@@ -16,10 +16,14 @@ namespace AssetManagerMvc.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         public DateTime? StartDate { get; set; }
+
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         public DateTime? EndDate { get; set; }
+
+        [DataType(DataType.MultilineText)]
         public string Remark { get; set; }
+
         public string Function { get; set; }
 
         public int? UsePeriodStatusId { get; set; }

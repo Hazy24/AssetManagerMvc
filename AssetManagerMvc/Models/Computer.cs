@@ -10,12 +10,13 @@ namespace AssetManagerMvc.Models
     {
         [Display(Name = "Computer Name")]
         public string ComputerName { get; set; }
+        [Required]
         [Display(Name = "Computer Type")]
         public string ComputerType { get; set; }
         [Display(Name = "Office Version")]
         public string OfficeVersion { get; set; }
         [Display(Name = "Operating System")]
-        public string OperatingSystem { get; set; }
+        public string OperatingSystem { get; set; }        
         public string Browser { get; set; }
         public string AntiVirus { get; set; }
         [Display(Name = "TeamViewer")]

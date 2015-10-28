@@ -9,8 +9,10 @@ namespace AssetManagerMvc.Models
     public class Asset
     {
         public int AssetId { get; set; }
+        [Required]
         [Display(Name = "Serial Number")]
         public string SerialNumber { get; set; }
+        [Required]
         [Display(Name = "Model Name")]
         public string ModelName { get; set; }
         [Display(Name = "Purchase Date")]
