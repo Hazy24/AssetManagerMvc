@@ -1,0 +1,77 @@
+﻿@model IEnumerable<AssetManagerMvc.Models.UsePeriod>
+@using AssetManagerMvc.Models
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@using (Html.BeginForm("Index", "Useperiods", FormMethod.Get))
+{
+    <p>
+        Filter: @Html.TextBox("SearchString")
+        <input type="submit" value="Filter" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("CompoundId", "Index", new { sortOrder = ViewBag.CompoundIdSortParm, searchString = ViewBag.CurrentFilter })            
+        </th>
+        <th>
+            @Html.ActionLink("Computer Name", "Index", new { sortOrder = ViewBag.ComputerNameSortParm, searchString = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Serial Number", "Index", new { sortOrder = ViewBag.SerialNumberSortParm, searchString = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Status", "Index", new { sortOrder = ViewBag.DescriptionSortParm, searchString = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Full Name", "Index", new { sortOrder = ViewBag.FullNameSortParm, searchString = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Function", "Index", new { sortOrder = ViewBag.FunctionSortParm, searchString = ViewBag.CurrentFilter })
+        </th>      
+
+        <th><div style="min-width: 140px;"></div></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Asset.CompoundId, "Details", "Computers", new { id = item.AssetId }, null)               
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => ((Computer)item.Asset).ComputerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Asset.SerialNumber)
+            </td>
+            <td style="background-color: #@item.Status.ColorCode.ToString("X")">
+                @Html.DisplayFor(modelItem => item.Status.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserAccount.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Function)
+            </td>           
+            <td>
+
+                @Html.ActionLink("Edit", "Edit", new { id = item.UsePeriodId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.UsePeriodId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.UsePeriodId })
+
+            </td>
+        </tr>
+    }
+
+</table>

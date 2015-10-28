@@ -1,0 +1,79 @@
+﻿@model IEnumerable<AssetManagerMvc.Models.Computer>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@using (Html.BeginForm("Index", "Computers", FormMethod.Get))
+{
+    <p>
+        Filter: @Html.TextBox("SearchString")
+        <input type="submit" value="Filter" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("CompoundId", "Index", new { sortOrder = ViewBag.CompoundIdSortParm, searchString = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Computer Name", "Index", new { sortOrder = ViewBag.ComputerNameSortParm, searchString = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Serial Number", "Index", new { sortOrder = ViewBag.SerialNumberSortParm, searchString = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Manufacturer", "Index", new { sortOrder = ViewBag.ManufacturerSortParm, searchString = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Model Name", "Index", new { sortOrder = ViewBag.ModelNameSortParm, searchString = ViewBag.CurrentFilter })
+        </th>
+
+        <th>
+            @Html.ActionLink("Purchase Date", "Index", new { sortOrder = ViewBag.PurchaseDateSortParm, searchString = ViewBag.CurrentFilter })
+        </th>       
+        <th>
+            @Html.ActionLink("Computer Type", "Index", new { sortOrder = ViewBag.ComputerTypeSortParm, searchString = ViewBag.CurrentFilter })
+        </th>       
+        <th><div style="min-width: 140px;"></div></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CompoundId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ComputerName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SerialNumber)
+        </td>       
+        <td>
+            @Html.DisplayFor(modelItem => item.Manufacturer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ModelName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PurchaseDate)
+        </td>           
+        <td>
+            @Html.DisplayFor(modelItem => item.ComputerType)
+        </td>     
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AssetId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AssetId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AssetId })
+        </td>
+    </tr>
+}
+
+</table>
