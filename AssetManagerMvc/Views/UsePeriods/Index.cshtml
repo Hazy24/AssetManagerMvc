@@ -59,7 +59,11 @@
                 @Html.DisplayFor(modelItem => item.Status.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UserAccount.Name)
+                @if (item.UserAccount != null)
+                {
+                    @Html.ActionLink(item.UserAccount.Name, "Details", "UserAccounts", new { id = item.UserAccountId }, null)                
+                }
+                @*@Html.DisplayFor(modelItem => item.UserAccount.Name)*@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Function)
