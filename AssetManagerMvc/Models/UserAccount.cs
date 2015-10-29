@@ -19,8 +19,6 @@ namespace AssetManagerMvc.Models
         [Display(Name = "Email")]
         public string Mail { get; set; }
         public string Company { get; set; }
-        public string Department { get; set; }
-        [Display(Name = "Admin")]
-        public bool IsAdmin { get; set; }
+        public string Department { get; set; }        
     }
 }

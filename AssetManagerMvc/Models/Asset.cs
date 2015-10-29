@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -26,6 +27,7 @@ namespace AssetManagerMvc.Models
         public string Supplier { get; set; }
         public string Manufacturer { get; set; }
 
+        [NotMapped]
         public string CompoundId
         {
             get
@@ -33,6 +35,14 @@ namespace AssetManagerMvc.Models
                 string compoundid = AssetId.ToString();
                 if (this is Computer) compoundid = "C" + compoundid;
                 return compoundid;
+            }
+        }
+        [NotMapped]
+        public string CompoundIdAndSerialNumber
+        {
+            get
+            {
+                return CompoundId + " - " + SerialNumber;
             }
         }
 

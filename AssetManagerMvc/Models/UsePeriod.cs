@@ -12,11 +12,13 @@ namespace AssetManagerMvc.Models
         public int? UserAccountId { get; set; }
         public virtual UserAccount UserAccount { get; set; }
         // TODO check overlap
-        // bool overlap = a.start < b.end && b.start < a.end;        
+        // bool overlap = a.start < b.end && b.start < a.end;       
+        [Display(Name = "Start date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         public DateTime? StartDate { get; set; }
 
+        [Display(Name = "End date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         public DateTime? EndDate { get; set; }
@@ -25,6 +27,9 @@ namespace AssetManagerMvc.Models
         public string Remark { get; set; }
 
         public string Function { get; set; }
+
+        [Display(Name = "User is Admin")]
+        public bool UserIsAdmin { get; set; }
 
         public int? UsePeriodStatusId { get; set; }
         public virtual UsePeriodStatus Status { get; set; }
@@ -35,6 +40,7 @@ namespace AssetManagerMvc.Models
     public class UsePeriodStatus
     {
         public int UsePeriodStatusId { get; set; }
+        [Display(Name = "Status")]
         public string Description { get; set; }
         public int ColorCode { get; set; }
         public UsePeriodStatus cbField { get { return this; } }

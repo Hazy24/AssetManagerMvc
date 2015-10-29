@@ -38,7 +38,7 @@ namespace AssetManagerMvc.Controllers
                 || u.Function.Contains(searchString)
                 || u.Remark.Contains(searchString)
                 || u.Status.Description.Contains(searchString)
-                    );                                      
+                    );
             }
             ViewBag.CurrentFilter = searchString;
 
@@ -48,7 +48,7 @@ namespace AssetManagerMvc.Controllers
             ViewBag.DescriptionSortParm = sortOrder == "description" ? "description_desc" : "description";
             ViewBag.FullNameSortParm = sortOrder == "fullname" ? "fullname_desc" : "fullname";
             ViewBag.FunctionSortParm = sortOrder == "function" ? "function_desc" : "function";
-           
+
 
 
             switch (sortOrder)
@@ -60,7 +60,7 @@ namespace AssetManagerMvc.Controllers
                     usePeriods = usePeriods.OrderBy(u => (u.Asset as Computer).ComputerName);
                     break;
                 case "computername_desc":
-                    usePeriods = usePeriods.OrderByDescending(u => (u.Asset as Computer).ComputerName);                    
+                    usePeriods = usePeriods.OrderByDescending(u => (u.Asset as Computer).ComputerName);
                     break;
                 case "serialnumber":
                     usePeriods = usePeriods.OrderBy(u => u.Asset.SerialNumber);
@@ -112,9 +112,11 @@ namespace AssetManagerMvc.Controllers
         // GET: UsePeriods/Create
         public ActionResult Create()
         {
-            ViewBag.AssetId = new SelectList(db.Assets, "AssetId", "SerialNumber");
+            ViewBag.AssetId = new SelectList(db.Assets, "AssetId", "CompoundIdAndSerialNumber");
             ViewBag.UsePeriodStatusId = new SelectList(db.UsePeriodStatuses, "UsePeriodStatusId", "Description");
-            ViewBag.UserAccountId = new SelectList(db.UserAccounts, "UserAccountId", "GivenName");
+            ViewBag.UserAccountId = new SelectList(db.UserAccounts, "UserAccountId", "Name").ToList();            
+            ViewBag.UserAccountId.Insert(0, new SelectListItem { Text = "", Value = "" });
+
             return View();
         }
 
@@ -123,7 +125,7 @@ namespace AssetManagerMvc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UsePeriodId,UserAccountId,StartDate,EndDate,Remark,Function,UsePeriodStatusId,AssetId")] UsePeriod usePeriod)
+        public ActionResult Create([Bind(Include = "UsePeriodId,UserAccountId,StartDate,EndDate,Remark,Function,UsePeriodStatusId,AssetId,UserIsAdmin")] UsePeriod usePeriod)
         {
             if (ModelState.IsValid)
             {
@@ -132,9 +134,10 @@ namespace AssetManagerMvc.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.AssetId = new SelectList(db.Assets, "AssetId", "SerialNumber", usePeriod.AssetId);
+            ViewBag.AssetId = new SelectList(db.Assets, "AssetId", "CompoundIdAndSerialNumber", usePeriod.AssetId);
             ViewBag.UsePeriodStatusId = new SelectList(db.UsePeriodStatuses, "UsePeriodStatusId", "Description", usePeriod.UsePeriodStatusId);
-            ViewBag.UserAccountId = new SelectList(db.UserAccounts, "UserAccountId", "GivenName", usePeriod.UserAccountId);
+            ViewBag.UserAccountId = new SelectList(db.UserAccounts, "UserAccountId", "Name", usePeriod.UserAccountId).ToList();
+            ViewBag.UserAccountId.Insert(0, new SelectListItem { Text = "", Value = "" });
             return View(usePeriod);
         }
 
@@ -150,9 +153,12 @@ namespace AssetManagerMvc.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.AssetId = new SelectList(db.Assets, "AssetId", "SerialNumber", usePeriod.AssetId);
+            ViewBag.AssetId = new SelectList(db.Assets, "AssetId", "CompoundIdAndSerialNumber", usePeriod.AssetId);
             ViewBag.UsePeriodStatusId = new SelectList(db.UsePeriodStatuses, "UsePeriodStatusId", "Description", usePeriod.UsePeriodStatusId);
-            ViewBag.UserAccountId = new SelectList(db.UserAccounts, "UserAccountId", "GivenName", usePeriod.UserAccountId);
+
+            ViewBag.UserAccountId = new SelectList(db.UserAccounts, "UserAccountId", "Name", usePeriod.UserAccountId).ToList();
+            ViewBag.UserAccountId.Insert(0, new SelectListItem { Text = "", Value = "" });
+
             return View(usePeriod);
         }
 
@@ -161,7 +167,7 @@ namespace AssetManagerMvc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UsePeriodId,UserAccountId,StartDate,EndDate,Remark,Function,UsePeriodStatusId,AssetId")] UsePeriod usePeriod)
+        public ActionResult Edit([Bind(Include = "UsePeriodId,UserAccountId,StartDate,EndDate,Remark,Function,UsePeriodStatusId,AssetId,UserIsAdmin")] UsePeriod usePeriod)
         {
             if (ModelState.IsValid)
             {
@@ -169,9 +175,10 @@ namespace AssetManagerMvc.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.AssetId = new SelectList(db.Assets, "AssetId", "SerialNumber", usePeriod.AssetId);
+            ViewBag.AssetId = new SelectList(db.Assets, "AssetId", "CompoundIdAndSerialNumber", usePeriod.AssetId);
             ViewBag.UsePeriodStatusId = new SelectList(db.UsePeriodStatuses, "UsePeriodStatusId", "Description", usePeriod.UsePeriodStatusId);
-            ViewBag.UserAccountId = new SelectList(db.UserAccounts, "UserAccountId", "GivenName", usePeriod.UserAccountId);
+            ViewBag.UserAccountId = new SelectList(db.UserAccounts, "UserAccountId", "Name", usePeriod.UserAccountId).ToList();
+            ViewBag.UserAccountId.Insert(0, new SelectListItem { Text = "", Value = "" });
             return View(usePeriod);
         }
 

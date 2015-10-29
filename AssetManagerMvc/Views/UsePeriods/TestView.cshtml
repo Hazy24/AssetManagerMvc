@@ -1,13 +1,12 @@
 ﻿@model AssetManagerMvc.Models.UsePeriod
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "TestView";
 }
 
-<h2>Edit</h2>
+<h2>TestView</h2>
 
-
-@using (Html.BeginForm())
+@using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
@@ -15,31 +14,11 @@
         <h4>UsePeriod</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.UsePeriodId)
-
         <div class="form-group">
-            @Html.LabelFor(model => model.AssetId, "Asset", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.UserAccountId, "UserAccountId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("AssetId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.AssetId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.UserAccountId, "User Account", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">                
                 @Html.DropDownList("UserAccountId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.UserAccountId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.UserIsAdmin, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.UserIsAdmin)
-                    @Html.ValidationMessageFor(model => model.UserIsAdmin, "", new { @class = "text-danger" })
-                </div>
             </div>
         </div>
 
@@ -76,16 +55,34 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.UsePeriodStatusId, "Status", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.UserIsAdmin, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.UserIsAdmin)
+                    @Html.ValidationMessageFor(model => model.UserIsAdmin, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UsePeriodStatusId, "UsePeriodStatusId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("UsePeriodStatusId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.UsePeriodStatusId, "", new { @class = "text-danger" })
             </div>
-        </div>       
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AssetId, "AssetId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("AssetId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AssetId, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>
@@ -94,7 +91,3 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

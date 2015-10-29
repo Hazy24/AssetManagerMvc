@@ -1,0 +1,82 @@
+﻿@model AssetManagerMvc.Models.UserAccount
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>UserAccount</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GivenName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GivenName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserPrincipalName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserPrincipalName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Mail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Mail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Company)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Company)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Department)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Department)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsAdmin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsAdmin)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.UserAccountId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
