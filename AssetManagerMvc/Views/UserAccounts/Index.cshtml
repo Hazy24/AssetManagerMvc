@@ -18,28 +18,37 @@
     </p>
     }
 </p>
+<p>
+    @using (Html.BeginForm("Index", "UserAccounts", FormMethod.Get))
+    {
+    <p>
+        Filter: @Html.TextBox("SearchString")
+        <input type="submit" value="Filter" />
+    </p>
+    }
+</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.ActionLink("Full Name", "Index", new { sortOrder = ViewBag.NameSortParm, searchString = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.GivenName)
+            @Html.ActionLink("Given Name", "Index", new { sortOrder = ViewBag.GivenNameSortParm, searchString = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UserPrincipalName)
+            @Html.ActionLink("UserPrincipalName", "Index", new { sortOrder = ViewBag.UserPrincipalNameSortParm, searchString = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Sn)
+            @Html.ActionLink("Surname", "Index", new { sortOrder = ViewBag.SnSortParm, searchString = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Mail)
+            @Html.ActionLink("Email", "Index", new { sortOrder = ViewBag.MailSortParm, searchString = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Company)
+            @Html.ActionLink("Company", "Index", new { sortOrder = ViewBag.CompanySortParm, searchString = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Department)
+            @Html.ActionLink("Department", "Index", new { sortOrder = ViewBag.DepartmentSortParm, searchString = ViewBag.CurrentFilter })
         </th>
         
         @*<th></th>*@

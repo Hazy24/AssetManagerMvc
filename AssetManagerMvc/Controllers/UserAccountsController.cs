@@ -15,9 +15,78 @@ namespace AssetManagerMvc.Controllers
         private AssetManagerContext db = new AssetManagerContext();
 
         // GET: UserAccounts
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString)
         {
-            return View(db.UserAccounts.ToList());
+            var useraccounts = from ua in db.UserAccounts
+                               select ua;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                useraccounts = useraccounts.Where(ua => ua.Name.Contains(searchString)
+                || ua.Company.Contains(searchString)
+                || ua.Department.Contains(searchString)
+                || ua.Mail.Contains(searchString)
+                || ua.UserPrincipalName.Contains(searchString)
+
+                    );
+            }
+            ViewBag.CurrentFilter = searchString;
+
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.GivenNameSortParm = sortOrder == "givenname" ? "givenname_desc" : "givenname";
+            ViewBag.UserPrincipalNameSortParm = sortOrder == "userprincipalname" ? "userprincipalname_desc" : "userprincipalname";
+            ViewBag.SnSortParm = sortOrder == "surname" ? "surname_desc" : "surname";
+            ViewBag.MailSortParm = sortOrder == "email" ? "email_desc" : "email";
+            ViewBag.CompanySortParm = sortOrder == "company" ? "company_desc" : "company";
+            ViewBag.DepartmentSortParm = sortOrder == "department" ? "department_desc" : "department";
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    useraccounts = useraccounts.OrderByDescending(ua => ua.Name);
+                    break;
+                case "givenname":
+                    useraccounts = useraccounts.OrderBy(ua => ua.GivenName);
+                    break;
+                case "givenname_desc":
+                    useraccounts = useraccounts.OrderByDescending(ua => ua.GivenName);
+                    break;
+                case "userprincipalname":
+                    useraccounts = useraccounts.OrderBy(ua => ua.UserPrincipalName);
+                    break;
+                case "userprincipalname_desc":
+                    useraccounts = useraccounts.OrderByDescending(ua => ua.UserPrincipalName);
+                    break;
+                case "surname":
+                    useraccounts = useraccounts.OrderBy(ua => ua.Sn);
+                    break;
+                case "surname_desc":
+                    useraccounts = useraccounts.OrderByDescending(ua => ua.Sn);
+                    break;
+                case "email":
+                    useraccounts = useraccounts.OrderBy(ua => ua.Mail);
+                    break;
+                case "email_desc":
+                    useraccounts = useraccounts.OrderByDescending(ua => ua.Mail);
+                    break;
+                case "company":
+                    useraccounts = useraccounts.OrderBy(ua => ua.Company);
+                    break;
+                case "company_desc":
+                    useraccounts = useraccounts.OrderByDescending(ua => ua.Company);
+                    break;
+                case "department":
+                    useraccounts = useraccounts.OrderBy(ua => ua.Department);
+                    break;
+                case "department_desc":
+                    useraccounts = useraccounts.OrderByDescending(ua => ua.Department);
+                    break;
+
+                default:  // name ascending 
+                    useraccounts = useraccounts.OrderBy(ua => ua.Name);
+                    break;
+            }
+
+            return View(useraccounts);
         }
         [HttpPost]
         public ActionResult Index(string update)
@@ -28,14 +97,14 @@ namespace AssetManagerMvc.Controllers
                 if (added != 1)
                 { ViewBag.UpdateResult = "Success! Added " + added + " users."; }
                 else
-                { ViewBag.UpdateResult = "Success! Added 1 user."; }                
+                { ViewBag.UpdateResult = "Success! Added 1 user."; }
             }
             catch (Exception ex)
             {
 
                 ViewBag.UpdateResult = ex.InnerException.Message;
             }
-            
+
             return View(db.UserAccounts.ToList());
         }
         // GET: UserAccounts/Details/5
