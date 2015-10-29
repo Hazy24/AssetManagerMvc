@@ -7,7 +7,16 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @*@Html.ActionLink("Create New", "Create")*@
+    @using (Html.BeginForm("Index", "UserAccounts", FormMethod.Post))
+    {
+    <p>
+        Ldap Useraccounts: 
+        <input type="submit" value="Update" />
+        @ViewBag.UpdateResult
+
+    </p>
+    }
 </p>
 <table class="table">
     <tr>

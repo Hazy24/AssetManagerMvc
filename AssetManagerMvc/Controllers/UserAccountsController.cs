@@ -19,7 +19,25 @@ namespace AssetManagerMvc.Controllers
         {
             return View(db.UserAccounts.ToList());
         }
+        [HttpPost]
+        public ActionResult Index(string update)
+        {
+            try
+            {
+                int added = UserAccount.UpdateUserAccounts();
+                if (added != 1)
+                { ViewBag.UpdateResult = "Success! Added " + added + " users."; }
+                else
+                { ViewBag.UpdateResult = "Success! Added 1 user."; }                
+            }
+            catch (Exception ex)
+            {
 
+                ViewBag.UpdateResult = ex.InnerException.Message;
+            }
+            
+            return View(db.UserAccounts.ToList());
+        }
         // GET: UserAccounts/Details/5
         public ActionResult Details(int? id)
         {
