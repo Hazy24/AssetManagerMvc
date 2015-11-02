@@ -109,17 +109,26 @@ namespace AssetManagerMvc.Controllers
             return View(usePeriod);
         }
 
-        // GET: UsePeriods/Create
-        public ActionResult Create()
+        // GET: UsePeriods/Create       
+        public ActionResult Create(int? oldUsePeriodId)
         {
             UsePeriod up = new UsePeriod();
             up.StartDate = DateTime.Now;
 
-            SetCreateAndEditViewbag();
-
+            if (oldUsePeriodId != null)
+            {
+                UsePeriod oldUsePeriod = db.UsePeriods.Single(oup => oup.UsePeriodId == oldUsePeriodId);
+                oldUsePeriod.EndDate = DateTime.Today;
+                db.SaveChanges();
+                SetCreateAndEditViewbag(oldUsePeriod.AssetId);
+            }
+            else
+            {
+                SetCreateAndEditViewbag();
+            }
             return View(up);
-        }     
-     
+        }
+
 
         // POST: UsePeriods/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 

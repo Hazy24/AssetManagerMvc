@@ -72,7 +72,10 @@
 
                 @Html.ActionLink("Edit", "Edit", new { id = item.UsePeriodId }) |
                 @Html.ActionLink("Details", "Details", new { id = item.UsePeriodId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.UsePeriodId })
+                @Html.ActionLink("Delete", "Delete", new { id = item.UsePeriodId }) |
+                @Html.ActionLink("New", "Create", new { oldUsePeriodId = item.UsePeriodId },
+               new  { title = "Sets the end date of this UsePeriod to today, and links you to the UsePeriods/Create page with this asset already selected." })
+
 
             </td>
         </tr>
