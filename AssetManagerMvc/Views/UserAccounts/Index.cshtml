@@ -11,79 +11,80 @@
     @using (Html.BeginForm("Index", "UserAccounts", FormMethod.Post))
     {
     <p>
-        Ldap Useraccounts: 
+        Ldap Useraccounts:
         <input type="submit" value="Update" />
         @ViewBag.UpdateResult
 
     </p>
     }
-</p>
-<p>
-    @using (Html.BeginForm("Index", "UserAccounts", FormMethod.Get))
-    {
-    <p>
-        Filter: @Html.TextBox("SearchString")
-        <input type="submit" value="Filter" />
     </p>
-    }
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.ActionLink("Full Name", "Index", new { sortOrder = ViewBag.NameSortParm, searchString = ViewBag.CurrentFilter })
-        </th>
-        <th>
-            @Html.ActionLink("Given Name", "Index", new { sortOrder = ViewBag.GivenNameSortParm, searchString = ViewBag.CurrentFilter })
-        </th>
-        <th>
-            @Html.ActionLink("UserPrincipalName", "Index", new { sortOrder = ViewBag.UserPrincipalNameSortParm, searchString = ViewBag.CurrentFilter })
-        </th>
-        <th>
-            @Html.ActionLink("Surname", "Index", new { sortOrder = ViewBag.SnSortParm, searchString = ViewBag.CurrentFilter })
-        </th>
-        <th>
-            @Html.ActionLink("Email", "Index", new { sortOrder = ViewBag.MailSortParm, searchString = ViewBag.CurrentFilter })
-        </th>
-        <th>
-            @Html.ActionLink("Company", "Index", new { sortOrder = ViewBag.CompanySortParm, searchString = ViewBag.CurrentFilter })
-        </th>
-        <th>
-            @Html.ActionLink("Department", "Index", new { sortOrder = ViewBag.DepartmentSortParm, searchString = ViewBag.CurrentFilter })
-        </th>
-        
-        @*<th></th>*@
-    </tr>
+    <p>
+        @using (Html.BeginForm("Index", "UserAccounts", FormMethod.Get))
+        {
+        <p>
+            Filter: @Html.TextBox("SearchString")
+            <input type="submit" value="Filter" />
+        </p>
+        }
+        </p>
+        <table class="table alternating">
+            <tr>
+                <th>
+                    @Html.ActionLink("Full Name", "Index", new { sortOrder = ViewBag.NameSortParm, searchString = ViewBag.CurrentFilter })
+                </th>
+                <th>
+                    @Html.ActionLink("Given Name", "Index", new { sortOrder = ViewBag.GivenNameSortParm, searchString = ViewBag.CurrentFilter })
+                </th>
+                <th>
+                    @Html.ActionLink("UserPrincipalName", "Index", new { sortOrder = ViewBag.UserPrincipalNameSortParm, searchString = ViewBag.CurrentFilter })
+                </th>
+                <th>
+                    @Html.ActionLink("Surname", "Index", new { sortOrder = ViewBag.SnSortParm, searchString = ViewBag.CurrentFilter })
+                </th>
+                <th>
+                    @Html.ActionLink("Email", "Index", new { sortOrder = ViewBag.MailSortParm, searchString = ViewBag.CurrentFilter })
+                </th>
+                <th>
+                    @Html.ActionLink("Company", "Index", new { sortOrder = ViewBag.CompanySortParm, searchString = ViewBag.CurrentFilter })
+                </th>
+                <th>
+                    @Html.ActionLink("Department", "Index", new { sortOrder = ViewBag.DepartmentSortParm, searchString = ViewBag.CurrentFilter })
+                </th>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GivenName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserPrincipalName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Sn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Mail)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Company)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Department)
-        </td>
-       
-        @*<td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.UserAccountId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.UserAccountId }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.UserAccountId })
-        </td>*@
-    </tr>
-}
+                @*<th></th>*@
+            </tr>
 
-</table>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GivenName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserPrincipalName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Sn)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Mail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Company)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Department)
+                    </td>
+
+                    @*<td>
+                            @Html.ActionLink("Edit", "Edit", new { id=item.UserAccountId }) |
+                            @Html.ActionLink("Details", "Details", new { id=item.UserAccountId }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.UserAccountId })
+                        </td>*@
+                </tr>
+            }
+
+        </table>
