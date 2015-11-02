@@ -115,13 +115,11 @@ namespace AssetManagerMvc.Controllers
             UsePeriod up = new UsePeriod();
             up.StartDate = DateTime.Now;
 
-            ViewBag.AssetId = new SelectList(db.Assets, "AssetId", "CompoundIdAndSerialNumber");
-            ViewBag.UsePeriodStatusId = new SelectList(db.UsePeriodStatuses, "UsePeriodStatusId", "Description");
-            ViewBag.UserAccountId = new SelectList(db.UserAccounts, "UserAccountId", "Name").ToList();            
-            ViewBag.UserAccountId.Insert(0, new SelectListItem { Text = "", Value = "" });
+            SetCreateAndEditViewbag();
 
             return View(up);
-        }
+        }     
+     
 
         // POST: UsePeriods/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -137,10 +135,8 @@ namespace AssetManagerMvc.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.AssetId = new SelectList(db.Assets, "AssetId", "CompoundIdAndSerialNumber", usePeriod.AssetId);
-            ViewBag.UsePeriodStatusId = new SelectList(db.UsePeriodStatuses, "UsePeriodStatusId", "Description", usePeriod.UsePeriodStatusId);
-            ViewBag.UserAccountId = new SelectList(db.UserAccounts, "UserAccountId", "Name", usePeriod.UserAccountId).ToList();
-            ViewBag.UserAccountId.Insert(0, new SelectListItem { Text = "", Value = "" });
+            SetCreateAndEditViewbag(usePeriod.AssetId, usePeriod.UsePeriodStatusId,
+                usePeriod.UserAccountId, usePeriod.Function);
             return View(usePeriod);
         }
 
@@ -156,11 +152,8 @@ namespace AssetManagerMvc.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.AssetId = new SelectList(db.Assets, "AssetId", "CompoundIdAndSerialNumber", usePeriod.AssetId);
-            ViewBag.UsePeriodStatusId = new SelectList(db.UsePeriodStatuses, "UsePeriodStatusId", "Description", usePeriod.UsePeriodStatusId);
-
-            ViewBag.UserAccountId = new SelectList(db.UserAccounts, "UserAccountId", "Name", usePeriod.UserAccountId).ToList();
-            ViewBag.UserAccountId.Insert(0, new SelectListItem { Text = "", Value = "" });
+            SetCreateAndEditViewbag(usePeriod.AssetId, usePeriod.UsePeriodStatusId,
+                usePeriod.UserAccountId, usePeriod.Function);
 
             return View(usePeriod);
         }
@@ -178,13 +171,52 @@ namespace AssetManagerMvc.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.AssetId = new SelectList(db.Assets, "AssetId", "CompoundIdAndSerialNumber", usePeriod.AssetId);
-            ViewBag.UsePeriodStatusId = new SelectList(db.UsePeriodStatuses, "UsePeriodStatusId", "Description", usePeriod.UsePeriodStatusId);
-            ViewBag.UserAccountId = new SelectList(db.UserAccounts, "UserAccountId", "Name", usePeriod.UserAccountId).ToList();
-            ViewBag.UserAccountId.Insert(0, new SelectListItem { Text = "", Value = "" });
+            SetCreateAndEditViewbag(usePeriod.AssetId, usePeriod.UsePeriodStatusId,
+                  usePeriod.UserAccountId, usePeriod.Function);
             return View(usePeriod);
         }
+        private void SetCreateAndEditViewbag(int? assetId = null, int? usePeriodStatusId = null, 
+            int? userAccountId = null, string function = null)
+        {
+            if (assetId == null)
+            {
+                ViewBag.AssetId = new SelectList(db.Assets, "AssetId", "CompoundIdAndSerialNumber");
+            }
+            else
+            {
+                ViewBag.AssetId = new SelectList(db.Assets, "AssetId", "CompoundIdAndSerialNumber", assetId);
+            }
+            if (usePeriodStatusId == null)
+            {
+                ViewBag.UsePeriodStatusId = new SelectList(db.UsePeriodStatuses, "UsePeriodStatusId", "Description");
+            }
+            else
+            {
+                ViewBag.UsePeriodStatusId = new SelectList(db.UsePeriodStatuses, "UsePeriodStatusId", "Description", usePeriodStatusId);
+            }
+            if (userAccountId == null)
+            {
+                ViewBag.UserAccountId = new SelectList(db.UserAccounts, "UserAccountId", "Name").ToList();
+            }
+            else
+            {
+                ViewBag.UserAccountId = new SelectList(db.UserAccounts, "UserAccountId", "Name", userAccountId).ToList();
+            }
+            ViewBag.UserAccountId.Insert(0, new SelectListItem { Text = "", Value = "" });
 
+            if (string.IsNullOrEmpty(function))
+            {
+                ViewBag.Function = new SelectList(db.UsePeriods, "Function", "Function")
+                .GroupBy(f => f.Text).Select(f => f.First()) // == Distinct              
+                .OrderBy(f => f.Text);
+            }
+            else
+            {
+                ViewBag.Function = new SelectList(db.UsePeriods, "Function", "Function", function)
+                .GroupBy(f => f.Text).Select(f => f.First()) // == Distinct              
+                .OrderBy(f => f.Text);
+            }
+        }
         // GET: UsePeriods/Delete/5
         public ActionResult Delete(int? id)
         {
