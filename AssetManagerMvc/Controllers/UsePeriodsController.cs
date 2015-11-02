@@ -112,12 +112,15 @@ namespace AssetManagerMvc.Controllers
         // GET: UsePeriods/Create
         public ActionResult Create()
         {
+            UsePeriod up = new UsePeriod();
+            up.StartDate = DateTime.Now;
+
             ViewBag.AssetId = new SelectList(db.Assets, "AssetId", "CompoundIdAndSerialNumber");
             ViewBag.UsePeriodStatusId = new SelectList(db.UsePeriodStatuses, "UsePeriodStatusId", "Description");
             ViewBag.UserAccountId = new SelectList(db.UserAccounts, "UserAccountId", "Name").ToList();            
             ViewBag.UserAccountId.Insert(0, new SelectListItem { Text = "", Value = "" });
 
-            return View();
+            return View(up);
         }
 
         // POST: UsePeriods/Create
