@@ -117,11 +117,46 @@
         <dt>
             @Html.DisplayNameFor(model => model.IsTeamViewerInstalled)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.IsTeamViewerInstalled)
         </dd>
-
+        @if (Model.UsePeriods.Count > 0)
+        {
+        <dt style="position: relative; top: 8px;">
+            @Html.DisplayNameFor(model => model.UsePeriods)
+        </dt>
+        <dd>
+            <table class="table alternating">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.UsePeriods.First().StartDate)</th>
+                    <th>@Html.DisplayNameFor(model => model.UsePeriods.First().EndDate)</th>
+                    <th>@Html.DisplayNameFor(model => model.UsePeriods.First().Status)</th>
+                    <th>@Html.DisplayNameFor(model => model.UsePeriods.First().UserAccount.Name)</th>
+                    <th>@Html.DisplayNameFor(model => model.UsePeriods.First().Function)</th>
+                </tr>
+                @foreach (var item in Model.UsePeriods.OrderBy(up => up.StartDate))
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndDate)
+                        </td>
+                        <td style="background-color: #@item.Status.ColorCode.ToString("X")">
+                            @Html.DisplayFor(modelItem => item.Status.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserAccount.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Function)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>
+        }
     </dl>
 </div>
 <p>
