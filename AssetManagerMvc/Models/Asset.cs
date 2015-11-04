@@ -46,9 +46,10 @@ namespace AssetManagerMvc.Models
             }
         }
 
-        private readonly ObservableListSource<UsePeriod> _usePeriods =
-                new ObservableListSource<UsePeriod>();
+        //private readonly ObservableListSource<UsePeriod> _usePeriods =
+        //        new ObservableListSource<UsePeriod>();
 
-        public virtual ObservableListSource<UsePeriod> UsePeriods { get { return _usePeriods; } }
+        //public virtual ObservableListSource<UsePeriod> UsePeriods { get { return _usePeriods; } }
+        public virtual ICollection<UsePeriod> UsePeriods { get; set; }
     }
 }
