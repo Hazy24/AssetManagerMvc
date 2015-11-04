@@ -22,6 +22,16 @@ namespace AssetManagerMvc.Models
         public string Company { get; set; }
         public string Department { get; set; }
 
+        public string Remark { get; set; }
+        public int Headset { get; set; }
+        public int Speakers { get; set; }
+        public int Keyboard { get; set; }
+        public int Mouse { get; set; }
+        public int WirelessMouse { get; set; }
+        public int UsbStick { get; set; }
+        public int LaptopBag { get; set; }
+
+
         public static int UpdateUserAccounts()
         {
             int added = 0;
