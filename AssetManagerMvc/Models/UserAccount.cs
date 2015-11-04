@@ -34,6 +34,8 @@ namespace AssetManagerMvc.Models
         public int UsbStick { get; set; }
         [Display(Name = "Laptop Bag")]
         public int LaptopBag { get; set; }
+        [Display(Name = "Laptop Stand")]
+        public int LaptopStand { get; set; }
 
 
         public static int UpdateUserAccounts()
