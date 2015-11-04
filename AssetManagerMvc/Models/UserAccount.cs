@@ -22,13 +22,17 @@ namespace AssetManagerMvc.Models
         public string Company { get; set; }
         public string Department { get; set; }
 
+        [DataType(DataType.MultilineText)]
         public string Remark { get; set; }
         public int Headset { get; set; }
         public int Speakers { get; set; }
         public int Keyboard { get; set; }
         public int Mouse { get; set; }
+        [Display(Name = "Wireless Mouse")]
         public int WirelessMouse { get; set; }
+        [Display(Name = "Usb Stick")]
         public int UsbStick { get; set; }
+        [Display(Name = "Laptop Bag")]
         public int LaptopBag { get; set; }
 
 

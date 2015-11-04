@@ -165,7 +165,7 @@ namespace AssetManagerMvc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserAccountId,Name,GivenName,UserPrincipalName,Sn,Mail,Company,Department,IsAdmin")] UserAccount userAccount)
+        public ActionResult Edit([Bind(Include = "UserAccountId,Name,GivenName,UserPrincipalName,Sn,Mail,Company,Department,Remark,Headset,Speakers,Keyboard,Mouse,WirelessMouse,UsbStick,LaptopBag")] UserAccount userAccount)
         {
             if (ModelState.IsValid)
             {
