@@ -21,6 +21,9 @@ namespace AssetManagerMvc.Controllers
                 .Include(u => u.Asset)
                 .Include(u => u.Status)
                 .Include(u => u.UserAccount)
+                .GroupBy(u => u.AssetId)
+                .Select(q => q.OrderByDescending(p => p.StartDate).FirstOrDefault())
+
                 // .Where(u => u.Asset is Computer)
                 // .Where(u => u.StartDate <= DateTime.Now || u.StartDate == null)
                 // .Where(u => u.EndDate > DateTime.Now || u.EndDate == null)                
