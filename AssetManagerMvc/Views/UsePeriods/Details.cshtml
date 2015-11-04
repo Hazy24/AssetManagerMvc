@@ -109,9 +109,9 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.EndDate)
                             </td>
-                            <td style="background-color: #@item.Status.ColorCode.ToString("X")">
-                                @Html.DisplayFor(modelItem => item.Status.Description)
-                            </td>
+                            
+                            @Html.DisplayFor(modelItem => item.Status, "UseperiodStatusTableCell")
+                            
                             <td>
                                 @Html.DisplayFor(modelItem => item.UserAccount.Name)
                             </td>
