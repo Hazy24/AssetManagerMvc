@@ -216,11 +216,11 @@ namespace AssetManagerMvc.Controllers
             }
             if (userAccountId == null)
             {
-                ViewBag.UserAccountId = new SelectList(db.UserAccounts, "UserAccountId", "Name").ToList();
+                ViewBag.UserAccountId = new SelectList(db.UserAccounts.OrderBy(x => x.Name), "UserAccountId", "Name").ToList();
             }
             else
             {
-                ViewBag.UserAccountId = new SelectList(db.UserAccounts, "UserAccountId", "Name", userAccountId).ToList();
+                ViewBag.UserAccountId = new SelectList(db.UserAccounts.OrderBy(x => x.Name), "UserAccountId", "Name", userAccountId).ToList();
             }
             ViewBag.UserAccountId.Insert(0, new SelectListItem { Text = "", Value = "" });
 
