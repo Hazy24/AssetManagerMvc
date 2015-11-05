@@ -1,0 +1,83 @@
+﻿@model IEnumerable<AssetManagerMvc.Models.UsePeriod>
+@using AssetManagerMvc.Models
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@using (Html.BeginForm("Index", "Useperiods", FormMethod.Get))
+{
+    <p>
+        Filter: @Html.TextBox("SearchString")
+        Current: @Html.CheckBox("Current", true)
+        Hide 'uit gebruik': @Html.CheckBox("HideUitGebruik", true)
+        <input type="submit" value="Apply" />
+    </p>
+}
+<table class="table alternating">
+    <tr>
+        <th>
+            @Html.ActionLink("CompoundId", "Index", new { sortOrder = ViewBag.CompoundIdSortParm, searchString = ViewBag.Filter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik })
+        </th>
+        <th>
+            @Html.ActionLink("Printer Name", "Index", new { sortOrder = ViewBag.PrinterNameSortParm, searchString = ViewBag.Filter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik })
+        </th>
+        <th>
+            @Html.ActionLink("Serial Number", "Index", new { sortOrder = ViewBag.SerialNumberSortParm, searchString = ViewBag.Filter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik })
+        </th>
+        <th>
+            @Html.ActionLink("Status", "Index", new { sortOrder = ViewBag.DescriptionSortParm, searchString = ViewBag.Filter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik })
+        </th>
+        <th>
+            @Html.ActionLink("Full Name", "Index", new { sortOrder = ViewBag.FullNameSortParm, searchString = ViewBag.CurrentFilter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik })
+        </th>
+        <th>
+            @Html.ActionLink("Function", "Index", new { sortOrder = ViewBag.FunctionSortParm, searchString = ViewBag.CurrentFilter, current = ViewBag.Current })
+        </th>
+
+        <th><div style="min-width: 140px;"></div></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Asset.CompoundId, "Details", "Computers", new { id = item.AssetId }, null)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => ((Printer)item.Asset).PrinterName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Asset.SerialNumber)
+            </td>
+
+            @Html.DisplayFor(modelItem => item.Status, "UseperiodStatusTableCell")
+
+            <td>
+                @if (item.UserAccount != null)
+                {
+                    @Html.ActionLink(item.UserAccount.Name, "Details", "UserAccounts", new { id = item.UserAccountId }, null)
+                }
+                @*@Html.DisplayFor(modelItem => item.UserAccount.Name)*@
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Function)
+            </td>
+            <td>
+
+                @Html.ActionLink("Edit", "Edit", new { id = item.UsePeriodId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.UsePeriodId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.UsePeriodId }) |
+                @Html.ActionLink("New", "Create", new { oldUsePeriodId = item.UsePeriodId },
+               new { title = "Sets the end date of this UsePeriod to today, and links you to the UsePeriods/Create page with this asset already selected." })
+
+
+            </td>
+        </tr>
+    }
+</table>
