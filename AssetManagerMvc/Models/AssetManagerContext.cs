@@ -22,18 +22,19 @@ namespace AssetManagerMvc.Models
         public DbSet<Asset> Assets { get; set; }
         public DbSet<Incident> Incidents { get; set; }
         public DbSet<UsePeriodStatus> UsePeriodStatuses { get; set; }
+        public DbSet<Printer> Printers { get; set; }
 
     }
-    public class ObservableListSource<T> : ObservableCollection<T>, IListSource
-        where T : class
-    {
-        private IBindingList _bindingList;
+    //public class ObservableListSource<T> : ObservableCollection<T>, IListSource
+    //    where T : class
+    //{
+    //    private IBindingList _bindingList;
 
-        bool IListSource.ContainsListCollection { get { return false; } }
+    //    bool IListSource.ContainsListCollection { get { return false; } }
 
-        IList IListSource.GetList()
-        {
-            return _bindingList ?? (_bindingList = this.ToBindingList());
-        }
-    }
+    //    IList IListSource.GetList()
+    //    {
+    //        return _bindingList ?? (_bindingList = this.ToBindingList());
+    //    }
+    //}
 }
