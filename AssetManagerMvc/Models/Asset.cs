@@ -10,20 +10,24 @@ namespace AssetManagerMvc.Models
     public class Asset
     {
         public int AssetId { get; set; }
+
         [Required]
         [Display(Name = "Serial Number")]
         public string SerialNumber { get; set; }
+
         [Required]
         [Display(Name = "Model Name")]
         public string ModelName { get; set; }
+
         [Display(Name = "Purchase Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         public DateTime? PurchaseDate { get; set; }
+
         [Display(Name = "Price")]
         public decimal? PurchasePrice { get; set; }
+
         public string Owner { get; set; }
-        // public List<UsePeriod> UserPeriods { get; set; }
         public string Supplier { get; set; }
         public string Manufacturer { get; set; }
 
@@ -34,6 +38,7 @@ namespace AssetManagerMvc.Models
             {
                 string compoundid = AssetId.ToString();
                 if (this is Computer) compoundid = "C" + compoundid;
+                else if (this is Printer) compoundid = "P" + compoundid;
                 return compoundid;
             }
         }
@@ -45,11 +50,6 @@ namespace AssetManagerMvc.Models
                 return CompoundId + " - " + SerialNumber;
             }
         }
-
-        //private readonly ObservableListSource<UsePeriod> _usePeriods =
-        //        new ObservableListSource<UsePeriod>();
-
-        //public virtual ObservableListSource<UsePeriod> UsePeriods { get { return _usePeriods; } }
         public virtual ICollection<UsePeriod> UsePeriods { get; set; }
     }
 }

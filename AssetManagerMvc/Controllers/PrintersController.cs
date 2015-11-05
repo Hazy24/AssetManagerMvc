@@ -15,10 +15,84 @@ namespace AssetManagerMvc.Controllers
         private AssetManagerContext db = new AssetManagerContext();
 
         // GET: Printers
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString)
         {
             var printers = from p in db.Printers
                            select p;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                printers = printers.Where(p => p.AssetId.ToString().Contains(searchString)
+                
+                || p.DrumModel.Contains(searchString)
+                || p.IpAddress.Contains(searchString)
+                || p.Manufacturer.Contains(searchString)
+                || p.ModelName.Contains(searchString)
+                || p.Owner.Contains(searchString)
+                || p.PrinterName.Contains(searchString)
+                || p.SerialNumber.Contains(searchString)
+                || p.Supplier.Contains(searchString)
+                || p.TonerModel.Contains(searchString)           
+
+                    );
+            }
+            ViewBag.CurrentFilter = searchString;
+
+            ViewBag.CompoundIdSortParm = String.IsNullOrEmpty(sortOrder) ? "compoundId_desc" : "";
+            ViewBag.PrinterNameSortParm = sortOrder == "printername" ? "printername_desc" : "printername";
+            ViewBag.SerialNumberSortParm = sortOrder == "serialnumber" ? "serialnumber_desc" : "serialnumber";
+            ViewBag.ManufacturerSortParm = sortOrder == "manufacturer" ? "manufacturer_desc" : "manufacturer";
+            ViewBag.ModelNameSortParm = sortOrder == "modelname" ? "modelname_desc" : "modelname";
+            ViewBag.PurchaseDateSortParm = sortOrder == "purchasedate" ? "purchasedate_desc" : "purchasedate";
+            ViewBag.IpAddressSortParm = sortOrder == "ipaddress" ? "ipaddress_desc" : "ipaddress";
+
+            switch (sortOrder)
+            {
+                case "compoundId_desc":
+                    printers = printers.OrderByDescending(p => p.AssetId);
+                    break;
+                case "printerrname":
+                    printers = printers.OrderBy(p => p.PrinterName);
+                    break;
+                case "printername_desc":
+                    printers = printers.OrderByDescending(p => p.PrinterName);
+                    break;
+                case "serialnumber":
+                    printers = printers.OrderBy(c => c.SerialNumber);
+                    break;
+                case "serialnumber_desc":
+                    printers = printers.OrderByDescending(c => c.SerialNumber);
+                    break;
+                case "manufacturer":
+                    printers = printers.OrderBy(c => c.Manufacturer);
+                    break;
+                case "manufacturer_desc":
+                    printers = printers.OrderByDescending(c => c.Manufacturer);
+                    break;
+                case "modelname":
+                    printers = printers.OrderBy(c => c.ModelName);
+                    break;
+                case "modelname_desc":
+                    printers = printers.OrderByDescending(c => c.ModelName);
+                    break;
+                case "purchasedate":
+                    printers = printers.OrderBy(c => c.PurchaseDate);
+                    break;
+                case "purchasedate_desc":
+                    printers = printers.OrderByDescending(c => c.PurchaseDate);
+                    break;
+                case "ipaddress":
+                    printers = printers.OrderBy(c => c.IpAddress);
+                    break;
+                case "ipaddress_desc":
+                    printers = printers.OrderByDescending(c => c.IpAddress);
+                    break;
+
+                default:  // compoundId ascending 
+                    printers = printers.OrderBy(c => c.AssetId);
+                    break;
+            }
+
+
             return View(printers);
         }
 

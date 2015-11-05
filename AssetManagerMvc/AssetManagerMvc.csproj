@@ -51,6 +51,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -171,13 +172,43 @@
     <Compile Include="Controllers\ComputersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PrintersController.cs" />
     <Compile Include="Controllers\UsePeriodsController.cs" />
+    <Compile Include="Controllers\UserAccountsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201510220800462_InitialCreate.cs" />
-    <Compile Include="Migrations\201510220800462_InitialCreate.Designer.cs">
-      <DependentUpon>201510220800462_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201510281311483_InitialCreate.cs" />
+    <Compile Include="Migrations\201510281311483_InitialCreate.Designer.cs">
+      <DependentUpon>201510281311483_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510281325325_serialnumber-requiered.cs" />
+    <Compile Include="Migrations\201510281325325_serialnumber-requiered.Designer.cs">
+      <DependentUpon>201510281325325_serialnumber-requiered.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510281347104_modelname-requiered.cs" />
+    <Compile Include="Migrations\201510281347104_modelname-requiered.Designer.cs">
+      <DependentUpon>201510281347104_modelname-requiered.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510291219250_userisadmintouseperiod.cs" />
+    <Compile Include="Migrations\201510291219250_userisadmintouseperiod.Designer.cs">
+      <DependentUpon>201510291219250_userisadmintouseperiod.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511041140070_newuseraccountproperties.cs" />
+    <Compile Include="Migrations\201511041140070_newuseraccountproperties.Designer.cs">
+      <DependentUpon>201511041140070_newuseraccountproperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511041430310_useraccountlaptopstand.cs" />
+    <Compile Include="Migrations\201511041430310_useraccountlaptopstand.Designer.cs">
+      <DependentUpon>201511041430310_useraccountlaptopstand.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511051323025_printer.cs" />
+    <Compile Include="Migrations\201511051323025_printer.Designer.cs">
+      <DependentUpon>201511051323025_printer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511051347122_printeripadressstring.cs" />
+    <Compile Include="Migrations\201511051347122_printeripadressstring.Designer.cs">
+      <DependentUpon>201511051347122_printeripadressstring.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -187,6 +218,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Incident.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Printer.cs" />
     <Compile Include="Models\UsePeriod.cs" />
     <Compile Include="Models\UserAccount.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -213,6 +245,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\script.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -260,6 +293,21 @@
     <Content Include="Views\UsePeriods\Details.cshtml" />
     <Content Include="Views\UsePeriods\Edit.cshtml" />
     <Content Include="Views\UsePeriods\Index.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
+    <Content Include="Views\UserAccounts\Create.cshtml" />
+    <Content Include="Views\UserAccounts\Delete.cshtml" />
+    <Content Include="Views\UserAccounts\Details.cshtml" />
+    <Content Include="Views\UserAccounts\Edit.cshtml" />
+    <Content Include="Views\UserAccounts\Index.cshtml" />
+    <Content Include="Views\UsePeriods\TestView.cshtml" />
+    <Content Include="Views\UsePeriods\_Function.cshtml" />
+    <Content Include="Views\Shared\Displaytemplates\UsePeriodStatusTableCell.cshtml" />
+    <Content Include="Views\Computers\Print.cshtml" />
+    <Content Include="Views\Printers\Create.cshtml" />
+    <Content Include="Views\Printers\Delete.cshtml" />
+    <Content Include="Views\Printers\Details.cshtml" />
+    <Content Include="Views\Printers\Edit.cshtml" />
+    <Content Include="Views\Printers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -273,8 +321,29 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201510220800462_InitialCreate.resx">
-      <DependentUpon>201510220800462_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201510281311483_InitialCreate.resx">
+      <DependentUpon>201510281311483_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510281325325_serialnumber-requiered.resx">
+      <DependentUpon>201510281325325_serialnumber-requiered.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510281347104_modelname-requiered.resx">
+      <DependentUpon>201510281347104_modelname-requiered.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510291219250_userisadmintouseperiod.resx">
+      <DependentUpon>201510291219250_userisadmintouseperiod.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511041140070_newuseraccountproperties.resx">
+      <DependentUpon>201511041140070_newuseraccountproperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511041430310_useraccountlaptopstand.resx">
+      <DependentUpon>201511041430310_useraccountlaptopstand.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511051323025_printer.resx">
+      <DependentUpon>201511051323025_printer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511051347122_printeripadressstring.resx">
+      <DependentUpon>201511051347122_printeripadressstring.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

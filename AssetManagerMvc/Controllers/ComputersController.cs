@@ -24,8 +24,7 @@ namespace AssetManagerMvc.Controllers
             {
                 computers = computers.Where(c => c.AntiVirus.Contains(searchString)
                 || c.AssetId.ToString().Contains(searchString)
-                || c.Browser.Contains(searchString)
-                || c.ComputerName.Contains(searchString)
+                || c.Browser.Contains(searchString)                
                 || c.ComputerName.Contains(searchString)
                 || c.ComputerType.Contains(searchString)
                 || c.Manufacturer.Contains(searchString)
