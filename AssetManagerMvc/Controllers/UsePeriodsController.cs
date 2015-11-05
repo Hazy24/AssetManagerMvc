@@ -15,16 +15,13 @@ namespace AssetManagerMvc.Controllers
         private AssetManagerContext db = new AssetManagerContext();
 
         // GET: UsePeriods
-        public ActionResult Index(string sortOrder, string searchString, bool? mostRecent,
-            bool? current)
+        public ActionResult Index(string sortOrder, string searchString, bool? current)
         {
             var usePeriods = db.UsePeriods
                 .Include(u => u.Asset)
                 .Include(u => u.Status)
                 .Include(u => u.UserAccount)
-                // .Where(u => u.Asset is Computer)
-                // .Where(u => u.StartDate <= DateTime.Now || u.StartDate == null)
-                // .Where(u => u.EndDate > DateTime.Now || u.EndDate == null)  
+                .Where(u => u.Asset is Computer)
                 ;
             
             if (!String.IsNullOrEmpty(searchString))
@@ -49,15 +46,8 @@ namespace AssetManagerMvc.Controllers
                 up.EndDate >= DateTime.Now);
             }
 
-            if (mostRecent == true)
-            {
-                usePeriods = usePeriods.GroupBy(u => u.AssetId)
-                .Select(q => q.OrderByDescending(p => p.StartDate).FirstOrDefault()) // exception if you use .First()                            
-                ;
-            }
 
             ViewBag.CurrentFilter = searchString;
-            ViewBag.MostRecent = mostRecent;
             ViewBag.Current = current;
 
             ViewBag.CompoundIdSortParm = String.IsNullOrEmpty(sortOrder) ? "compoundId_desc" : "";

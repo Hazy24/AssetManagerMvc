@@ -14,8 +14,7 @@
 @using (Html.BeginForm("Index", "Useperiods", FormMethod.Get))
 {
     <p>
-        Filter: @Html.TextBox("SearchString")
-        Most Recent: @Html.CheckBox("MostRecent")
+        Filter: @Html.TextBox("SearchString")        
         Current: @Html.CheckBox("Current")
         <input type="submit" value="Filter" />
     </p>
@@ -30,16 +29,16 @@
             @Html.ActionLink("Computer Name", "Index", new { sortOrder = ViewBag.ComputerNameSortParm, searchString = ViewBag.CurrentFilter, mostRecent = ViewBag.MostRecent, current = ViewBag.Current })
         </th>
         <th>
-            @Html.ActionLink("Serial Number", "Index", new { sortOrder = ViewBag.SerialNumberSortParm, searchString = ViewBag.CurrentFilter, mostRecent = ViewBag.MostRecent, current = ViewBag.Current })
+            @Html.ActionLink("Serial Number", "Index", new { sortOrder = ViewBag.SerialNumberSortParm, searchString = ViewBag.CurrentFilter, current = ViewBag.Current })
         </th>
         <th>
-            @Html.ActionLink("Status", "Index", new { sortOrder = ViewBag.DescriptionSortParm, searchString = ViewBag.CurrentFilter, mostRecent = ViewBag.MostRecent, current = ViewBag.Current })
+            @Html.ActionLink("Status", "Index", new { sortOrder = ViewBag.DescriptionSortParm, searchString = ViewBag.CurrentFilter, current = ViewBag.Current })
         </th>
         <th>
-            @Html.ActionLink("Full Name", "Index", new { sortOrder = ViewBag.FullNameSortParm, searchString = ViewBag.CurrentFilter, mostRecent = ViewBag.MostRecent, current = ViewBag.Current })
+            @Html.ActionLink("Full Name", "Index", new { sortOrder = ViewBag.FullNameSortParm, searchString = ViewBag.CurrentFilter,  current = ViewBag.Current })
         </th>
         <th>
-            @Html.ActionLink("Function", "Index", new { sortOrder = ViewBag.FunctionSortParm, searchString = ViewBag.CurrentFilter, mostRecent = ViewBag.MostRecent, current = ViewBag.Current })
+            @Html.ActionLink("Function", "Index", new { sortOrder = ViewBag.FunctionSortParm, searchString = ViewBag.CurrentFilter, current = ViewBag.Current })
         </th>      
 
         <th><div style="min-width: 140px;"></div></th>
