@@ -2,7 +2,7 @@
 @using AssetManagerMvc.Models
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "UsePeriods";
 }
 
 <h2>UsePeriods</h2>
@@ -15,6 +15,8 @@
 {
     <p>
         Filter: @Html.TextBox("SearchString")
+        Most Recent: @Html.CheckBox("MostRecent")
+        Current: @Html.CheckBox("Current")
         <input type="submit" value="Filter" />
     </p>
 }
@@ -22,22 +24,22 @@
 <table class="table alternating">
     <tr>
         <th>
-            @Html.ActionLink("CompoundId", "Index", new { sortOrder = ViewBag.CompoundIdSortParm, searchString = ViewBag.CurrentFilter })            
+            @Html.ActionLink("CompoundId", "Index", new { sortOrder = ViewBag.CompoundIdSortParm, searchString = ViewBag.CurrentFilter, mostRecent = ViewBag.MostRecent, current = ViewBag.Current })            
         </th>
         <th>
-            @Html.ActionLink("Computer Name", "Index", new { sortOrder = ViewBag.ComputerNameSortParm, searchString = ViewBag.CurrentFilter })
+            @Html.ActionLink("Computer Name", "Index", new { sortOrder = ViewBag.ComputerNameSortParm, searchString = ViewBag.CurrentFilter, mostRecent = ViewBag.MostRecent, current = ViewBag.Current })
         </th>
         <th>
-            @Html.ActionLink("Serial Number", "Index", new { sortOrder = ViewBag.SerialNumberSortParm, searchString = ViewBag.CurrentFilter })
+            @Html.ActionLink("Serial Number", "Index", new { sortOrder = ViewBag.SerialNumberSortParm, searchString = ViewBag.CurrentFilter, mostRecent = ViewBag.MostRecent, current = ViewBag.Current })
         </th>
         <th>
-            @Html.ActionLink("Status", "Index", new { sortOrder = ViewBag.DescriptionSortParm, searchString = ViewBag.CurrentFilter })
+            @Html.ActionLink("Status", "Index", new { sortOrder = ViewBag.DescriptionSortParm, searchString = ViewBag.CurrentFilter, mostRecent = ViewBag.MostRecent, current = ViewBag.Current })
         </th>
         <th>
-            @Html.ActionLink("Full Name", "Index", new { sortOrder = ViewBag.FullNameSortParm, searchString = ViewBag.CurrentFilter })
+            @Html.ActionLink("Full Name", "Index", new { sortOrder = ViewBag.FullNameSortParm, searchString = ViewBag.CurrentFilter, mostRecent = ViewBag.MostRecent, current = ViewBag.Current })
         </th>
         <th>
-            @Html.ActionLink("Function", "Index", new { sortOrder = ViewBag.FunctionSortParm, searchString = ViewBag.CurrentFilter })
+            @Html.ActionLink("Function", "Index", new { sortOrder = ViewBag.FunctionSortParm, searchString = ViewBag.CurrentFilter, mostRecent = ViewBag.MostRecent, current = ViewBag.Current })
         </th>      
 
         <th><div style="min-width: 140px;"></div></th>

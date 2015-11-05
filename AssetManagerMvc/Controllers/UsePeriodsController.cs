@@ -15,19 +15,18 @@ namespace AssetManagerMvc.Controllers
         private AssetManagerContext db = new AssetManagerContext();
 
         // GET: UsePeriods
-        public ActionResult Index(string sortOrder, string searchString)
+        public ActionResult Index(string sortOrder, string searchString, bool? mostRecent,
+            bool? current)
         {
             var usePeriods = db.UsePeriods
                 .Include(u => u.Asset)
                 .Include(u => u.Status)
                 .Include(u => u.UserAccount)
-                .GroupBy(u => u.AssetId)
-                .Select(q => q.OrderByDescending(p => p.StartDate).FirstOrDefault())
-
                 // .Where(u => u.Asset is Computer)
                 // .Where(u => u.StartDate <= DateTime.Now || u.StartDate == null)
-                // .Where(u => u.EndDate > DateTime.Now || u.EndDate == null)                
+                // .Where(u => u.EndDate > DateTime.Now || u.EndDate == null)  
                 ;
+            
             if (!String.IsNullOrEmpty(searchString))
             {
                 usePeriods = usePeriods.Where(u => u.UserAccount.Name.Contains(searchString)
@@ -43,7 +42,23 @@ namespace AssetManagerMvc.Controllers
                 || u.Status.Description.Contains(searchString)
                     );
             }
+
+            if (current == true)
+            {
+                usePeriods = usePeriods.Where(up => up.EndDate == null ||
+                up.EndDate >= DateTime.Now);
+            }
+
+            if (mostRecent == true)
+            {
+                usePeriods = usePeriods.GroupBy(u => u.AssetId)
+                .Select(q => q.OrderByDescending(p => p.StartDate).FirstOrDefault()) // exception if you use .First()                            
+                ;
+            }
+
             ViewBag.CurrentFilter = searchString;
+            ViewBag.MostRecent = mostRecent;
+            ViewBag.Current = current;
 
             ViewBag.CompoundIdSortParm = String.IsNullOrEmpty(sortOrder) ? "compoundId_desc" : "";
             ViewBag.ComputerNameSortParm = sortOrder == "computername" ? "computername_desc" : "computername";
@@ -51,7 +66,6 @@ namespace AssetManagerMvc.Controllers
             ViewBag.DescriptionSortParm = sortOrder == "description" ? "description_desc" : "description";
             ViewBag.FullNameSortParm = sortOrder == "fullname" ? "fullname_desc" : "fullname";
             ViewBag.FunctionSortParm = sortOrder == "function" ? "function_desc" : "function";
-
 
 
             switch (sortOrder)
@@ -187,7 +201,7 @@ namespace AssetManagerMvc.Controllers
                   usePeriod.UserAccountId, usePeriod.Function);
             return View(usePeriod);
         }
-        private void SetCreateAndEditViewbag(int? assetId = null, int? usePeriodStatusId = null, 
+        private void SetCreateAndEditViewbag(int? assetId = null, int? usePeriodStatusId = null,
             int? userAccountId = null, string function = null)
         {
             if (assetId == null)
