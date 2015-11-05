@@ -97,7 +97,11 @@ namespace AssetManagerMvc.Controllers
 
             return View(computers);
         }
-
+        public ActionResult Print(int? id)
+        {            
+            Computer computer = db.Computers.Find(id);
+            return View(computer);
+        }
         // GET: Computers/Details/5
         public ActionResult Details(int? id)
         {

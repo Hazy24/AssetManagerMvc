@@ -11,6 +11,14 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.CompoundId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompoundId)
+            @Html.ActionLink("Print", "Print", new { id = Model.AssetId })
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.SerialNumber)
         </dt>
 
