@@ -15,7 +15,8 @@ namespace AssetManagerMvc.Controllers
         private AssetManagerContext db = new AssetManagerContext();
 
         // GET: UsePeriods
-        public ActionResult Index(string sortOrder, string searchString, bool? current)
+        public ActionResult Index(string sortOrder, string searchString, bool? current,
+            bool? hideUitGebruik)
         {
             var usePeriods = db.UsePeriods
                 .Include(u => u.Asset)
@@ -23,7 +24,9 @@ namespace AssetManagerMvc.Controllers
                 .Include(u => u.UserAccount)
                 .Where(u => u.Asset is Computer)
                 ;
+            if ((hideUitGebruik == null) || (hideUitGebruik == true)) usePeriods = usePeriods.Where(up => up.Status.Description != "uit gebruik");
             
+
             if (!String.IsNullOrEmpty(searchString))
             {
                 usePeriods = usePeriods.Where(u => u.UserAccount.Name.Contains(searchString)
@@ -40,15 +43,16 @@ namespace AssetManagerMvc.Controllers
                     );
             }
 
-            if (current == true)
+            if ((current == null) || (current == true))
             {
                 usePeriods = usePeriods.Where(up => up.EndDate == null ||
                 up.EndDate >= DateTime.Now);
             }
 
 
-            ViewBag.CurrentFilter = searchString;
+            ViewBag.Filter = searchString;
             ViewBag.Current = current;
+            ViewBag.HideUitGebruik = hideUitGebruik;
 
             ViewBag.CompoundIdSortParm = String.IsNullOrEmpty(sortOrder) ? "compoundId_desc" : "";
             ViewBag.ComputerNameSortParm = sortOrder == "computername" ? "computername_desc" : "computername";
