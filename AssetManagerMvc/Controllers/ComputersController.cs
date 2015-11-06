@@ -20,22 +20,9 @@ namespace AssetManagerMvc.Controllers
             var computers = from c in db.Computers
                             select c;
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!String.IsNullOrWhiteSpace(searchString))
             {
-                computers = computers.Where(c => c.AntiVirus.Contains(searchString)
-                || c.AssetId.ToString().Contains(searchString)
-                || c.Browser.Contains(searchString)                
-                || c.ComputerName.Contains(searchString)
-                || c.ComputerType.Contains(searchString)
-                || c.Manufacturer.Contains(searchString)
-                || c.ModelName.Contains(searchString)
-                || c.OfficeVersion.Contains(searchString)
-                || c.OperatingSystem.Contains(searchString)
-                || c.Owner.Contains(searchString)
-                || c.SerialNumber.Contains(searchString)
-                || c.Supplier.Contains(searchString)              
-               
-                    );
+                computers = computers.TextSearch(searchString);
             }
             ViewBag.CurrentFilter = searchString;
 
