@@ -24,6 +24,7 @@ namespace AssetManagerMvc.Controllers
             {
                 computers = computers.TextSearch(searchString);
             }
+            
             ViewBag.CurrentFilter = searchString;
 
             ViewBag.CompoundIdSortParm = String.IsNullOrEmpty(sortOrder) ? "compoundId_desc" : "";

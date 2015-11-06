@@ -20,17 +20,18 @@ namespace AssetManagerMvc.Models
         }
         public static IQueryable<Computer> TextSearch(this IQueryable<Computer> computers, string searchString)
         {
-            computers = (computers as IQueryable<Asset>)
+            IQueryable<Computer> assetSearch = (computers as IQueryable<Asset>)
                 .TextSearch(searchString)
                 .Cast<Computer>();
-          
-            computers = computers.Where(c => c.AntiVirus.Contains(searchString)
+
+            computers = assetSearch.Concat(computers.Where(c => c.AntiVirus.Contains(searchString)
               || c.Browser.Contains(searchString)
               || c.ComputerName.Contains(searchString)
               || c.ComputerType.Contains(searchString)
               || c.OfficeVersion.Contains(searchString)
-              || c.OperatingSystem.Contains(searchString));
-             
+              || c.OperatingSystem.Contains(searchString)))
+              .Distinct();
+
             return computers;
         }
     }

@@ -13,7 +13,7 @@ namespace AssetManagerMvc.Models
     {
         public AssetManagerContext() : base()
         {
-
+            this.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
         }
 
         public DbSet<UserAccount> UserAccounts { get; set; }
