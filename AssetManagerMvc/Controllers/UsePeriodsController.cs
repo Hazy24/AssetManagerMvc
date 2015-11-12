@@ -16,22 +16,26 @@ namespace AssetManagerMvc.Controllers
 
         // GET: UsePeriods
         public ActionResult Index(string sortOrder, string searchString, bool? current,
-            bool? hideUitGebruik)
+            bool? hideUitGebruik, string category)
         {
             var usePeriods = db.UsePeriods
                 .Include(u => u.Asset)
                 .Include(u => u.Status)
                 .Include(u => u.UserAccount)
-                .Where(u => u.Asset is Computer)
                 ;
+            switch (category)
+            {
+                case "Computers":
+                    usePeriods = usePeriods.Where(u => u.Asset is Computer);
+                    break;
+                case "Printers":
+                    usePeriods = usePeriods.Where(u => u.Asset is Printer);
+                    break;
+                default:
+                    break;
+            }
             if ((hideUitGebruik == null) || (hideUitGebruik == true))
             { usePeriods = usePeriods.Where(up => up.Status.UsePeriodStatusId != 4); } // "uit gebruik"
-
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                usePeriods = usePeriods.TextSearch(searchString);            
-            }
 
             if ((current == null) || (current == true))
             {
@@ -39,13 +43,21 @@ namespace AssetManagerMvc.Controllers
                 up.EndDate >= DateTime.Now);
             }
 
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                usePeriods = usePeriods.TextSearch(searchString);
+            }
+            var categories = new SelectList(new string[] { "Computers", "Printers" }, category);
 
             ViewBag.Filter = searchString;
             ViewBag.Current = current;
             ViewBag.HideUitGebruik = hideUitGebruik;
+            ViewBag.Category = categories;
+            ViewBag.SelectedCategory = category;
 
             ViewBag.CompoundIdSortParm = String.IsNullOrEmpty(sortOrder) ? "compoundId_desc" : "";
             ViewBag.ComputerNameSortParm = sortOrder == "computername" ? "computername_desc" : "computername";
+            ViewBag.PrinterNameSortParm = sortOrder == "printername" ? "printername_desc" : "printername";
             ViewBag.SerialNumberSortParm = sortOrder == "serialnumber" ? "serialnumber_desc" : "serialnumber";
             ViewBag.DescriptionSortParm = sortOrder == "description" ? "description_desc" : "description";
             ViewBag.FullNameSortParm = sortOrder == "fullname" ? "fullname_desc" : "fullname";
@@ -62,6 +74,12 @@ namespace AssetManagerMvc.Controllers
                     break;
                 case "computername_desc":
                     usePeriods = usePeriods.OrderByDescending(u => (u.Asset as Computer).ComputerName);
+                    break;
+                case "printername":
+                    usePeriods = usePeriods.OrderBy(u => (u.Asset as Printer).PrinterName);
+                    break;
+                case "printername_desc":
+                    usePeriods = usePeriods.OrderByDescending(u => (u.Asset as Printer).PrinterName);
                     break;
                 case "serialnumber":
                     usePeriods = usePeriods.OrderBy(u => u.Asset.SerialNumber);
@@ -96,7 +114,7 @@ namespace AssetManagerMvc.Controllers
         }
 
         // GET: UsePeriods/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, string category)
         {
             if (id == null)
             {
@@ -111,7 +129,7 @@ namespace AssetManagerMvc.Controllers
         }
 
         // GET: UsePeriods/Create       
-        public ActionResult Create(int? oldUsePeriodId)
+        public ActionResult Create(string category, int? oldUsePeriodId)
         {
             UsePeriod up = new UsePeriod();
             up.StartDate = DateTime.Now;
@@ -121,12 +139,13 @@ namespace AssetManagerMvc.Controllers
                 UsePeriod oldUsePeriod = db.UsePeriods.Single(oup => oup.UsePeriodId == oldUsePeriodId);
                 oldUsePeriod.EndDate = DateTime.Today;
                 db.SaveChanges();
-                SetCreateAndEditViewbag(oldUsePeriod.AssetId);
+                SetCreateAndEditViewbag(category, oldUsePeriod.AssetId);
             }
             else
             {
-                SetCreateAndEditViewbag();
+                SetCreateAndEditViewbag(category);
             }
+            ViewBag.SelectedCategory = category;
             return View(up);
         }
 
@@ -136,22 +155,23 @@ namespace AssetManagerMvc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UsePeriodId,UserAccountId,StartDate,EndDate,Remark,Function,UsePeriodStatusId,AssetId,UserIsAdmin")] UsePeriod usePeriod)
+        public ActionResult Create(string category, [Bind(Include = "UsePeriodId,UserAccountId,StartDate,EndDate,Remark,Function,UsePeriodStatusId,AssetId,UserIsAdmin")] UsePeriod usePeriod)
         {
             if (ModelState.IsValid)
             {
                 db.UsePeriods.Add(usePeriod);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { category = category });
             }
 
-            SetCreateAndEditViewbag(usePeriod.AssetId, usePeriod.UsePeriodStatusId,
+            SetCreateAndEditViewbag(category, usePeriod.AssetId, usePeriod.UsePeriodStatusId,
                 usePeriod.UserAccountId, usePeriod.Function);
+            ViewBag.SelectedCategory = category;
             return View(usePeriod);
         }
 
         // GET: UsePeriods/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? id, string category)
         {
             if (id == null)
             {
@@ -162,9 +182,9 @@ namespace AssetManagerMvc.Controllers
             {
                 return HttpNotFound();
             }
-            SetCreateAndEditViewbag(usePeriod.AssetId, usePeriod.UsePeriodStatusId,
+            SetCreateAndEditViewbag(category, usePeriod.AssetId, usePeriod.UsePeriodStatusId,
                 usePeriod.UserAccountId, usePeriod.Function);
-
+            ViewBag.SelectedCategory = category;
             return View(usePeriod);
         }
 
@@ -173,28 +193,40 @@ namespace AssetManagerMvc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UsePeriodId,UserAccountId,StartDate,EndDate,Remark,Function,UsePeriodStatusId,AssetId,UserIsAdmin")] UsePeriod usePeriod)
+        public ActionResult Edit(string category, [Bind(Include = "UsePeriodId,UserAccountId,StartDate,EndDate,Remark,Function,UsePeriodStatusId,AssetId,UserIsAdmin")] UsePeriod usePeriod)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(usePeriod).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { category = category });
             }
-            SetCreateAndEditViewbag(usePeriod.AssetId, usePeriod.UsePeriodStatusId,
+            SetCreateAndEditViewbag(category, usePeriod.AssetId, usePeriod.UsePeriodStatusId,
                   usePeriod.UserAccountId, usePeriod.Function);
+            ViewBag.SelectedCategory = category;
             return View(usePeriod);
         }
-        private void SetCreateAndEditViewbag(int? assetId = null, int? usePeriodStatusId = null,
+        private void SetCreateAndEditViewbag(string category = null, int? assetId = null, int? usePeriodStatusId = null,
             int? userAccountId = null, string function = null)
         {
-            if (assetId == null)
+
+            switch (category)
             {
-                ViewBag.AssetId = new SelectList(db.Assets, "AssetId", "CompoundIdAndSerialNumber");
-            }
-            else
-            {
-                ViewBag.AssetId = new SelectList(db.Assets, "AssetId", "CompoundIdAndSerialNumber", assetId);
+                case "Computers":
+                    if (assetId == null)
+                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Computer), "AssetId", "CompoundIdAndSerialNumber"); }
+                    else
+                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Computer), "AssetId", "CompoundIdAndSerialNumber", assetId); }
+                    break;
+                case "Printers":
+                    if (assetId == null)
+                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Printer), "AssetId", "CompoundIdAndSerialNumber"); }
+                    else
+                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Printer), "AssetId", "CompoundIdAndSerialNumber", assetId); }
+                    break;
+                default:
+                    ViewBag.AssetId = new SelectList(db.Assets, "AssetId", "CompoundIdAndSerialNumber");
+                    break;
             }
             if (usePeriodStatusId == null)
             {

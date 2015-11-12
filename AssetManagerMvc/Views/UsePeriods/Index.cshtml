@@ -8,15 +8,16 @@
 <h2>UsePeriods</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", new { category = ViewBag.SelectedCategory })
 </p>
 
 @using (Html.BeginForm("Index", "Useperiods", FormMethod.Get))
 {
     <p>
-        Filter: @Html.TextBox("SearchString")        
+        Filter: @Html.TextBox("SearchString")
         Current: @Html.CheckBox("Current", true)
         Hide 'uit gebruik': @Html.CheckBox("HideUitGebruik", true)
+        @Html.DropDownList("Category")
         <input type="submit" value="Apply" />
     </p>
 }
@@ -24,23 +25,26 @@
 <table class="table alternating">
     <tr>
         <th>
-            @Html.ActionLink("CompoundId", "Index", new { sortOrder = ViewBag.CompoundIdSortParm, searchString = ViewBag.Filter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik })            
+            @Html.ActionLink("CompoundId", "Index", new { sortOrder = ViewBag.CompoundIdSortParm, searchString = ViewBag.Filter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik, category = ViewBag.SelectedCategory })
         </th>
         <th>
-            @Html.ActionLink("Computer Name", "Index", new { sortOrder = ViewBag.ComputerNameSortParm, searchString = ViewBag.Filter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik })
+            @if (ViewBag.SelectedCategory == "Computers")
+            { @Html.ActionLink("Computer Name", "Index", new { sortOrder = ViewBag.ComputerNameSortParm, searchString = ViewBag.Filter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik, category = ViewBag.SelectedCategory }); }
+            else if (ViewBag.SelectedCategory == "Printers")
+            { @Html.ActionLink("Printer Name", "Index", new { sortOrder = ViewBag.PrinterNameSortParm, searchString = ViewBag.Filter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik, category = ViewBag.SelectedCategory }); }
         </th>
         <th>
-            @Html.ActionLink("Serial Number", "Index", new { sortOrder = ViewBag.SerialNumberSortParm, searchString = ViewBag.Filter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik })
+            @Html.ActionLink("Serial Number", "Index", new { sortOrder = ViewBag.SerialNumberSortParm, searchString = ViewBag.Filter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik, category = ViewBag.SelectedCategory })
         </th>
         <th>
-            @Html.ActionLink("Status", "Index", new { sortOrder = ViewBag.DescriptionSortParm, searchString = ViewBag.Filter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik })
+            @Html.ActionLink("Status", "Index", new { sortOrder = ViewBag.DescriptionSortParm, searchString = ViewBag.Filter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik, category = ViewBag.SelectedCategory })
         </th>
         <th>
-            @Html.ActionLink("Full Name", "Index", new { sortOrder = ViewBag.FullNameSortParm, searchString = ViewBag.CurrentFilter,  current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik })
+            @Html.ActionLink("Full Name", "Index", new { sortOrder = ViewBag.FullNameSortParm, searchString = ViewBag.CurrentFilter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik, category = ViewBag.SelectedCategory })
         </th>
         <th>
-            @Html.ActionLink("Function", "Index", new { sortOrder = ViewBag.FunctionSortParm, searchString = ViewBag.CurrentFilter, current = ViewBag.Current })
-        </th>      
+            @Html.ActionLink("Function", "Index", new { sortOrder = ViewBag.FunctionSortParm, searchString = ViewBag.CurrentFilter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik, category = ViewBag.SelectedCategory })
+        </th>
 
         <th><div style="min-width: 140px;"></div></th>
     </tr>
@@ -49,34 +53,36 @@
     {
         <tr>
             <td>
-                @Html.ActionLink(item.Asset.CompoundId, "Details", "Computers", new { id = item.AssetId }, null)               
+                @Html.ActionLink(item.Asset.CompoundId, "Details", "Computers", new { id = item.AssetId }, null)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => ((Computer)item.Asset).ComputerName)
+                @if (ViewBag.SelectedCategory == "Computers")
+                { @Html.DisplayFor(modelItem => ((Computer)item.Asset).ComputerName); }
+                else if (ViewBag.SelectedCategory == "Printers")
+                { @Html.DisplayFor(modelItem => ((Printer)item.Asset).PrinterName); }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Asset.SerialNumber)
             </td>
-            
+
             @Html.DisplayFor(modelItem => item.Status, "UseperiodStatusTableCell")
-            
+
             <td>
                 @if (item.UserAccount != null)
                 {
-                    @Html.ActionLink(item.UserAccount.Name, "Details", "UserAccounts", new { id = item.UserAccountId }, null)                
+                    @Html.ActionLink(item.UserAccount.Name, "Details", "UserAccounts", new { id = item.UserAccountId }, null)
                 }
-                @*@Html.DisplayFor(modelItem => item.UserAccount.Name)*@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Function)
-            </td>           
+            </td>
             <td>
 
-                @Html.ActionLink("Edit", "Edit", new { id = item.UsePeriodId }) |
+                @Html.ActionLink("Edit", "Edit", "Useperiods", new { id = item.UsePeriodId, category = ViewBag.SelectedCategory }, null) |
                 @Html.ActionLink("Details", "Details", new { id = item.UsePeriodId }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.UsePeriodId }) |
-                @Html.ActionLink("New", "Create", new { oldUsePeriodId = item.UsePeriodId },
-               new  { title = "Sets the end date of this UsePeriod to today, and links you to the UsePeriods/Create page with this asset already selected." })
+                @Html.ActionLink("New", "Create", new { oldUsePeriodId = item.UsePeriodId, category = ViewBag.SelectedCategory },
+               new { title = "Sets the end date of this UsePeriod to today, and links you to the UsePeriods/Create page with this asset already selected." })
 
 
             </td>

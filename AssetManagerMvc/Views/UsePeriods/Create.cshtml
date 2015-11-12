@@ -10,6 +10,8 @@
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
+
+    <input type="hidden" name="Category" value=@ViewBag.SelectedCategory />
     
     <div class="form-horizontal">
         <h4>UsePeriod</h4>

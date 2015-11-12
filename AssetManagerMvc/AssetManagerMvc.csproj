@@ -174,7 +174,6 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PrintersController.cs" />
     <Compile Include="Controllers\UsePeriodsController.cs" />
-    <Compile Include="Controllers\UsePeriodsPrintersController.cs" />
     <Compile Include="Controllers\UserAccountsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -310,11 +309,6 @@
     <Content Include="Views\Printers\Details.cshtml" />
     <Content Include="Views\Printers\Edit.cshtml" />
     <Content Include="Views\Printers\Index.cshtml" />
-    <Content Include="Views\UsePeriodsPrinters\Create.cshtml" />
-    <Content Include="Views\UsePeriodsPrinters\Delete.cshtml" />
-    <Content Include="Views\UsePeriodsPrinters\Details.cshtml" />
-    <Content Include="Views\UsePeriodsPrinters\Edit.cshtml" />
-    <Content Include="Views\UsePeriodsPrinters\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

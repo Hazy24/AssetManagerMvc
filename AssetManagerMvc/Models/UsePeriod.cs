@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -36,6 +37,16 @@ namespace AssetManagerMvc.Models
 
         public int AssetId { get; set; }
         public virtual Asset Asset { get; set; }
+
+        //[NotMapped]
+        //public class Filter
+        //{           
+        //    public string SortOrder { get; set; }
+        //    public string SearchString { get; set; }
+        //    public bool? Current { get; set; }
+        //    public bool? hideUitGebruik { get; set; }
+        //    public string Category { get; set; }
+        //}
     }
     public class UsePeriodStatus
     {

@@ -19,13 +19,29 @@
             @Html.DisplayFor(model => model.Asset.CompoundId)
         </dd>
 
-        <dt>
-           @Html.DisplayNameFor(model => ((Computer)model.Asset).ComputerName)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => ((Computer)model.Asset).ComputerName)
-        </dd>
+        @if (Model.Asset is Computer)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => ((Computer)model.Asset).ComputerName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => ((Computer)model.Asset).ComputerName)
+            </dd>
+        }
+
+        else if (Model.Asset is Printer)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => ((Printer)model.Asset).PrinterName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => ((Printer)model.Asset).PrinterName)
+            </dd>
+        }
+
+
+
         <dt>
             @Html.DisplayNameFor(model => model.Asset.SerialNumber)
         </dt>
@@ -69,14 +85,14 @@
 
         <dd>
             @Html.DisplayFor(model => model.Remark)
-        </dd>  
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Function)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Function)
-        </dd>     
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Status.Description)
         </dt>
@@ -99,9 +115,9 @@
                         <th>@Html.DisplayNameFor(model => model.Function)</th>
                     </tr>
                     @foreach (var item in Model.Asset.UsePeriods
-                        .Where(up => up.UsePeriodId != Model.UsePeriodId)
-                        .OrderBy(up => up.StartDate))
-                {
+.Where(up => up.UsePeriodId != Model.UsePeriodId)
+.OrderBy(up => up.StartDate))
+                    {
                         <tr>
                             <td>
                                 @Html.DisplayFor(modelItem => item.StartDate)
@@ -109,9 +125,9 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.EndDate)
                             </td>
-                            
+
                             @Html.DisplayFor(modelItem => item.Status, "UseperiodStatusTableCell")
-                            
+
                             <td>
                                 @Html.DisplayFor(modelItem => item.UserAccount.Name)
                             </td>

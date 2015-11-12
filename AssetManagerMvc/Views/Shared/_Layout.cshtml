@@ -24,9 +24,9 @@
                     @*<li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>*@
                     <li>@Html.ActionLink("Computers", "Index", "Computers")</li>
-                    <li>@Html.ActionLink("UsePeriods", "Index", "UsePeriods")</li>
+                    <li>@Html.ActionLink("UsePeriods", "Index", "UsePeriods",  new { category = "Computers" }, null)</li>
                     <li>@Html.ActionLink("Printers", "Index", "Printers")</li>
-                    <li>@Html.ActionLink("UsePeriods", "Index", "UsePeriodsPrinter")</li>
+                    <li>@Html.ActionLink("UsePeriods", "Index", "UsePeriods", new { category = "Printers" }, null)</li>
                     <li>@Html.ActionLink("User Accounts", "Index", "UserAccounts")</li>
                 </ul>
                 @*@Html.Partial("_LoginPartial")*@
@@ -37,7 +37,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Oxfam Fairtrade</p>
         </footer>
     </div>
 
