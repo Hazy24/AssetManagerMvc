@@ -21,19 +21,7 @@ namespace AssetManagerMvc.Controllers
                            select p;
             if (!String.IsNullOrEmpty(searchString))
             {
-                printers = printers.Where(p => p.AssetId.ToString().Contains(searchString)
-                
-                || p.DrumModel.Contains(searchString)
-                || p.IpAddress.Contains(searchString)
-                || p.Manufacturer.Contains(searchString)
-                || p.ModelName.Contains(searchString)
-                || p.Owner.Contains(searchString)
-                || p.PrinterName.Contains(searchString)
-                || p.SerialNumber.Contains(searchString)
-                || p.Supplier.Contains(searchString)
-                || p.TonerModel.Contains(searchString)           
-
-                    );
+                printers = printers.TextSearch(searchString);
             }
             ViewBag.CurrentFilter = searchString;
 

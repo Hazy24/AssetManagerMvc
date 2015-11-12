@@ -6,7 +6,7 @@ using System.Web;
 namespace AssetManagerMvc.Models
 {
     public static class Util
-    {        
+    {
         public static IQueryable<Asset> TextSearch(this IQueryable<Asset> assets, string searchString)
         {
             assets = assets.Where(a => a.AssetId.ToString().Contains(searchString)
@@ -26,7 +26,8 @@ namespace AssetManagerMvc.Models
                 .Cast<Computer>();
 
             // search computer specific properties and concat with assetSearch
-            computers = assetSearch.Concat(computers.Where(c => c.AntiVirus.Contains(searchString)
+            computers = assetSearch.Concat(computers.Where
+              (c => c.AntiVirus.Contains(searchString)
               || c.Browser.Contains(searchString)
               || c.ComputerName.Contains(searchString)
               || c.ComputerType.Contains(searchString)
@@ -35,6 +36,21 @@ namespace AssetManagerMvc.Models
               .Distinct();
 
             return computers;
+        }
+        public static IQueryable<Printer> TextSearch(this IQueryable<Printer> printers, string searchString)
+        {
+            IQueryable<Printer> assetSearch = (printers as IQueryable<Asset>)
+                .TextSearch(searchString)
+                .Cast<Printer>();
+
+            printers = assetSearch.Concat(printers.Where
+                (p => p.DrumModel.Contains(searchString)
+                || p.IpAddress.Contains(searchString)
+                || p.PrinterName.Contains(searchString)
+                || p.TonerModel.Contains(searchString)))
+                .Distinct();
+
+            return printers;
         }
     }
 }
