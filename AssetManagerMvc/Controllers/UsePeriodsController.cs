@@ -30,18 +30,7 @@ namespace AssetManagerMvc.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                usePeriods = usePeriods.Where(u => u.UserAccount.Name.Contains(searchString)
-                || (u.Asset as Computer).ComputerName.Contains(searchString)
-                || (u.Asset as Computer).ComputerType.Contains(searchString)
-                || u.Asset.Manufacturer.Contains(searchString)
-                || u.Asset.ModelName.Contains(searchString)
-                || u.Asset.SerialNumber.Contains(searchString)
-                || u.Asset.Supplier.Contains(searchString)
-                || u.Asset.AssetId.ToString().Contains(searchString)
-                || u.Function.Contains(searchString)
-                || u.Remark.Contains(searchString)
-                || u.Status.Description.Contains(searchString)
-                    );
+                usePeriods = usePeriods.TextSearch(searchString);            
             }
 
             if ((current == null) || (current == true))

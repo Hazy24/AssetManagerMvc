@@ -52,5 +52,30 @@ namespace AssetManagerMvc.Models
 
             return printers;
         }
-    }
+        public static IQueryable<UsePeriod> TextSearch(this IQueryable<UsePeriod> useperiods, string searchString)
+        {
+            useperiods = useperiods.Where
+                (u => u.UserAccount.Name.Contains(searchString)
+                || u.Asset.Manufacturer.Contains(searchString)
+                || u.Asset.ModelName.Contains(searchString)
+                || u.Asset.SerialNumber.Contains(searchString)
+                || u.Asset.Supplier.Contains(searchString)
+                || u.Asset.AssetId.ToString().Contains(searchString)
+                || u.Function.Contains(searchString)
+                || u.Remark.Contains(searchString)
+                || u.Status.Description.Contains(searchString)
+                || (u.Asset as Computer).AntiVirus.Contains(searchString)
+                || (u.Asset as Computer).Browser.Contains(searchString)
+                || (u.Asset as Computer).ComputerName.Contains(searchString)
+                || (u.Asset as Computer).ComputerType.Contains(searchString)
+                || (u.Asset as Computer).OfficeVersion.Contains(searchString)
+                || (u.Asset as Computer).OperatingSystem.Contains(searchString)
+                || (u.Asset as Printer).PrinterName.Contains(searchString)
+                || (u.Asset as Printer).DrumModel.Contains(searchString)
+                || (u.Asset as Printer).IpAddress.Contains(searchString)
+                || (u.Asset as Printer).TonerModel.Contains(searchString)
+                    );          
+            return useperiods;
+        }
+    }     
 }
