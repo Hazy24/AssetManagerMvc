@@ -169,6 +169,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BeamersController.cs" />
     <Compile Include="Controllers\ComputersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -210,10 +211,15 @@
     <Compile Include="Migrations\201511051347122_printeripadressstring.Designer.cs">
       <DependentUpon>201511051347122_printeripadressstring.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511121512057_beamer.cs" />
+    <Compile Include="Migrations\201511121512057_beamer.Designer.cs">
+      <DependentUpon>201511121512057_beamer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Asset.cs" />
     <Compile Include="Models\AssetManagerContext.cs" />
+    <Compile Include="Models\Beamer.cs" />
     <Compile Include="Models\Computer.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Incident.cs" />
@@ -309,6 +315,11 @@
     <Content Include="Views\Printers\Details.cshtml" />
     <Content Include="Views\Printers\Edit.cshtml" />
     <Content Include="Views\Printers\Index.cshtml" />
+    <Content Include="Views\Beamers\Create.cshtml" />
+    <Content Include="Views\Beamers\Delete.cshtml" />
+    <Content Include="Views\Beamers\Details.cshtml" />
+    <Content Include="Views\Beamers\Edit.cshtml" />
+    <Content Include="Views\Beamers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -345,6 +356,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511051347122_printeripadressstring.resx">
       <DependentUpon>201511051347122_printeripadressstring.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511121512057_beamer.resx">
+      <DependentUpon>201511121512057_beamer.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

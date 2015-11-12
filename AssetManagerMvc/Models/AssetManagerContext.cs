@@ -23,6 +23,7 @@ namespace AssetManagerMvc.Models
         public DbSet<Incident> Incidents { get; set; }
         public DbSet<UsePeriodStatus> UsePeriodStatuses { get; set; }
         public DbSet<Printer> Printers { get; set; }
+        public DbSet<Beamer> Beamers { get; set; }
 
     }
     //public class ObservableListSource<T> : ObservableCollection<T>, IListSource
