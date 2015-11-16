@@ -40,6 +40,7 @@ namespace AssetManagerMvc.Models
                 if (this is Computer) compoundid = "C" + compoundid;
                 else if (this is Printer) compoundid = "P" + compoundid;
                 else if (this is Beamer) compoundid = "B" + compoundid;
+                else if (this is Monitor) compoundid = "M" + compoundid;
                 return compoundid;
             }
         }
