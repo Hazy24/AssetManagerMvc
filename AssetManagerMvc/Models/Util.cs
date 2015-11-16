@@ -64,6 +64,19 @@ namespace AssetManagerMvc.Models
 
             return beamers;
         }
+        public static IQueryable<Monitor> TextSearch(this IQueryable<Monitor> monitors, string searchString)
+        {
+            IQueryable<Monitor> assetSearch = (monitors as IQueryable<Asset>)
+                .TextSearch(searchString)
+                .Cast<Monitor>();
+
+            monitors = assetSearch.Concat(monitors.Where
+                (p => p.MaxResolution.Contains(searchString)
+                || p.Size.ToString().Contains(searchString)))
+                .Distinct();
+
+            return monitors;
+        }
 
         public static IQueryable<UsePeriod> TextSearch(this IQueryable<UsePeriod> useperiods, string searchString)
         {

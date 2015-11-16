@@ -15,9 +15,64 @@ namespace AssetManagerMvc.Controllers
         private AssetManagerContext db = new AssetManagerContext();
 
         // GET: Monitors
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString)
         {
-            return View(db.Monitors.ToList());
+            var monitors = from m in db.Monitors
+                           select m;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                monitors = monitors.TextSearch(searchString);
+            }
+            ViewBag.CurrentFilter = searchString;
+
+            ViewBag.CompoundIdSortParm = String.IsNullOrEmpty(sortOrder) ? "compoundId_desc" : "";
+            ViewBag.SerialNumberSortParm = sortOrder == "serialnumber" ? "serialnumber_desc" : "serialnumber";
+            ViewBag.ManufacturerSortParm = sortOrder == "manufacturer" ? "manufacturer_desc" : "manufacturer";
+            ViewBag.ModelNameSortParm = sortOrder == "modelname" ? "modelname_desc" : "modelname";
+            ViewBag.PurchaseDateSortParm = sortOrder == "purchasedate" ? "purchasedate_desc" : "purchasedate";
+            ViewBag.SizeSortParm = sortOrder == "size" ? "size_desc" : "size";
+
+            switch (sortOrder)
+            {
+                case "compoundId_desc":
+                    monitors = monitors.OrderByDescending(m => m.AssetId);
+                    break;
+                case "serialnumber":
+                    monitors = monitors.OrderBy(m => m.SerialNumber);
+                    break;
+                case "serialnumber_desc":
+                    monitors = monitors.OrderByDescending(m => m.SerialNumber);
+                    break;
+                case "manufacturer":
+                    monitors = monitors.OrderBy(m => m.Manufacturer);
+                    break;
+                case "manufacturer_desc":
+                    monitors = monitors.OrderByDescending(m => m.Manufacturer);
+                    break;
+                case "modelname":
+                    monitors = monitors.OrderBy(m => m.ModelName);
+                    break;
+                case "modelname_desc":
+                    monitors = monitors.OrderByDescending(m => m.ModelName);
+                    break;
+                case "purchasedate":
+                    monitors = monitors.OrderBy(m => m.PurchaseDate);
+                    break;
+                case "purchasedate_desc":
+                    monitors = monitors.OrderByDescending(m => m.PurchaseDate);
+                    break;
+                case "size":
+                    monitors = monitors.OrderBy(m => m.Size);
+                    break;
+                case "size_desc":
+                    monitors = monitors.OrderByDescending(m => m.Size);
+                    break;
+
+                default:  // compoundId ascending 
+                    monitors = monitors.OrderBy(m => m.AssetId);
+                    break;
+            }
+            return View(monitors);
         }
 
         // GET: Monitors/Details/5
