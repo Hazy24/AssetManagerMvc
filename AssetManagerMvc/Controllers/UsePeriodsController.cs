@@ -31,6 +31,9 @@ namespace AssetManagerMvc.Controllers
                 case "Printers":
                     usePeriods = usePeriods.Where(u => u.Asset is Printer);
                     break;
+                case "Beamers":
+                    usePeriods = usePeriods.Where(u => u.Asset is Beamer);
+                    break;
                 default:
                     break;
             }
@@ -47,7 +50,7 @@ namespace AssetManagerMvc.Controllers
             {
                 usePeriods = usePeriods.TextSearch(searchString);
             }
-            var categories = new SelectList(new string[] { "Computers", "Printers" }, category);
+            var categories = new SelectList(new string[] { "Computers", "Printers", "Beamers" }, category);
 
             ViewBag.Filter = searchString;
             ViewBag.Current = current;
@@ -58,6 +61,7 @@ namespace AssetManagerMvc.Controllers
             ViewBag.CompoundIdSortParm = String.IsNullOrEmpty(sortOrder) ? "compoundId_desc" : "";
             ViewBag.ComputerNameSortParm = sortOrder == "computername" ? "computername_desc" : "computername";
             ViewBag.PrinterNameSortParm = sortOrder == "printername" ? "printername_desc" : "printername";
+            ViewBag.BeamerNameSortParm = sortOrder == "beamername" ? "beamername_desc" : "beamername";
             ViewBag.SerialNumberSortParm = sortOrder == "serialnumber" ? "serialnumber_desc" : "serialnumber";
             ViewBag.DescriptionSortParm = sortOrder == "description" ? "description_desc" : "description";
             ViewBag.FullNameSortParm = sortOrder == "fullname" ? "fullname_desc" : "fullname";
@@ -80,6 +84,12 @@ namespace AssetManagerMvc.Controllers
                     break;
                 case "printername_desc":
                     usePeriods = usePeriods.OrderByDescending(u => (u.Asset as Printer).PrinterName);
+                    break;
+                case "beamername":
+                    usePeriods = usePeriods.OrderBy(u => (u.Asset as Beamer).BeamerName);
+                    break;
+                case "beamername_desc":
+                    usePeriods = usePeriods.OrderByDescending(u => (u.Asset as Beamer).BeamerName);
                     break;
                 case "serialnumber":
                     usePeriods = usePeriods.OrderBy(u => u.Asset.SerialNumber);
@@ -223,6 +233,12 @@ namespace AssetManagerMvc.Controllers
                     { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Printer), "AssetId", "CompoundIdAndSerialNumber"); }
                     else
                     { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Printer), "AssetId", "CompoundIdAndSerialNumber", assetId); }
+                    break;
+                case "Beamers":
+                    if (assetId == null)
+                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Beamer), "AssetId", "CompoundIdAndSerialNumber"); }
+                    else
+                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Beamer), "AssetId", "CompoundIdAndSerialNumber", assetId); }
                     break;
                 default:
                     ViewBag.AssetId = new SelectList(db.Assets, "AssetId", "CompoundIdAndSerialNumber");

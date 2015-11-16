@@ -31,7 +31,11 @@
             @if (ViewBag.SelectedCategory == "Computers")
             { @Html.ActionLink("Computer Name", "Index", new { sortOrder = ViewBag.ComputerNameSortParm, searchString = ViewBag.Filter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik, category = ViewBag.SelectedCategory }); }
             else if (ViewBag.SelectedCategory == "Printers")
-            { @Html.ActionLink("Printer Name", "Index", new { sortOrder = ViewBag.PrinterNameSortParm, searchString = ViewBag.Filter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik, category = ViewBag.SelectedCategory }); }
+            { @Html.ActionLink("Printer Name", "Index", new { sortOrder = ViewBag.PrinterNameSortParm, searchString = ViewBag.Filter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik, category = ViewBag.SelectedCategory });
+            }
+            else if (ViewBag.SelectedCategory == "Beamers")
+            { @Html.ActionLink("Beamer Name", "Index", new { sortOrder = ViewBag.BeamerNameSortParm, searchString = ViewBag.Filter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik, category = ViewBag.SelectedCategory });
+            }
         </th>
         <th>
             @Html.ActionLink("Serial Number", "Index", new { sortOrder = ViewBag.SerialNumberSortParm, searchString = ViewBag.Filter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik, category = ViewBag.SelectedCategory })
@@ -59,7 +63,11 @@
                 @if (ViewBag.SelectedCategory == "Computers")
                 { @Html.DisplayFor(modelItem => ((Computer)item.Asset).ComputerName); }
                 else if (ViewBag.SelectedCategory == "Printers")
-                { @Html.DisplayFor(modelItem => ((Printer)item.Asset).PrinterName); }
+                { @Html.DisplayFor(modelItem => ((Printer)item.Asset).PrinterName);
+                }
+                else if (ViewBag.SelectedCategory == "Beamers")
+                { @Html.DisplayFor(modelItem => ((Beamer)item.Asset).BeamerName);
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Asset.SerialNumber)
