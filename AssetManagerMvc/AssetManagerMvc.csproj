@@ -173,6 +173,7 @@
     <Compile Include="Controllers\ComputersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MonitorsController.cs" />
     <Compile Include="Controllers\PrintersController.cs" />
     <Compile Include="Controllers\UsePeriodsController.cs" />
     <Compile Include="Controllers\UserAccountsController.cs" />
@@ -215,6 +216,10 @@
     <Compile Include="Migrations\201511121512057_beamer.Designer.cs">
       <DependentUpon>201511121512057_beamer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511161055023_monitor.cs" />
+    <Compile Include="Migrations\201511161055023_monitor.Designer.cs">
+      <DependentUpon>201511161055023_monitor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Asset.cs" />
@@ -224,6 +229,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Incident.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Monitor.cs" />
     <Compile Include="Models\Printer.cs" />
     <Compile Include="Models\UsePeriod.cs" />
     <Compile Include="Models\UserAccount.cs" />
@@ -320,6 +326,11 @@
     <Content Include="Views\Beamers\Details.cshtml" />
     <Content Include="Views\Beamers\Edit.cshtml" />
     <Content Include="Views\Beamers\Index.cshtml" />
+    <Content Include="Views\Monitors\Create.cshtml" />
+    <Content Include="Views\Monitors\Delete.cshtml" />
+    <Content Include="Views\Monitors\Details.cshtml" />
+    <Content Include="Views\Monitors\Edit.cshtml" />
+    <Content Include="Views\Monitors\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -359,6 +370,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511121512057_beamer.resx">
       <DependentUpon>201511121512057_beamer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511161055023_monitor.resx">
+      <DependentUpon>201511161055023_monitor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
