@@ -175,6 +175,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MonitorsController.cs" />
     <Compile Include="Controllers\PrintersController.cs" />
+    <Compile Include="Controllers\TelephonesController.cs" />
     <Compile Include="Controllers\UsePeriodsController.cs" />
     <Compile Include="Controllers\UserAccountsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -220,6 +221,10 @@
     <Compile Include="Migrations\201511161055023_monitor.Designer.cs">
       <DependentUpon>201511161055023_monitor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511161302308_telephone.cs" />
+    <Compile Include="Migrations\201511161302308_telephone.Designer.cs">
+      <DependentUpon>201511161302308_telephone.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Asset.cs" />
@@ -231,6 +236,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Monitor.cs" />
     <Compile Include="Models\Printer.cs" />
+    <Compile Include="Models\Telephone.cs" />
     <Compile Include="Models\UsePeriod.cs" />
     <Compile Include="Models\UserAccount.cs" />
     <Compile Include="Models\Util.cs" />
@@ -331,6 +337,12 @@
     <Content Include="Views\Monitors\Details.cshtml" />
     <Content Include="Views\Monitors\Edit.cshtml" />
     <Content Include="Views\Monitors\Index.cshtml" />
+    <Content Include="Views\Telephones\Create.cshtml" />
+    <Content Include="Views\Telephones\Delete.cshtml" />
+    <Content Include="Views\Telephones\Details.cshtml" />
+    <Content Include="Views\Telephones\Edit.cshtml" />
+    <Content Include="Views\Telephones\Index.cshtml" />
+    <Content Include="Views\Telephones\_TelephoneType.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -373,6 +385,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511161055023_monitor.resx">
       <DependentUpon>201511161055023_monitor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511161302308_telephone.resx">
+      <DependentUpon>201511161302308_telephone.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

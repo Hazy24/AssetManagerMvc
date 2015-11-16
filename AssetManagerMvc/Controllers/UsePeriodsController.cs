@@ -17,7 +17,7 @@ namespace AssetManagerMvc.Controllers
         // GET: UsePeriods
         public ActionResult Index(string sortOrder, string searchString, bool? current,
             bool? hideUitGebruik, string category)
-        {
+        {            
             var usePeriods = db.UsePeriods
                 .Include(u => u.Asset)
                 .Include(u => u.Status)

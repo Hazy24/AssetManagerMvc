@@ -1,0 +1,12 @@
+﻿@model AssetManagerMvc.Models.Telephone
+
+<div class="form-group">
+    @Html.LabelFor(model => model.TelephoneType, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10" style="float: left;">
+        @Html.DropDownList("TelephoneType", null, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.TelephoneType, "", new { @class = "text-danger" })
+        <a id="typeLink" href="javascript:" onclick="changeToText('TelephoneType', 'typeLink'); return false;">New type?</a>
+    </div>
+</div>
+<script src="@Url.Content("~/Scripts/script.js")" type="text/javascript"></script>
+
