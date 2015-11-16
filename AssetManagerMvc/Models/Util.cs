@@ -52,6 +52,19 @@ namespace AssetManagerMvc.Models
 
             return printers;
         }
+        public static IQueryable<Beamer> TextSearch(this IQueryable<Beamer> beamers, string searchString)
+        {
+            IQueryable<Beamer> assetSearch = (beamers as IQueryable<Asset>)
+                .TextSearch(searchString)
+                .Cast<Beamer>();
+
+            beamers = assetSearch.Concat(beamers.Where
+                (p => p.BeamerName.Contains(searchString)))               
+                .Distinct();
+
+            return beamers;
+        }
+
         public static IQueryable<UsePeriod> TextSearch(this IQueryable<UsePeriod> useperiods, string searchString)
         {
             useperiods = useperiods.Where

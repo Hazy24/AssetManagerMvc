@@ -19,8 +19,59 @@ namespace AssetManagerMvc.Controllers
         {
             var beamers = from b in db.Beamers
                            select b;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                beamers = beamers.TextSearch(searchString);
+            }
+            ViewBag.CurrentFilter = searchString;
 
+            ViewBag.CompoundIdSortParm = String.IsNullOrEmpty(sortOrder) ? "compoundId_desc" : "";
+            ViewBag.BeamerNameSortParm = sortOrder == "beamername" ? "beamername_desc" : "beamername";
+            ViewBag.SerialNumberSortParm = sortOrder == "serialnumber" ? "serialnumber_desc" : "serialnumber";
+            ViewBag.ManufacturerSortParm = sortOrder == "manufacturer" ? "manufacturer_desc" : "manufacturer";
+            ViewBag.ModelNameSortParm = sortOrder == "modelname" ? "modelname_desc" : "modelname";
+            ViewBag.PurchaseDateSortParm = sortOrder == "purchasedate" ? "purchasedate_desc" : "purchasedate";
 
+            switch (sortOrder)
+            {
+                case "compoundId_desc":
+                    beamers = beamers.OrderByDescending(b => b.AssetId);
+                    break;
+                case "beamername":
+                    beamers = beamers.OrderBy(b => b.BeamerName);
+                    break;
+                case "beamername_desc":
+                    beamers = beamers.OrderByDescending(b => b.BeamerName);
+                    break;
+                case "serialnumber":
+                    beamers = beamers.OrderBy(b => b.SerialNumber);
+                    break;
+                case "serialnumber_desc":
+                    beamers = beamers.OrderByDescending(b => b.SerialNumber);
+                    break;
+                case "manufacturer":
+                    beamers = beamers.OrderBy(b => b.Manufacturer);
+                    break;
+                case "manufacturer_desc":
+                    beamers = beamers.OrderByDescending(b => b.Manufacturer);
+                    break;
+                case "modelname":
+                    beamers = beamers.OrderBy(b => b.ModelName);
+                    break;
+                case "modelname_desc":
+                    beamers = beamers.OrderByDescending(b => b.ModelName);
+                    break;
+                case "purchasedate":
+                    beamers = beamers.OrderBy(b => b.PurchaseDate);
+                    break;
+                case "purchasedate_desc":
+                    beamers = beamers.OrderByDescending(b => b.PurchaseDate);
+                    break;               
+
+                default:  // compoundId ascending 
+                    beamers = beamers.OrderBy(b => b.AssetId);
+                    break;
+            }
 
             return View(beamers);
         }

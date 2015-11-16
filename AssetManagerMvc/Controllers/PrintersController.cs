@@ -38,45 +38,45 @@ namespace AssetManagerMvc.Controllers
                 case "compoundId_desc":
                     printers = printers.OrderByDescending(p => p.AssetId);
                     break;
-                case "printerrname":
+                case "printername":
                     printers = printers.OrderBy(p => p.PrinterName);
                     break;
                 case "printername_desc":
                     printers = printers.OrderByDescending(p => p.PrinterName);
                     break;
                 case "serialnumber":
-                    printers = printers.OrderBy(c => c.SerialNumber);
+                    printers = printers.OrderBy(p => p.SerialNumber);
                     break;
                 case "serialnumber_desc":
-                    printers = printers.OrderByDescending(c => c.SerialNumber);
+                    printers = printers.OrderByDescending(p => p.SerialNumber);
                     break;
                 case "manufacturer":
-                    printers = printers.OrderBy(c => c.Manufacturer);
+                    printers = printers.OrderBy(p => p.Manufacturer);
                     break;
                 case "manufacturer_desc":
-                    printers = printers.OrderByDescending(c => c.Manufacturer);
+                    printers = printers.OrderByDescending(p => p.Manufacturer);
                     break;
                 case "modelname":
-                    printers = printers.OrderBy(c => c.ModelName);
+                    printers = printers.OrderBy(p => p.ModelName);
                     break;
                 case "modelname_desc":
-                    printers = printers.OrderByDescending(c => c.ModelName);
+                    printers = printers.OrderByDescending(p => p.ModelName);
                     break;
                 case "purchasedate":
-                    printers = printers.OrderBy(c => c.PurchaseDate);
+                    printers = printers.OrderBy(p => p.PurchaseDate);
                     break;
                 case "purchasedate_desc":
-                    printers = printers.OrderByDescending(c => c.PurchaseDate);
+                    printers = printers.OrderByDescending(p => p.PurchaseDate);
                     break;
                 case "ipaddress":
-                    printers = printers.OrderBy(c => c.IpAddress);
+                    printers = printers.OrderBy(p => p.IpAddress);
                     break;
                 case "ipaddress_desc":
-                    printers = printers.OrderByDescending(c => c.IpAddress);
+                    printers = printers.OrderByDescending(p => p.IpAddress);
                     break;
 
                 default:  // compoundId ascending 
-                    printers = printers.OrderBy(c => c.AssetId);
+                    printers = printers.OrderBy(p => p.AssetId);
                     break;
             }
 
