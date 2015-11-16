@@ -77,6 +77,20 @@ namespace AssetManagerMvc.Models
 
             return monitors;
         }
+        public static IQueryable<Telephone> TextSearch(this IQueryable<Telephone> telephones, string searchString)
+        {
+            IQueryable<Telephone> assetSearch = (telephones as IQueryable<Asset>)
+                .TextSearch(searchString)
+                .Cast<Telephone>();
+
+            telephones = assetSearch.Concat(telephones.Where
+                (p => p.TelephoneType.Contains(searchString)
+                || p.NumberIntern.Contains(searchString)
+                || p.Number.Contains(searchString)))
+                .Distinct();
+
+            return telephones;
+        }
 
         public static IQueryable<UsePeriod> TextSearch(this IQueryable<UsePeriod> useperiods, string searchString)
         {
