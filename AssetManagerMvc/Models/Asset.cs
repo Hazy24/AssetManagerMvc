@@ -39,6 +39,7 @@ namespace AssetManagerMvc.Models
                 string compoundid = AssetId.ToString();
                 if (this is Computer) compoundid = "C" + compoundid;
                 else if (this is Printer) compoundid = "P" + compoundid;
+                else if (this is Beamer) compoundid = "B" + compoundid;
                 return compoundid;
             }
         }

@@ -19,6 +19,9 @@ namespace AssetManagerMvc.Controllers
         {
             var beamers = from b in db.Beamers
                            select b;
+
+
+
             return View(beamers);
         }
 
