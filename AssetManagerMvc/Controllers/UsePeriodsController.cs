@@ -37,6 +37,9 @@ namespace AssetManagerMvc.Controllers
                 case "Monitors":
                     usePeriods = usePeriods.Where(u => u.Asset is Monitor);
                     break;
+                case "Telephones":
+                    usePeriods = usePeriods.Where(u => u.Asset is Telephone);
+                    break;
                 default:
                     break;
             }
@@ -53,7 +56,8 @@ namespace AssetManagerMvc.Controllers
             {
                 usePeriods = usePeriods.TextSearch(searchString);
             }
-            var categories = new SelectList(new string[] { "Computers", "Printers", "Beamers", "Monitors" }, category);
+            var categories = new SelectList
+                (new string[] { "Computers", "Printers", "Beamers", "Monitors", "Telephones" }, category);
 
             ViewBag.Filter = searchString;
             ViewBag.Current = current;
@@ -248,6 +252,12 @@ namespace AssetManagerMvc.Controllers
                     { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Monitor), "AssetId", "CompoundIdAndSerialNumber"); }
                     else
                     { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Monitor), "AssetId", "CompoundIdAndSerialNumber", assetId); }
+                    break;
+                case "Telephones":
+                    if (assetId == null)
+                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Telephone), "AssetId", "CompoundIdAndSerialNumber"); }
+                    else
+                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Telephone), "AssetId", "CompoundIdAndSerialNumber", assetId); }
                     break;
                 default:
                     ViewBag.AssetId = new SelectList(db.Assets, "AssetId", "CompoundIdAndSerialNumber");
