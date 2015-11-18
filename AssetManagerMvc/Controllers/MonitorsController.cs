@@ -99,6 +99,7 @@ namespace AssetManagerMvc.Controllers
         // GET: Monitors/Create
         public ActionResult Create()
         {
+            SetCreateAndEditViewbag();
             return View();
         }
 
@@ -119,6 +120,7 @@ namespace AssetManagerMvc.Controllers
                 return RedirectToAction("Index");
             }
 
+            SetCreateAndEditViewbag(monitor.MaxResolution);
             return View(monitor);
         }
 
@@ -134,6 +136,7 @@ namespace AssetManagerMvc.Controllers
             {
                 return HttpNotFound();
             }
+            SetCreateAndEditViewbag(monitor.MaxResolution);
             return View(monitor);
         }
 
@@ -150,6 +153,7 @@ namespace AssetManagerMvc.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            SetCreateAndEditViewbag(monitor.MaxResolution);
             return View(monitor);
         }
 
@@ -166,6 +170,22 @@ namespace AssetManagerMvc.Controllers
                 return HttpNotFound();
             }
             return View(monitor);
+        }
+
+        private void SetCreateAndEditViewbag(string maxResolution = null)
+        {
+            if (string.IsNullOrEmpty(maxResolution))
+            {
+                ViewBag.TelephoneType = new SelectList(db.Telephones, "MaxRsolution", "MaxRsolution")
+                .GroupBy(f => f.Text).Select(f => f.First()) // == Distinct              
+                .OrderBy(f => f.Text);
+            }
+            else
+            {
+                ViewBag.TelephoneType = new SelectList(db.Telephones, "MaxRsolution", "MaxRsolution", maxResolution)
+                .GroupBy(f => f.Text).Select(f => f.First()) // == Distinct              
+                .OrderBy(f => f.Text);
+            }
         }
 
         // POST: Monitors/Delete/5

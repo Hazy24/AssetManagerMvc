@@ -350,6 +350,7 @@
     <Content Include="Views\Telephones\Edit.cshtml" />
     <Content Include="Views\Telephones\Index.cshtml" />
     <Content Include="Views\Telephones\_TelephoneType.cshtml" />
+    <Content Include="Views\Monitors\_MaxResolution.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
