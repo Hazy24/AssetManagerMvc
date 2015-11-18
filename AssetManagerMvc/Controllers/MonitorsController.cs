@@ -106,6 +106,9 @@ namespace AssetManagerMvc.Controllers
             if (ModelState.IsValid)
             {
                 db.Assets.Add(monitor);
+                UsePeriod up = new UsePeriod(monitor, db.UsePeriodStatuses
+                    .Where(x => x.Description == "nieuw toestel").First().UsePeriodStatusId);
+                db.UsePeriods.Add(up);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

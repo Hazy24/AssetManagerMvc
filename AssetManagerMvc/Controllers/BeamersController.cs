@@ -107,6 +107,9 @@ namespace AssetManagerMvc.Controllers
             if (ModelState.IsValid)
             {
                 db.Assets.Add(beamer);
+                UsePeriod up = new UsePeriod(beamer, db.UsePeriodStatuses
+                    .Where(x => x.Description == "nieuw toestel").First().UsePeriodStatusId);
+                db.UsePeriods.Add(up);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

@@ -120,6 +120,9 @@ namespace AssetManagerMvc.Controllers
             if (ModelState.IsValid)
             {
                 db.Computers.Add(computer);
+                UsePeriod up = new UsePeriod(computer, db.UsePeriodStatuses
+                    .Where(x => x.Description == "nieuw toestel").First().UsePeriodStatusId);                
+                db.UsePeriods.Add(up);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

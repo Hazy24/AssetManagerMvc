@@ -9,6 +9,14 @@ namespace AssetManagerMvc.Models
 {
     public class UsePeriod
     {
+        public UsePeriod() { }
+        public UsePeriod(Asset asset, int statusId)
+        {
+            Asset = asset;
+            StartDate = asset.PurchaseDate != null ? asset.PurchaseDate : DateTime.Now;
+            UsePeriodStatusId = statusId;
+        }
+
         public int UsePeriodId { get; set; }
         public int? UserAccountId { get; set; }
         public virtual UserAccount UserAccount { get; set; }
