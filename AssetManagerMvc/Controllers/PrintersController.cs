@@ -110,7 +110,7 @@ namespace AssetManagerMvc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AssetId,SerialNumber,ModelName,PurchaseDate,PurchasePrice,Owner,Supplier,Manufacturer,PrinterName,TonerModel,DrumModel,IpAddress")] Printer printer)
+        public ActionResult Create([Bind(Include = "AssetId,SerialNumber,ModelName,PurchaseDate,PurchasePrice,Owner,Supplier,Manufacturer,PrinterName,TonerModel,DrumModel,IpAddress,Location")] Printer printer)
         {
             if (ModelState.IsValid)
             {
@@ -145,7 +145,7 @@ namespace AssetManagerMvc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AssetId,SerialNumber,ModelName,PurchaseDate,PurchasePrice,Owner,Supplier,Manufacturer,PrinterName,TonerModel,DrumModel,IpAddress")] Printer printer)
+        public ActionResult Edit([Bind(Include = "AssetId,SerialNumber,ModelName,PurchaseDate,PurchasePrice,Owner,Supplier,Manufacturer,PrinterName,TonerModel,DrumModel,IpAddress,Location")] Printer printer)
         {
             if (ModelState.IsValid)
             {

@@ -7,6 +7,9 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AssetManagerMvc.Models;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.IO;
 
 namespace AssetManagerMvc.Controllers
 {
@@ -87,6 +90,9 @@ namespace AssetManagerMvc.Controllers
         public ActionResult Print(int? id)
         {            
             Computer computer = db.Computers.Find(id);
+            //var doc1 = new Document();
+            //string path = Server.MapPath("PDFs");
+            //PdfWriter.GetInstance(doc1, new FileStream(path + "/Doc1.pdf", FileMode.Create));
             return View(computer);
         }
         // GET: Computers/Details/5

@@ -44,6 +44,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="iTextSharp, Version=4.1.6.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca">
+      <HintPath>..\packages\iTextSharp-LGPL.4.1.6\lib\iTextSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -225,6 +229,10 @@
     <Compile Include="Migrations\201511161302308_telephone.Designer.cs">
       <DependentUpon>201511161302308_telephone.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511181045090_printer.location.cs" />
+    <Compile Include="Migrations\201511181045090_printer.location.Designer.cs">
+      <DependentUpon>201511181045090_printer.location.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Asset.cs" />
@@ -388,6 +396,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511161302308_telephone.resx">
       <DependentUpon>201511161302308_telephone.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511181045090_printer.location.resx">
+      <DependentUpon>201511181045090_printer.location.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

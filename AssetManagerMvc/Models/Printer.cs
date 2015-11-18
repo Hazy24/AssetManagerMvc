@@ -17,5 +17,6 @@ namespace AssetManagerMvc.Models
         public string TonerModel { get; set; }
         [Display(Name = "Drum Model")]
         public string DrumModel { get; set; }
+        public string Location { get; set; }
     }
 }
