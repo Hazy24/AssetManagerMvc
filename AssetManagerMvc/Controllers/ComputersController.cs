@@ -87,6 +87,7 @@ namespace AssetManagerMvc.Controllers
 
             return View(computers);
         }
+        //Print CompoundId to PDF
         public ActionResult Print(string compoundId)
         {            
             return File(Util.CompoundIdtoPDFStream(compoundId), "application/pdf", compoundId + ".pdf");
