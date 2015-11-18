@@ -117,7 +117,12 @@ namespace AssetManagerMvc.Models
                 || (u.Asset as Printer).PrinterName.Contains(searchString)
                 || (u.Asset as Printer).DrumModel.Contains(searchString)
                 || (u.Asset as Printer).IpAddress.Contains(searchString)
-                || (u.Asset as Printer).TonerModel.Contains(searchString)
+                || (u.Asset as Beamer).BeamerName.Contains(searchString)
+                || (u.Asset as Monitor).MaxResolution.Contains(searchString)
+                || (u.Asset as Monitor).Size.ToString().Contains(searchString)
+                || (u.Asset as Telephone).TelephoneType.Contains(searchString)
+                || (u.Asset as Telephone).Number.Contains(searchString)
+                || (u.Asset as Telephone).NumberIntern.Contains(searchString)                
                     );
             return useperiods;
         }
