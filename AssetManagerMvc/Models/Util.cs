@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace AssetManagerMvc.Models
 {
@@ -59,7 +63,7 @@ namespace AssetManagerMvc.Models
                 .Cast<Beamer>();
 
             beamers = assetSearch.Concat(beamers.Where
-                (p => p.BeamerName.Contains(searchString)))               
+                (p => p.BeamerName.Contains(searchString)))
                 .Distinct();
 
             return beamers;
@@ -114,8 +118,40 @@ namespace AssetManagerMvc.Models
                 || (u.Asset as Printer).DrumModel.Contains(searchString)
                 || (u.Asset as Printer).IpAddress.Contains(searchString)
                 || (u.Asset as Printer).TonerModel.Contains(searchString)
-                    );          
+                    );
             return useperiods;
         }
-    }     
+        public static MemoryStream CompoundIdtoPDFStream(string compoundId)
+        {
+            Document document = new Document(new Rectangle(147f, 68f));
+            document.SetMargins(0f, 0f, 0f, 0f);
+            // string fontsfolder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Fonts);
+            Font font = FontFactory.GetFont("Arial", 28, Color.BLACK);
+            MemoryStream stream = new MemoryStream();
+
+            try
+            {
+                PdfWriter pdfWriter = PdfWriter.GetInstance(document, stream);
+                pdfWriter.CloseStream = false;
+                Paragraph para = new Paragraph(compoundId, font);                            
+                para.Alignment = Element.ALIGN_CENTER;
+                document.Open();
+                document.Add(para);
+            }
+            catch (DocumentException de)
+            {
+                Console.Error.WriteLine(de.Message);
+            }
+            catch (IOException ioe)
+            {
+                Console.Error.WriteLine(ioe.Message);
+            }
+
+            document.Close();
+
+            stream.Flush();
+            stream.Position = 0;
+            return stream;
+        }
+    }
 }

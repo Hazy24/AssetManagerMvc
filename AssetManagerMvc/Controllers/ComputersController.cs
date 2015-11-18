@@ -27,7 +27,7 @@ namespace AssetManagerMvc.Controllers
             {
                 computers = computers.TextSearch(searchString);
             }
-            
+
             ViewBag.CurrentFilter = searchString;
 
             ViewBag.CompoundIdSortParm = String.IsNullOrEmpty(sortOrder) ? "compoundId_desc" : "";
@@ -87,13 +87,9 @@ namespace AssetManagerMvc.Controllers
 
             return View(computers);
         }
-        public ActionResult Print(int? id)
+        public ActionResult Print(string compoundId)
         {            
-            Computer computer = db.Computers.Find(id);
-            //var doc1 = new Document();
-            //string path = Server.MapPath("PDFs");
-            //PdfWriter.GetInstance(doc1, new FileStream(path + "/Doc1.pdf", FileMode.Create));
-            return View(computer);
+            return File(Util.CompoundIdtoPDFStream(compoundId), "application/pdf", compoundId + ".pdf");
         }
         // GET: Computers/Details/5
         public ActionResult Details(int? id)
@@ -127,7 +123,7 @@ namespace AssetManagerMvc.Controllers
             {
                 db.Computers.Add(computer);
                 UsePeriod up = new UsePeriod(computer, db.UsePeriodStatuses
-                    .Where(x => x.Description == "nieuw toestel").First().UsePeriodStatusId);                
+                    .Where(x => x.Description == "nieuw toestel").First().UsePeriodStatusId);
                 db.UsePeriods.Add(up);
                 db.SaveChanges();
                 return RedirectToAction("Index");

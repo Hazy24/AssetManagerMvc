@@ -329,7 +329,6 @@
     <Content Include="Views\UsePeriods\TestView.cshtml" />
     <Content Include="Views\UsePeriods\_Function.cshtml" />
     <Content Include="Views\Shared\Displaytemplates\UsePeriodStatusTableCell.cshtml" />
-    <Content Include="Views\Computers\Print.cshtml" />
     <Content Include="Views\Printers\Create.cshtml" />
     <Content Include="Views\Printers\Delete.cshtml" />
     <Content Include="Views\Printers\Details.cshtml" />
