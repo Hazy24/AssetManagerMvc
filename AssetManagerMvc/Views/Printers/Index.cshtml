@@ -63,8 +63,8 @@
     <td>
         @Html.DisplayFor(modelItem => item.PurchaseDate)
     </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.IpAddress)
+    <td>        
+        <a href="http://@Html.DisplayFor(modelItem => item.IpAddress)">@Html.DisplayFor(modelItem => item.IpAddress)</a>
     </td>
     <td>
         @Html.ActionLink("Edit", "Edit", new { id = item.AssetId }) |
