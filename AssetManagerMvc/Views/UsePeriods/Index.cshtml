@@ -11,13 +11,16 @@
     @Html.ActionLink("Create New", "Create", new { category = ViewBag.SelectedCategory })
 </p>
 
-@using (Html.BeginForm("Index", "Useperiods", FormMethod.Get))
+@using (Html.BeginForm("Index", "Useperiods", FormMethod.Get, new { id = "TheForm" }))
 {
     <p>
         Filter: @Html.TextBox("SearchString")
         Current: @Html.CheckBox("Current", true)
         Hide 'uit gebruik': @Html.CheckBox("HideUitGebruik", true)
-        @Html.DropDownList("Category")
+        @Html.DropDownList("Category", (SelectList)ViewBag.Category, new
+           {
+               onchange = "document.getElementById('TheForm').submit();"
+           })
         <input type="submit" value="Apply" />
     </p>
 }
@@ -29,7 +32,8 @@
         </th>
         <th>
             @if (ViewBag.SelectedCategory == "Computers")
-            { @Html.ActionLink("Computer Name", "Index", new { sortOrder = ViewBag.ComputerNameSortParm, searchString = ViewBag.Filter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik, category = ViewBag.SelectedCategory }); }
+            { @Html.ActionLink("Computer Name", "Index", new { sortOrder = ViewBag.ComputerNameSortParm, searchString = ViewBag.Filter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik, category = ViewBag.SelectedCategory });
+            }
             else if (ViewBag.SelectedCategory == "Printers")
             { @Html.ActionLink("Printer Name", "Index", new { sortOrder = ViewBag.PrinterNameSortParm, searchString = ViewBag.Filter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik, category = ViewBag.SelectedCategory });
             }
@@ -61,7 +65,8 @@
             </td>
             <td>
                 @if (ViewBag.SelectedCategory == "Computers")
-                { @Html.DisplayFor(modelItem => ((Computer)item.Asset).ComputerName); }
+                { @Html.DisplayFor(modelItem => ((Computer)item.Asset).ComputerName);
+                }
                 else if (ViewBag.SelectedCategory == "Printers")
                 { @Html.DisplayFor(modelItem => ((Printer)item.Asset).PrinterName);
                 }
