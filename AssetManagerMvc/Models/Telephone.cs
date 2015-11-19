@@ -18,5 +18,7 @@ namespace AssetManagerMvc.Models
         [RegularExpression(@"[0-9][0-9][0-9]", ErrorMessage = "Use e.g. 123")]
         [Display(Name = "Intern")]
         public string NumberIntern { get; set; }
+
+        public string Port { get; set; }
     }
 }

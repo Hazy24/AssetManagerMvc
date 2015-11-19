@@ -233,6 +233,10 @@
     <Compile Include="Migrations\201511181045090_printer.location.Designer.cs">
       <DependentUpon>201511181045090_printer.location.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511191109065_telephone.port.cs" />
+    <Compile Include="Migrations\201511191109065_telephone.port.Designer.cs">
+      <DependentUpon>201511191109065_telephone.port.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Asset.cs" />
@@ -399,6 +403,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511181045090_printer.location.resx">
       <DependentUpon>201511181045090_printer.location.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511191109065_telephone.port.resx">
+      <DependentUpon>201511191109065_telephone.port.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
