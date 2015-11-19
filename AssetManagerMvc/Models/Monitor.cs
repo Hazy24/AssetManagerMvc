@@ -9,6 +9,7 @@ namespace AssetManagerMvc.Models
 {
     public class Monitor : Asset
     {
+        [Display(Name = "Size (inch)")]
         [DisplayFormat(DataFormatString = "{0:G}\"")]
         public float Size { get; set; }       
 

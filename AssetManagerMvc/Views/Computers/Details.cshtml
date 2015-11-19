@@ -18,6 +18,15 @@
             @Html.DisplayFor(model => model.CompoundId)
             @Html.ActionLink("Print", "Print", new { compoundId = Model.CompoundId })
         </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ComputerName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ComputerName)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.SerialNumber)
         </dt>
@@ -32,6 +41,14 @@
 
         <dd>
             @Html.DisplayFor(model => model.ModelName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Manufacturer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Manufacturer)
         </dd>
 
         <dt>
@@ -64,22 +81,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.Supplier)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Manufacturer)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Manufacturer)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ComputerName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ComputerName)
         </dd>
 
         <dt>
