@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AssetManagerMvc.Models;
+using System.Text.RegularExpressions;
 
 namespace AssetManagerMvc.Controllers
 {
@@ -17,17 +18,20 @@ namespace AssetManagerMvc.Controllers
         // GET: UsePeriods
         public ActionResult Index(string sortOrder, string searchString, bool? current,
             bool? hideUitGebruik, string category)
-        {            
+        {
             var usePeriods = db.UsePeriods
                 .Include(u => u.Asset)
                 .Include(u => u.Status)
                 .Include(u => u.UserAccount)
                 ;
+            // set category to computers if we come from a computer page etc.
             if ((string.IsNullOrEmpty(category)) && (Request.UrlReferrer != null))
             {
-                category = Request.UrlReferrer.AbsolutePath.Remove(0, 1);                
+                Match match = Regex.Match(Request.UrlReferrer.AbsolutePath, @"/([A-Za-z]+)");
+                if (match.Success && match.Groups.Count > 1) { category = match.Groups[1].Value; }
             }
 
+            // filters
             switch (category)
             {
                 case "Computers":
@@ -71,6 +75,7 @@ namespace AssetManagerMvc.Controllers
             ViewBag.CategorySelectList = categories;
             ViewBag.SelectedCategory = category;
 
+            // sorting
             ViewBag.CompoundIdSortParm = String.IsNullOrEmpty(sortOrder) ? "compoundId_desc" : "";
             ViewBag.ComputerNameSortParm = sortOrder == "computername" ? "computername_desc" : "computername";
             ViewBag.PrinterNameSortParm = sortOrder == "printername" ? "printername_desc" : "printername";
