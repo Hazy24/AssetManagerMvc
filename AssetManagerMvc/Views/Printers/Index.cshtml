@@ -38,6 +38,9 @@
             @Html.ActionLink("Purchase Date", "Index", new { sortOrder = ViewBag.PurchaseDateSortParm, searchString = ViewBag.CurrentFilter })
         </th>
         <th>
+            @Html.ActionLink("Location", "Index", new { sortOrder = ViewBag.LocationSortParm, searchString = ViewBag.CurrentFilter })
+        </th>
+        <th>
             @Html.ActionLink("Ip Address", "Index", new { sortOrder = ViewBag.IpAddressSortParm, searchString = ViewBag.CurrentFilter })
         </th>
         <th><div style="min-width: 140px;"></div></th>
@@ -62,6 +65,9 @@
     </td>
     <td>
         @Html.DisplayFor(modelItem => item.PurchaseDate)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Location)
     </td>
     <td>        
         <a href="http://@Html.DisplayFor(modelItem => item.IpAddress)">@Html.DisplayFor(modelItem => item.IpAddress)</a>

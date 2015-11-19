@@ -31,6 +31,7 @@ namespace AssetManagerMvc.Controllers
             ViewBag.ManufacturerSortParm = sortOrder == "manufacturer" ? "manufacturer_desc" : "manufacturer";
             ViewBag.ModelNameSortParm = sortOrder == "modelname" ? "modelname_desc" : "modelname";
             ViewBag.PurchaseDateSortParm = sortOrder == "purchasedate" ? "purchasedate_desc" : "purchasedate";
+            ViewBag.LocationSortParm = sortOrder == "location" ? "location_desc" : "location";
             ViewBag.IpAddressSortParm = sortOrder == "ipaddress" ? "ipaddress_desc" : "ipaddress";
 
             switch (sortOrder)
@@ -67,6 +68,12 @@ namespace AssetManagerMvc.Controllers
                     break;
                 case "purchasedate_desc":
                     printers = printers.OrderByDescending(p => p.PurchaseDate);
+                    break;
+                case "location":
+                    printers = printers.OrderBy(p => p.Location);
+                    break;
+                case "location_desc":
+                    printers = printers.OrderByDescending(p => p.Location);
                     break;
                 case "ipaddress":
                     printers = printers.OrderBy(p => p.IpAddress);
