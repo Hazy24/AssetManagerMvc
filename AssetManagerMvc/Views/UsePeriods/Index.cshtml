@@ -17,7 +17,7 @@
         Filter: @Html.TextBox("SearchString")
         Current: @Html.CheckBox("Current", true)
         Hide 'uit gebruik': @Html.CheckBox("HideUitGebruik", true)
-        @Html.DropDownList("Category", (SelectList)ViewBag.Category, new
+        @Html.DropDownList("Category", (SelectList)ViewBag.CategorySelectList, new
            {
                onchange = "document.getElementById('TheForm').submit();"
            })

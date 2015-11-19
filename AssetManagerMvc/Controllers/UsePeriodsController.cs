@@ -23,6 +23,11 @@ namespace AssetManagerMvc.Controllers
                 .Include(u => u.Status)
                 .Include(u => u.UserAccount)
                 ;
+            if ((string.IsNullOrEmpty(category)) && (Request.UrlReferrer != null))
+            {
+                category = Request.UrlReferrer.AbsolutePath.Remove(0, 1);                
+            }
+
             switch (category)
             {
                 case "Computers":
@@ -41,6 +46,7 @@ namespace AssetManagerMvc.Controllers
                     usePeriods = usePeriods.Where(u => u.Asset is Telephone);
                     break;
                 default:
+                    usePeriods = usePeriods.Where(u => u.Asset is Computer);
                     break;
             }
             if ((hideUitGebruik == null) || (hideUitGebruik == true))
@@ -62,7 +68,7 @@ namespace AssetManagerMvc.Controllers
             ViewBag.Filter = searchString;
             ViewBag.Current = current;
             ViewBag.HideUitGebruik = hideUitGebruik;
-            ViewBag.Category = categories;
+            ViewBag.CategorySelectList = categories;
             ViewBag.SelectedCategory = category;
 
             ViewBag.CompoundIdSortParm = String.IsNullOrEmpty(sortOrder) ? "compoundId_desc" : "";
