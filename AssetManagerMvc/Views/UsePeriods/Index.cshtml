@@ -61,7 +61,7 @@
     {
         <tr>
             <td>
-                @Html.ActionLink(item.Asset.CompoundId, "Details", "Computers", new { id = item.AssetId }, null)
+                @Html.ActionLink(item.Asset.CompoundId, "Details", (string)ViewBag.SelectedCategory, new { id = item.AssetId }, null)
             </td>
             <td>
                 @if (ViewBag.SelectedCategory == "Computers")
