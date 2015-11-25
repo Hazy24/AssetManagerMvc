@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace AssetManagerMvc.Controllers
-{
+{    
     public class HomeController : Controller
     {
         public ActionResult Index()

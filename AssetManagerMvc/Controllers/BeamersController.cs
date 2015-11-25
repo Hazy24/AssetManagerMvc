@@ -10,6 +10,7 @@ using AssetManagerMvc.Models;
 
 namespace AssetManagerMvc.Controllers
 {
+    [Authorize(Users = @"OWWOFT\miquel, OWWOFT\maurice, OWWOFT\kristof, OWWOFT\werner")]
     public class BeamersController : Controller
     {
         private AssetManagerContext db = new AssetManagerContext();

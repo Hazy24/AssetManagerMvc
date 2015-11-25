@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 
 namespace AssetManagerMvc.Controllers
 {
+    [Authorize(Users = @"OWWOFT\sven, OWWOFT\miquel, OWWOFT\maurice, OWWOFT\kristof, OWWOFT\werner")]
     public class UsePeriodsController : Controller
     {
         private AssetManagerContext db = new AssetManagerContext();
