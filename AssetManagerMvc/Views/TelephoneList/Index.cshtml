@@ -1,0 +1,31 @@
+﻿@using AssetManagerMvc.Models
+@model List<Group<string, Telephonelist>>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@Html.ActionLink("Print", "Print")
+
+<table class="table">
+    <tr>        
+        <th>
+            Name
+        </th>
+        <th>
+            NumberIntern
+        </th>
+    </tr>
+
+    @foreach (var group in Model)
+    {
+        <tr><th colspan="2">@group.Key</th></tr>
+        foreach (var tel in group.Values)
+        {
+            <tr><td>@tel.Name</td><td>@tel.NumberIntern</td></tr>
+        }
+    }
+
+</table>

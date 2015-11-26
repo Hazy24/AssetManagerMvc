@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using System.Data;
+using System.Data.Entity;
 
 namespace AssetManagerMvc.Models
 {
@@ -157,6 +159,92 @@ namespace AssetManagerMvc.Models
             stream.Flush();
             stream.Position = 0;
             return stream;
+        }
+        public static MemoryStream TelephoneListPDFStream(AssetManagerContext db)
+        {
+            MemoryStream stream = new MemoryStream();
+            Document document = new Document();
+            List<Group<string, Telephonelist>> listByDep = TelephoneListByDepartment(db);
+            // Font font = FontFactory.GetFont("Arial", 28, Color.BLACK);          
+
+            try
+            {
+                PdfWriter pdfWriter = PdfWriter.GetInstance(document, stream);
+                pdfWriter.CloseStream = false;
+                document.Open();             
+
+                Paragraph paraIntern = new Paragraph();
+
+                foreach (var dep in listByDep)
+                {
+                    paraIntern.Add(dep.Key);                  
+
+                    PdfPTable table = new PdfPTable(2);
+                    // table.SpacingBefore = 20f;
+                    table.SpacingAfter = 10f;
+
+                    foreach (var number in dep.Values)
+                    {
+                        PdfPCell cell = new PdfPCell(new Phrase(number.Name));
+                        // cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.TOP_BORDER | Rectangle.LEFT_BORDER;
+                        table.AddCell(cell);
+                        cell = new PdfPCell(new Phrase(number.NumberIntern));
+                        // cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER;
+                        table.AddCell(cell);
+                    }
+                    paraIntern.Add(table);
+                }
+
+                Paragraph parTitle = new Paragraph("Telefoonlijst");
+                parTitle.Alignment = Element.ALIGN_CENTER;
+                Paragraph parInternTitle = new Paragraph();                
+                parInternTitle.Add("Interne nummers");
+                parInternTitle.SpacingAfter = 10f;
+
+                document.Add(parTitle);
+                document.Add(parInternTitle);
+                document.Add(paraIntern);     
+             
+
+                document.Close();
+            }
+            catch (DocumentException de)
+            {
+                Console.Error.WriteLine(de.Message + "My DocumentException");
+            }
+            catch (IOException ioe)
+            {
+                Console.Error.WriteLine(ioe.Message + "My IOException");
+            }
+            document.Close();
+
+            stream.Flush();
+            stream.Position = 0;
+
+            return stream;
+        }
+        public static List<Group<string, Telephonelist>> TelephoneListByDepartment(AssetManagerContext db)
+        {
+            var currentPhones = db.UsePeriods
+           .Include(u => u.Asset)
+           .Include(u => u.Status)
+           .Include(u => u.UserAccount)
+           .Where(u => u.Asset is Telephone)
+           .Where(u => u.EndDate == null || u.EndDate >= DateTime.Now)
+           .Where(u => u.UserAccount != null)
+            .Select(u => new Telephonelist
+            {
+                Department = u.UserAccount.Department,
+                Name = u.UserAccount.Name,
+                NumberIntern = (u.Asset as Telephone).NumberIntern
+            });
+
+            var grouped1 = from phone in currentPhones
+                           group phone by phone.Department into groupedPhones
+                           orderby groupedPhones.Key
+                           select new Group<string, Telephonelist>
+                           { Key = groupedPhones.Key, Values = groupedPhones.OrderBy(t => t.Name) };
+            return grouped1.ToList();
         }
     }
 }

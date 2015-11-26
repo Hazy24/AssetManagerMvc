@@ -179,6 +179,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MonitorsController.cs" />
     <Compile Include="Controllers\PrintersController.cs" />
+    <Compile Include="Controllers\TelephoneListController.cs" />
     <Compile Include="Controllers\TelephonesController.cs" />
     <Compile Include="Controllers\UsePeriodsController.cs" />
     <Compile Include="Controllers\UserAccountsController.cs" />
@@ -249,6 +250,7 @@
     <Compile Include="Models\Monitor.cs" />
     <Compile Include="Models\Printer.cs" />
     <Compile Include="Models\Telephone.cs" />
+    <Compile Include="Models\TelephoneList.cs" />
     <Compile Include="Models\UsePeriod.cs" />
     <Compile Include="Models\UserAccount.cs" />
     <Compile Include="Models\Util.cs" />
@@ -355,6 +357,7 @@
     <Content Include="Views\Telephones\Index.cshtml" />
     <Content Include="Views\Telephones\_TelephoneType.cshtml" />
     <Content Include="Views\Monitors\_MaxResolution.cshtml" />
+    <Content Include="Views\TelephoneList\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

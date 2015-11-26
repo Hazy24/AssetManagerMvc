@@ -177,13 +177,13 @@ namespace AssetManagerMvc.Controllers
         {
             if (string.IsNullOrEmpty(maxResolution))
             {
-                ViewBag.TelephoneType = new SelectList(db.Telephones, "MaxRsolution", "MaxRsolution")
+                ViewBag.MaxResolution = new SelectList(db.Monitors, "MaxResolution", "MaxResolution")
                 .GroupBy(f => f.Text).Select(f => f.First()) // == Distinct              
                 .OrderBy(f => f.Text);
             }
             else
             {
-                ViewBag.TelephoneType = new SelectList(db.Telephones, "MaxRsolution", "MaxRsolution", maxResolution)
+                ViewBag.MaxResolution = new SelectList(db.Monitors, "MaxResolution", "MaxResolution", maxResolution)
                 .GroupBy(f => f.Text).Select(f => f.First()) // == Distinct              
                 .OrderBy(f => f.Text);
             }
