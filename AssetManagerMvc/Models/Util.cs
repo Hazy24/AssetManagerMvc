@@ -171,13 +171,30 @@ namespace AssetManagerMvc.Models
             {
                 PdfWriter pdfWriter = PdfWriter.GetInstance(document, stream);
                 pdfWriter.CloseStream = false;
-                document.Open();             
+                document.Open();            
 
-                Paragraph paraIntern = new Paragraph();
+                
+                PdfPTable layoutTable = new PdfPTable(2);
+                layoutTable.WidthPercentage = 100f;                
+                
+                PdfPCell cellTitle = CreateCell(5f, "Telefoonlijst");
+                cellTitle.Colspan = 2;
+                cellTitle.HorizontalAlignment = 1;
+                layoutTable.AddCell(cellTitle);
 
+                PdfPTable tblLeft = new PdfPTable(1);
+
+
+                PdfPCell cellIntern = CreateCell(5f);
+                Paragraph parInternTitle = new Paragraph();
+                parInternTitle.Add("Interne nummers");
+                parInternTitle.SpacingAfter = 10f;
+                cellIntern.AddElement(parInternTitle);             
+
+                // Paragraph paraIntern = new Paragraph();
                 foreach (var dep in listByDep)
                 {
-                    paraIntern.Add(dep.Key);                  
+                    cellIntern.AddElement(new Phrase(dep.Key));
 
                     PdfPTable table = new PdfPTable(2);
                     // table.SpacingBefore = 20f;
@@ -192,19 +209,19 @@ namespace AssetManagerMvc.Models
                         // cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER;
                         table.AddCell(cell);
                     }
-                    paraIntern.Add(table);
+                    cellIntern.AddElement(table);
                 }
+                // cellIntern.AddElement(paraIntern);
 
-                Paragraph parTitle = new Paragraph("Telefoonlijst");
-                parTitle.Alignment = Element.ALIGN_CENTER;
-                Paragraph parInternTitle = new Paragraph();                
-                parInternTitle.Add("Interne nummers");
-                parInternTitle.SpacingAfter = 10f;
+                tblLeft.AddCell(cellIntern);
+                tblLeft.AddCell(CreateCell(5f, "LOG"));
+                PdfPCell nesthousing = new PdfPCell(tblLeft);
+                nesthousing.Padding = 0f;
+                layoutTable.AddCell(nesthousing);
+                layoutTable.AddCell(CreateCell(5f, "GSM"));
 
-                document.Add(parTitle);
-                document.Add(parInternTitle);
-                document.Add(paraIntern);     
-             
+                document.Add(layoutTable);
+                // document.Add(paraIntern);
 
                 document.Close();
             }
@@ -222,6 +239,14 @@ namespace AssetManagerMvc.Models
             stream.Position = 0;
 
             return stream;
+        }
+        private static PdfPCell CreateCell(float padding = 5f, string str = null)
+        {
+            var c = new PdfPCell();
+            if (!string.IsNullOrEmpty(str))
+            { c.Phrase = new Phrase(str); }
+            c.Padding = padding;
+            return c;
         }
         public static List<Group<string, Telephonelist>> TelephoneListByDepartment(AssetManagerContext db)
         {
