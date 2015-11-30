@@ -53,6 +53,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.DirectoryServices" />
@@ -178,6 +181,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MonitorsController.cs" />
+    <Compile Include="Controllers\PatchPointsController.cs" />
     <Compile Include="Controllers\PrintersController.cs" />
     <Compile Include="Controllers\TelephoneListController.cs" />
     <Compile Include="Controllers\TelephonesController.cs" />
@@ -248,6 +252,7 @@
     <Compile Include="Models\Incident.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Monitor.cs" />
+    <Compile Include="Models\PatchPoint.cs" />
     <Compile Include="Models\Printer.cs" />
     <Compile Include="Models\Telephone.cs" />
     <Compile Include="Models\TelephoneList.cs" />
@@ -358,6 +363,7 @@
     <Content Include="Views\Telephones\_TelephoneType.cshtml" />
     <Content Include="Views\Monitors\_MaxResolution.cshtml" />
     <Content Include="Views\TelephoneList\Index.cshtml" />
+    <Content Include="Views\PatchPoints\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

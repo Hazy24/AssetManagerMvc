@@ -1,0 +1,55 @@
+﻿@model IEnumerable<AssetManagerMvc.Models.PatchPoint>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@ViewBag.WorksSheet
+
+<table class="table alternating">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(m => m.Number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(m => m.Floor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(m => m.Office.Number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(m => m.Office.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(m => m.Tile)
+        </th>
+        <th>
+            @Html.DisplayNameFor(m => m.Asset.CompoundId)
+        </th>
+    </tr>
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Floor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Office.Number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Office.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tile)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Asset.CompoundId)
+        </td>          
+    </tr>
+}
+</table>
