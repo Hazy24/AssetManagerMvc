@@ -61,9 +61,10 @@ namespace AssetManagerMvc.Controllers
                     usePeriods = usePeriods.Where(u => u.Asset is Computer);
                     break;
             }
+            // hideUitGebruik
             if ((hideUitGebruik == null) || (hideUitGebruik == true))
             { usePeriods = usePeriods.Where(up => up.Status.UsePeriodStatusId != 4); } // "uit gebruik"
-
+            // current
             if ((current == null) || (current == true))
             {
                 usePeriods = usePeriods.Where(up => up.EndDate == null ||

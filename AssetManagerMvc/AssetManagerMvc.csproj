@@ -44,6 +44,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DocX, Version=1.0.0.19, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocX.1.0.0.19\lib\net40\DocX.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="iTextSharp, Version=4.1.6.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca">
       <HintPath>..\packages\iTextSharp-LGPL.4.1.6\lib\iTextSharp.dll</HintPath>
       <Private>True</Private>
@@ -183,6 +187,7 @@
     <Compile Include="Controllers\MonitorsController.cs" />
     <Compile Include="Controllers\PatchPointsController.cs" />
     <Compile Include="Controllers\PrintersController.cs" />
+    <Compile Include="Controllers\RepairInfoController.cs" />
     <Compile Include="Controllers\TelephoneListController.cs" />
     <Compile Include="Controllers\TelephonesController.cs" />
     <Compile Include="Controllers\UsePeriodsController.cs" />
@@ -248,6 +253,7 @@
     <Compile Include="Models\AssetManagerContext.cs" />
     <Compile Include="Models\Beamer.cs" />
     <Compile Include="Models\Computer.cs" />
+    <Compile Include="Models\RepairInfo.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Incident.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -364,6 +370,7 @@
     <Content Include="Views\Monitors\_MaxResolution.cshtml" />
     <Content Include="Views\TelephoneList\Index.cshtml" />
     <Content Include="Views\PatchPoints\Index.cshtml" />
+    <Content Include="Views\RepairInfo\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

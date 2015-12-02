@@ -16,6 +16,20 @@ namespace AssetManagerMvc.Models
             StartDate = asset.PurchaseDate != null ? asset.PurchaseDate : DateTime.Now;
             UsePeriodStatusId = statusId;
         }
+        public UsePeriod Copy()
+        {
+            UsePeriod copy = new UsePeriod();
+            copy.AssetId = this.AssetId;
+            copy.UserAccountId = this.UserAccountId;
+            copy.UsePeriodStatusId = this.UsePeriodStatusId;
+            copy.StartDate = this.StartDate;
+            copy.EndDate = this.EndDate;
+            copy.Remark = this.Remark;
+            copy.Function = this.Function;
+            copy.UserIsAdmin = this.UserIsAdmin;            
+
+            return copy;
+        }
 
         public int UsePeriodId { get; set; }
         public int? UserAccountId { get; set; }
