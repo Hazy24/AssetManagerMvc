@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -20,5 +21,17 @@ namespace AssetManagerMvc.Models
         public string NumberIntern { get; set; }
 
         public string Port { get; set; }
+
+        [NotMapped]
+        public string CompoundIdAndNumberIntern
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(NumberIntern))
+                { return CompoundId + " - " + Number; }
+                else
+                { return CompoundId + " - " + NumberIntern; }
+            }
+        }
     }
 }

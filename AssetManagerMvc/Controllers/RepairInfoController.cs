@@ -17,6 +17,14 @@ namespace AssetManagerMvc.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            
+            var useperiods = db.UsePeriods
+                .Where(up => up.EndDate == null || up.EndDate >= DateTime.Now)
+                .Where(up => up.Asset is Computer)
+                .Select(up => new { AssetId = up.AssetId, UserName = up.UserAccount.Name, Function = up.Function })
+                .ToList()
+                ;
+
             ViewBag.CompoundId = new SelectList(db.Assets.Where(x => x is Computer), "CompoundId", "CompoundIdAndSerialNumber");
             return View(new RepairInfo());
         }

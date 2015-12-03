@@ -90,6 +90,8 @@ namespace AssetManagerMvc.Controllers
             ViewBag.PrinterNameSortParm = sortOrder == "printername" ? "printername_desc" : "printername";
             ViewBag.BeamerNameSortParm = sortOrder == "beamername" ? "beamername_desc" : "beamername";
             ViewBag.SerialNumberSortParm = sortOrder == "serialnumber" ? "serialnumber_desc" : "serialnumber";
+            ViewBag.NumberSortParm = sortOrder == "number" ? "number_desc" : "number";
+            ViewBag.TelephoneTypeSortParm = sortOrder == "telephonetype" ? "telephonetype_desc" : "telephonetype";
             ViewBag.DescriptionSortParm = sortOrder == "description" ? "description_desc" : "description";
             ViewBag.FullNameSortParm = sortOrder == "fullname" ? "fullname_desc" : "fullname";
             ViewBag.FunctionSortParm = sortOrder == "function" ? "function_desc" : "function";
@@ -123,6 +125,18 @@ namespace AssetManagerMvc.Controllers
                     break;
                 case "serialnumber_desc":
                     usePeriods = usePeriods.OrderByDescending(u => u.Asset.SerialNumber);
+                    break;
+                case "number":
+                    usePeriods = usePeriods.OrderBy(u => (u.Asset as Telephone).Number);
+                    break;
+                case "number_desc":
+                    usePeriods = usePeriods.OrderByDescending(u => (u.Asset as Telephone).Number);
+                    break;
+                case "telephonetype":
+                    usePeriods = usePeriods.OrderBy(u => (u.Asset as Telephone).TelephoneType);
+                    break;
+                case "telephonetype_desc":
+                    usePeriods = usePeriods.OrderByDescending(u => (u.Asset as Telephone).TelephoneType);
                     break;
                 case "description":
                     usePeriods = usePeriods.OrderBy(u => u.Status.Description);
@@ -281,9 +295,9 @@ namespace AssetManagerMvc.Controllers
                     break;
                 case "Telephones":
                     if (assetId == null)
-                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Telephone), "AssetId", "CompoundIdAndSerialNumber"); }
+                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Telephone), "AssetId", "CompoundIdAndNumberIntern"); }
                     else
-                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Telephone), "AssetId", "CompoundIdAndSerialNumber", assetId); }
+                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Telephone), "AssetId", "CompoundIdAndNumberIntern", assetId); }
                     break;
                 default:
                     ViewBag.AssetId = new SelectList(db.Assets, "AssetId", "CompoundIdAndSerialNumber");

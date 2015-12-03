@@ -18,9 +18,9 @@
         Current: @Html.CheckBox("Current", true)
         Hide 'uit gebruik': @Html.CheckBox("HideUitGebruik", true)
         @Html.DropDownList("Category", (SelectList)ViewBag.CategorySelectList, new
-           {
-               onchange = "document.getElementById('TheForm').submit();"
-           })
+   {
+       onchange = "document.getElementById('TheForm').submit();"
+   })
         <input type="submit" value="Apply" />
     </p>
 }
@@ -40,9 +40,23 @@
             { @Html.ActionLink("Beamer Name", "Index", new { sortOrder = ViewBag.BeamerNameSortParm, searchString = ViewBag.Filter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik, category = ViewBag.SelectedCategory });
             }
         </th>
+
         <th>
-            @Html.ActionLink("Serial Number", "Index", new { sortOrder = ViewBag.SerialNumberSortParm, searchString = ViewBag.Filter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik, category = ViewBag.SelectedCategory })
+            @if (ViewBag.SelectedCategory == "Telephones")
+            {
+                @Html.ActionLink("Number", "Index", new { sortOrder = ViewBag.NumberSortParm, searchString = ViewBag.Filter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik, category = ViewBag.SelectedCategory })
+            }
+            else
+            {
+                @Html.ActionLink("Serial Number", "Index", new { sortOrder = ViewBag.SerialNumberSortParm, searchString = ViewBag.Filter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik, category = ViewBag.SelectedCategory })
+            }
         </th>
+        @if (ViewBag.SelectedCategory == "Telephones")
+        {
+            <th>
+                @Html.ActionLink("Type", "Index", new { sortOrder = ViewBag.TelephoneTypeSortParm, searchString = ViewBag.Filter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik, category = ViewBag.SelectedCategory })
+            </th>
+        }
         <th>
             @Html.ActionLink("Status", "Index", new { sortOrder = ViewBag.DescriptionSortParm, searchString = ViewBag.Filter, current = ViewBag.Current, hideUitgebruik = ViewBag.HideUitgebruik, category = ViewBag.SelectedCategory })
         </th>
@@ -74,8 +88,19 @@
                 }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Asset.SerialNumber)
+                @if (ViewBag.SelectedCategory == "Telephones")
+                {  @Html.DisplayFor(modelItem => ((Telephone)item.Asset).Number)}
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.Asset.SerialNumber)
+                }
             </td>
+            @if (ViewBag.SelectedCategory == "Telephones")
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => ((Telephone)item.Asset).TelephoneType)
+                </td>
+            }
 
             @Html.DisplayFor(modelItem => item.Status, "UseperiodStatusTableCell")
 
@@ -104,7 +129,7 @@
 
 @if (ViewBag.repairInfo == true)
 {
-    <script type="text/javascript">        
+    <script type="text/javascript">
         window.location.href = "/RepairInfo/Download";
     </script>
 }

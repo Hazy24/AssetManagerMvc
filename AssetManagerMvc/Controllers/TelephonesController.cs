@@ -27,22 +27,36 @@ namespace AssetManagerMvc.Controllers
             ViewBag.CurrentFilter = searchString;
 
             ViewBag.CompoundIdSortParm = String.IsNullOrEmpty(sortOrder) ? "compoundId_desc" : "";
-            ViewBag.SerialNumberSortParm = sortOrder == "serialnumber" ? "serialnumber_desc" : "serialnumber";
+            ViewBag.NumberSortParm = sortOrder == "number" ? "number_desc" : "number";
+            ViewBag.InternSortParm = sortOrder == "intern" ? "intern_desc" : "intern";
+            ViewBag.TelephoneTypeSortParm = sortOrder == "telephonetype" ? "telephonetype_desc" : "telephonetype";
             ViewBag.ManufacturerSortParm = sortOrder == "manufacturer" ? "manufacturer_desc" : "manufacturer";
             ViewBag.ModelNameSortParm = sortOrder == "modelname" ? "modelname_desc" : "modelname";
             ViewBag.PurchaseDateSortParm = sortOrder == "purchasedate" ? "purchasedate_desc" : "purchasedate";
-            ViewBag.InternSortParm = sortOrder == "intern" ? "intern_desc" : "intern";
+            
 
             switch (sortOrder)
             {
                 case "compoundId_desc":
                     telephones = telephones.OrderByDescending(m => m.AssetId);
                     break;
-                case "serialnumber":
-                    telephones = telephones.OrderBy(m => m.SerialNumber);
+                case "number":
+                    telephones = telephones.OrderBy(m => m.Number);
                     break;
-                case "serialnumber_desc":
-                    telephones = telephones.OrderByDescending(m => m.SerialNumber);
+                case "number_desc":
+                    telephones = telephones.OrderByDescending(m => m.Number);
+                    break;
+                case "intern":
+                    telephones = telephones.OrderBy(m => m.NumberIntern);
+                    break;
+                case "intern_desc":
+                    telephones = telephones.OrderByDescending(m => m.NumberIntern);
+                    break;
+                case "telephonetype":
+                    telephones = telephones.OrderBy(m => m.TelephoneType);
+                    break;
+                case "telephonetype_desc":
+                    telephones = telephones.OrderByDescending(m => m.TelephoneType);
                     break;
                 case "manufacturer":
                     telephones = telephones.OrderBy(m => m.Manufacturer);
@@ -62,12 +76,7 @@ namespace AssetManagerMvc.Controllers
                 case "purchasedate_desc":
                     telephones = telephones.OrderByDescending(m => m.PurchaseDate);
                     break;
-                case "intern":
-                    telephones = telephones.OrderBy(m => m.NumberIntern);
-                    break;
-                case "intern_desc":
-                    telephones = telephones.OrderByDescending(m => m.NumberIntern);
-                    break;
+              
 
                 default:  // compoundId ascending 
                     telephones = telephones.OrderBy(m => m.AssetId);
