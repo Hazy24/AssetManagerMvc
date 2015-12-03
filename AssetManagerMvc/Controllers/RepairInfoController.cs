@@ -40,10 +40,22 @@ namespace AssetManagerMvc.Controllers
                 {
                     up.EndDate = DateTime.Now;
                 }
+
+                if (usePeriods[0].UserAccount != null)
+                {
+                    repairInfo.UserNameFunction = usePeriods[0].UserAccount.Name;
+                    if (!string.IsNullOrWhiteSpace(usePeriods[0].Function))
+                    { repairInfo.UserNameFunction += " - " + usePeriods[0].Function; }
+                }
+                else
+                {
+                    if (!string.IsNullOrWhiteSpace(usePeriods[0].Function))
+                    { repairInfo.UserNameFunction = usePeriods[0].Function; }                   
+                }
             }
             else
             {
-                newUp = new UsePeriod(db.Assets.Find(assetId), 3); // statusId 3 = binnen ter herstelling
+                newUp = new UsePeriod(db.Assets.Find(assetId), 3); // statusId 3 = binnen ter herstelling                
             }
 
             newUp.StartDate = DateTime.Now;
@@ -66,17 +78,21 @@ namespace AssetManagerMvc.Controllers
 
             using (DocX document = DocX.Load(fileName))
             {
-                document.ReplaceText("%Date%", string.Format("{0:d}", repairInfo.Date));
-                document.ReplaceText("%CompoundId%", repairInfo.CompoundId);
-                if (string.IsNullOrEmpty(repairInfo.Remark)) { repairInfo.Remark = " "; } // set spaces for strings or ReplaceText will complain if they're empty
-                document.ReplaceText("%Remark%", repairInfo.Remark);
-                if (string.IsNullOrEmpty(repairInfo.Reason)) { repairInfo.Reason = " "; }// set spaces for strings or ReplaceText will complain if they're empty
+                // set spaces for strings or ReplaceText will complain if they're empty
+                if (string.IsNullOrEmpty(repairInfo.UserNameFunction)) { repairInfo.UserNameFunction = " "; }
+                if (string.IsNullOrEmpty(repairInfo.Remark)) { repairInfo.Remark = " "; }
+                if (string.IsNullOrEmpty(repairInfo.Reason)) { repairInfo.Reason = " "; }
+                // ReplaceText
+                document.ReplaceText("%Date%", string.Format("{0:d}", repairInfo.Date));                
+                document.ReplaceText("%UserNameFunction%",  repairInfo.UserNameFunction);
+                document.ReplaceText("%CompoundId%", repairInfo.CompoundId);                
+                document.ReplaceText("%Remark%", repairInfo.Remark);                
                 document.ReplaceText("%Reason%", repairInfo.Reason);              
-
+                // prepare stream
                 document.SaveAs(ms);
                 ms.Flush();
                 ms.Position = 0;
-               
+               // save filestream for next requests
                 TempData["repairDoc"] = File(ms, "application/msword", repairInfo.CompoundId + ".docx"); 
 
             }

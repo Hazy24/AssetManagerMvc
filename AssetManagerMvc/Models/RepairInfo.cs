@@ -17,7 +17,7 @@ namespace AssetManagerMvc.Models
         [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
 
-        public string Owner { get; set; }
+        public string UserNameFunction { get; set; }        
 
         public string CompoundId { get; set; }
 
