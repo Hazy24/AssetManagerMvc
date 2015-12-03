@@ -18,7 +18,7 @@ namespace AssetManagerMvc.Controllers
 
         // GET: UsePeriods
         public ActionResult Index(string sortOrder, string searchString, bool? current,
-            bool? hideUitGebruik, string category)
+            bool? hideUitGebruik, string category, bool? repair)
         {
             var usePeriods = db.UsePeriods
                 .Include(u => u.Asset)
@@ -145,6 +145,12 @@ namespace AssetManagerMvc.Controllers
                 default:  // compoundId ascending 
                     usePeriods = usePeriods.OrderBy(u => u.AssetId);
                     break;
+            }
+
+            // repair doc
+            if (repair == true)
+            {
+                ViewBag.RepairInfo = true;
             }
 
             return View(usePeriods.ToList());

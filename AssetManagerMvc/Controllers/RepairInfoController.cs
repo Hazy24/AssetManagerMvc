@@ -20,6 +20,7 @@ namespace AssetManagerMvc.Controllers
             ViewBag.CompoundId = new SelectList(db.Assets.Where(x => x is Computer), "CompoundId", "CompoundIdAndSerialNumber");
             return View(new RepairInfo());
         }
+
         [HttpPost]
         public ActionResult Index(RepairInfo repairInfo)
         {
@@ -44,40 +45,54 @@ namespace AssetManagerMvc.Controllers
             {
                 newUp = new UsePeriod(db.Assets.Find(assetId), 3); // statusId 3 = binnen ter herstelling
             }
+
             newUp.StartDate = DateTime.Now;
+
             if (string.IsNullOrWhiteSpace(newUp.Remark))
             {
                 newUp.Remark = repairInfo.Remark;
             }
             else
             {
-                newUp.Remark += Environment.NewLine +  repairInfo.Remark;
+                newUp.Remark += Environment.NewLine + repairInfo.Remark;
             }
 
             db.UsePeriods.Add(newUp);
             db.SaveChanges();
 
 
-            string fileName = @"S:\My Documents\deliverInfo.docx";
+            string fileName = Server.MapPath("~/Docs/deliverInfo.docx");
             MemoryStream ms = new MemoryStream();
-            
+
             using (DocX document = DocX.Load(fileName))
-            {               
+            {
                 document.ReplaceText("%Date%", string.Format("{0:d}", repairInfo.Date));
                 document.ReplaceText("%CompoundId%", repairInfo.CompoundId);
+                if (string.IsNullOrEmpty(repairInfo.Remark)) { repairInfo.Remark = " "; } // set spaces for strings or ReplaceText will complain if they're empty
                 document.ReplaceText("%Remark%", repairInfo.Remark);
-                document.ReplaceText("%Reason%", repairInfo.Reason);
-                
-
-                // document.SaveAs(@"S:\My Documents\delivered.docx");
+                if (string.IsNullOrEmpty(repairInfo.Reason)) { repairInfo.Reason = " "; }// set spaces for strings or ReplaceText will complain if they're empty
+                document.ReplaceText("%Reason%", repairInfo.Reason);              
 
                 document.SaveAs(ms);
                 ms.Flush();
                 ms.Position = 0;
+               
+                TempData["repairDoc"] = File(ms, "application/msword", repairInfo.CompoundId + ".docx"); 
 
-                return File(ms, "application/msword", repairInfo.CompoundId + ".docx");                
-            }       
-            
+            }
+
+            return RedirectToAction("Index", "UsePeriods", new
+            {
+                searchString = assetId.ToString(),
+                current = false,
+                hideUitGebruik = false,
+                category = "Computer", 
+                repair = true
+            });
+        }
+        public ActionResult Download()
+        {         
+            return (FileStreamResult)TempData["repairDoc"];
         }
     }
 }

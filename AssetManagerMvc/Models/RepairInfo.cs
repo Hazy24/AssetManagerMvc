@@ -10,13 +10,7 @@ namespace AssetManagerMvc.Models
     {
         public RepairInfo()
         {
-            Date = DateTime.Now;
-
-            // set spaces for strings or ReplaceText will complain if they're empty
-            Owner = " ";
-            CompoundId = " ";
-            Reason = " ";
-            Remark = " ";
+            Date = DateTime.Now;        
         }
 
         [DataType(DataType.Date)]

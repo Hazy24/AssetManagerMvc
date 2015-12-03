@@ -100,5 +100,11 @@
             </td>
         </tr>
     }
-
 </table>
+
+@if (ViewBag.repairInfo == true)
+{
+    <script type="text/javascript">        
+        window.location.href = "/RepairInfo/Download";
+    </script>
+}
