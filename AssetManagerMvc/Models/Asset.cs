@@ -55,4 +55,9 @@ namespace AssetManagerMvc.Models
         }
         public virtual ICollection<UsePeriod> UsePeriods { get; set; }
     }
+    public class AssetSelectListItem
+    {
+        public string CompoundId { get; set; }
+        public string Identifier { get; set; }
+    }
 }

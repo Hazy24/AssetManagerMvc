@@ -17,15 +17,35 @@ namespace AssetManagerMvc.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            
+            string category = "Computers";
             var useperiods = db.UsePeriods
                 .Where(up => up.EndDate == null || up.EndDate >= DateTime.Now)
                 .Where(up => up.Asset is Computer)
-                .Select(up => new { AssetId = up.AssetId, UserName = up.UserAccount.Name, Function = up.Function })
+                .OrderBy(up => up.AssetId)
+                .Select(up => new { AssetId = up.AssetId, Name = up.UserAccount.Name,
+                    Function = up.Function, SerialNumber = up.Asset.SerialNumber })
                 .ToList()
                 ;
 
-            ViewBag.CompoundId = new SelectList(db.Assets.Where(x => x is Computer), "CompoundId", "CompoundIdAndSerialNumber");
+            List<AssetSelectListItem> list2 = new List<AssetSelectListItem>();
+            foreach (var item in useperiods)
+            {
+                AssetSelectListItem asli = new AssetSelectListItem();
+                asli.CompoundId = category.Substring(0, 1) + item.AssetId.ToString();
+                asli.Identifier = asli.CompoundId + " - ";
+                if (string.IsNullOrEmpty(item.Name))
+                {
+                    if (string.IsNullOrEmpty(item.Function))
+                    {
+                        asli.Identifier += item.SerialNumber;
+                    }
+                    else { asli.Identifier += item.Function; }
+                }
+                else { asli.Identifier += item.Name; }
+                list2.Add(asli);
+            }
+
+            ViewBag.CompoundId = new SelectList(list2, "CompoundId", "Identifier");
             return View(new RepairInfo());
         }
 
@@ -104,13 +124,13 @@ namespace AssetManagerMvc.Controllers
                 TempData["repairDoc"] = File(ms, "application/msword", repairInfo.CompoundId + ".docx"); 
 
             }
-
+            
             return RedirectToAction("Index", "UsePeriods", new
             {
                 searchString = assetId.ToString(),
                 current = false,
                 hideUitGebruik = false,
-                category = "Computer", 
+                category = "Computer",
                 repair = true
             });
         }

@@ -165,6 +165,8 @@ namespace AssetManagerMvc.Models
             MemoryStream stream = new MemoryStream();
             Document document = new Document();
             List<Group<string, Telephonelist>> listByDep = TelephoneListByDepartment(db);
+            List<Telephonelist> listLog = TelephoneListLog(db);
+            List<Telephonelist> listGSM = TelephoneListGSM(db);
             // Font font = FontFactory.GetFont("Arial", 28, Color.BLACK);          
 
             try
@@ -175,30 +177,26 @@ namespace AssetManagerMvc.Models
 
                 
                 PdfPTable layoutTable = new PdfPTable(2);
-                layoutTable.WidthPercentage = 100f;                
+                layoutTable.WidthPercentage = 100f;
+                layoutTable.SplitLate = false;                
                 
                 PdfPCell cellTitle = CreateCell(5f, "Telefoonlijst");
                 cellTitle.Colspan = 2;
-                cellTitle.HorizontalAlignment = 1;
+                cellTitle.HorizontalAlignment = 1; // centered
                 layoutTable.AddCell(cellTitle);
 
                 PdfPTable tblLeft = new PdfPTable(1);
 
-
-                PdfPCell cellIntern = CreateCell(5f);
-                Paragraph parInternTitle = new Paragraph();
-                parInternTitle.Add("Interne nummers");
-                parInternTitle.SpacingAfter = 10f;
-                cellIntern.AddElement(parInternTitle);             
-
-                // Paragraph paraIntern = new Paragraph();
+                PdfPCell cellIntern = CreateCellWithParaTitle(5f, "Interne nummers");                     
+                                
                 foreach (var dep in listByDep)
                 {
-                    cellIntern.AddElement(new Phrase(dep.Key));
+                    Paragraph para = new Paragraph();
+                    para.Add(dep.Key);
+                    para.SpacingAfter = 3f;
+                    cellIntern.AddElement(para);
 
-                    PdfPTable table = new PdfPTable(2);
-                    // table.SpacingBefore = 20f;
-                    table.SpacingAfter = 10f;
+                    PdfPTable table = depTable();                   
 
                     foreach (var number in dep.Values)
                     {
@@ -211,17 +209,40 @@ namespace AssetManagerMvc.Models
                     }
                     cellIntern.AddElement(table);
                 }
-                // cellIntern.AddElement(paraIntern);
+
+                PdfPCell cellLog = CreateCellWithParaTitle(5f, "log");
+                PdfPTable tableLog = depTable();               
+
+                foreach (var tel in listLog)
+                {
+                    PdfPCell cell = new PdfPCell(new Phrase(tel.Name));
+                    tableLog.AddCell(cell);
+                    cell = new PdfPCell(new Phrase(tel.NumberIntern));
+                    tableLog.AddCell(cell);
+                }
+                cellLog.AddElement(tableLog);
+
+                PdfPCell cellGSM = CreateCellWithParaTitle(5f, "GSM");
+                PdfPTable tableGSM = depTable();
+
+                foreach (var tel in listGSM)
+                {
+                    PdfPCell cell = new PdfPCell(new Phrase(tel.Name));
+                    tableGSM.AddCell(cell);
+                    cell = new PdfPCell(new Phrase(tel.Number));                    
+                    tableGSM.AddCell(cell);
+                }
+                cellGSM.AddElement(tableGSM);
+
 
                 tblLeft.AddCell(cellIntern);
-                tblLeft.AddCell(CreateCell(5f, "LOG"));
+                tblLeft.AddCell(cellLog);
                 PdfPCell nesthousing = new PdfPCell(tblLeft);
                 nesthousing.Padding = 0f;
                 layoutTable.AddCell(nesthousing);
-                layoutTable.AddCell(CreateCell(5f, "GSM"));
+                layoutTable.AddCell(cellGSM);
 
-                document.Add(layoutTable);
-                // document.Add(paraIntern);
+                document.Add(layoutTable);                
 
                 document.Close();
             }
@@ -248,6 +269,27 @@ namespace AssetManagerMvc.Models
             c.Padding = padding;
             return c;
         }
+        private static PdfPCell CreateCellWithParaTitle(float padding, string str)
+        {
+            var c = CreateCell(padding);
+            if (!string.IsNullOrEmpty(str))
+            {
+                Paragraph para = new Paragraph();
+                para.Add(str);
+                para.SpacingAfter = 10f;
+                c.AddElement(para);
+            }            
+            return c;                
+        }
+        private static PdfPTable depTable()
+        {
+            PdfPTable table = new PdfPTable(2);
+            table.WidthPercentage = 95f;
+            // table.SpacingBefore = 20f;
+            table.SpacingAfter = 10f;
+            return table;
+        }      
+        // list of intern telephone numbers, no gsm's, without log department
         public static List<Group<string, Telephonelist>> TelephoneListByDepartment(AssetManagerContext db)
         {
             var currentPhones = db.UsePeriods
@@ -255,8 +297,10 @@ namespace AssetManagerMvc.Models
            .Include(u => u.Status)
            .Include(u => u.UserAccount)
            .Where(u => u.Asset is Telephone)
+           .Where(u => (u.Asset as Telephone).TelephoneType != "GSM")
            .Where(u => u.EndDate == null || u.EndDate >= DateTime.Now)
            .Where(u => u.UserAccount != null)
+           .Where(u => u.UserAccount.Department != "log")
             .Select(u => new Telephonelist
             {
                 Department = u.UserAccount.Department,
@@ -270,6 +314,69 @@ namespace AssetManagerMvc.Models
                            select new Group<string, Telephonelist>
                            { Key = groupedPhones.Key, Values = groupedPhones.OrderBy(t => t.Name) };
             return grouped1.ToList();
+        }
+        public static List<Telephonelist> TelephoneListLog(AssetManagerContext db)
+        {
+            var logPhones = db.UsePeriods
+           .Include(u => u.Asset)
+           .Include(u => u.Status)
+           .Include(u => u.UserAccount)
+           .Where(u => u.Asset is Telephone)
+           .Where(u => (u.Asset as Telephone).TelephoneType != "GSM")
+           .Where(u => u.EndDate == null || u.EndDate >= DateTime.Now)
+           .Where(u => u.UserAccount != null)
+           .Where(u => u.UserAccount.Department == "log")
+            .Select(u => new Telephonelist
+            {
+                Department = u.UserAccount.Department,
+                Name = u.UserAccount.Name,
+                NumberIntern = (u.Asset as Telephone).NumberIntern
+            });
+
+            return logPhones.ToList();
+        }
+        public static List<Telephonelist> TelephoneListGSM(AssetManagerContext db)
+        {
+            var gsmPhones = db.UsePeriods
+           .Include(u => u.Asset)
+           .Include(u => u.Status)
+           .Include(u => u.UserAccount)
+           .Where(u => u.Asset is Telephone)
+           .Where(u => (u.Asset as Telephone).TelephoneType == "GSM")
+           .Where(u => u.EndDate == null || u.EndDate >= DateTime.Now)
+           .Where(u => u.UserAccount != null)           
+            .Select(u => new Telephonelist
+            {
+                Department = u.UserAccount.Department,
+                Name = u.UserAccount.Name,
+                Number = (u.Asset as Telephone).Number
+            });
+
+            return gsmPhones.ToList();
+        }
+
+        public static List<AssetSelectListItem> CompoundIdAndUserAccountNameOrFunction(AssetManagerContext db)
+        {           
+
+            var usePeriods = db.UsePeriods
+              .Include(u => u.Asset)
+              .Include(u => u.Status)
+              .Include(u => u.UserAccount)
+              .Where(u => u.EndDate == null ||u.EndDate >= DateTime.Now) // current
+              .Select(u =>  new { CompoundId = u.Asset.CompoundId, Name = u.UserAccount.Name, Function = u.Function })            
+              ;
+
+            List<AssetSelectListItem> list2 = new List<AssetSelectListItem>();
+            foreach (var item in usePeriods)
+            {
+                AssetSelectListItem asli = new AssetSelectListItem();
+                asli.CompoundId = item.CompoundId;
+                if (string.IsNullOrEmpty(item.Name)) { asli.Identifier = item.Function; }
+                else { asli.Identifier = item.Name; }
+            }
+
+
+            return list2;
         }
     }   
 }

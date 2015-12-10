@@ -130,6 +130,6 @@
 @if (ViewBag.repairInfo == true)
 {
     <script type="text/javascript">
-        window.location.href = "/RepairInfo/Download";
+        window.location.href = "@Url.Action("Download", "RepairInfo")";
     </script>
 }

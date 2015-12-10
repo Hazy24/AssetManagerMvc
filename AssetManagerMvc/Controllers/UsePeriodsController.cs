@@ -163,8 +163,9 @@ namespace AssetManagerMvc.Controllers
 
             // repair doc
             if (repair == true)
-            {
+            {                
                 ViewBag.RepairInfo = true;
+                TempData.Keep("repairDoc");                
             }
 
             return View(usePeriods.ToList());
