@@ -6,31 +6,36 @@
 
 <h2>Index</h2>
 
-@ViewBag.WorksSheet
-
-<table class="table alternating">
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(m => m.Number)
+            @Html.DisplayNameFor(model => model.Number)
         </th>
         <th>
-            @Html.DisplayNameFor(m => m.Floor)
+            @Html.DisplayNameFor(model => model.Floor)
         </th>
         <th>
-            @Html.DisplayNameFor(m => m.Office.Number)
+            @Html.DisplayNameFor(model => model.RoomName)
         </th>
         <th>
-            @Html.DisplayNameFor(m => m.Office.Name)
+            @Html.DisplayNameFor(model => model.RoomNumber)
         </th>
         <th>
-            @Html.DisplayNameFor(m => m.Tile)
+            @Html.DisplayNameFor(model => model.Tile)
         </th>
         <th>
-            @Html.DisplayNameFor(m => m.Asset.CompoundId)
+            @Html.DisplayNameFor(model => model.Remark)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Function)
+        </th>
+        <th></th>
     </tr>
-@foreach (var item in Model)
-{
+
+@foreach (var item in Model) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Number)
@@ -39,17 +44,26 @@
             @Html.DisplayFor(modelItem => item.Floor)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Office.Number)
+            @Html.DisplayFor(modelItem => item.RoomName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Office.Name)
+            @Html.DisplayFor(modelItem => item.RoomNumber)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Tile)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Asset.CompoundId)
-        </td>          
+            @Html.DisplayFor(modelItem => item.Remark)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Function)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PatchPointId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PatchPointId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PatchPointId })
+        </td>
     </tr>
 }
+
 </table>

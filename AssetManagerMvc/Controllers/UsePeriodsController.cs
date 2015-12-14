@@ -194,10 +194,11 @@ namespace AssetManagerMvc.Controllers
 
             if (oldUsePeriodId != null)
             {
-                UsePeriod oldUsePeriod = db.UsePeriods.Single(oup => oup.UsePeriodId == oldUsePeriodId);
+                UsePeriod oldUsePeriod = db.UsePeriods.Find(oldUsePeriodId);                
                 oldUsePeriod.EndDate = DateTime.Today;
                 db.SaveChanges();
-                SetCreateAndEditViewbag(category, oldUsePeriod.AssetId);
+                SetCreateAndEditViewbag(category, oldUsePeriod.AssetId, null, 
+                    oldUsePeriod.UserAccountId, oldUsePeriod.Function);
             }
             else
             {

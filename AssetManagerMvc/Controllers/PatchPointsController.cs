@@ -1,151 +1,38 @@
-﻿using AssetManagerMvc.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using Excel = Microsoft.Office.Interop.Excel;
-using System.Data.Entity;
+using AssetManagerMvc.Models;
 
 namespace AssetManagerMvc.Controllers
 {
     public class PatchPointsController : Controller
     {
         private AssetManagerContext db = new AssetManagerContext();
+
         // GET: PatchPoints
         public ActionResult Index()
         {
-            List<PatchPoint> patchPoints = GetPatchPoints();
-            return View(patchPoints);
-        }
-        private List<PatchPoint> GetPatchPoints()
-        {
-            List<PatchPoint> patchPoints = new List<PatchPoint>();
-            string excelFileName = "\\\\vmfile\\users\\sven\\My Documents\\patchpuntjes.xlsx";
-            Excel.Application xlApp = new Excel.Application();
-            object misValue = System.Reflection.Missing.Value;
-
-            Excel.Workbook xlWorkBook = xlApp.Workbooks.Open(excelFileName);
-            Excel.Worksheet xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
-
-            int startRow = 2;
-            if (xlWorkSheet != null)
-            {
-                Excel.Range usedRange = xlWorkSheet.UsedRange;
-                PatchPoint pp;
-
-                using (var context = new AssetManagerContext())
-                {
-                    for (int rowCount = startRow; rowCount <= usedRange.Rows.Count; rowCount++)
-                    {
-                        pp = GetPatchPointFromRange(usedRange, rowCount);
-                        if (pp.Number > 0)
-                        {
-                            patchPoints.Add(pp);
-                        }
-                    }
-                }
-            }
-
-            xlWorkBook.Close(true, misValue, misValue);
-            xlApp.Quit();
-
-            releaseObject(xlWorkSheet);
-            releaseObject(xlWorkBook);
-            releaseObject(xlApp);
-
-            return patchPoints;
-        }
-
-        private PatchPoint GetPatchPointFromRange(Excel.Range usedRange, int rowCount)
-        {
-            PatchPoint pp = new PatchPoint();
-            Office o = new Office();
-            pp.Office = o;
-            if (usedRange.Cells[rowCount, 1].Value2 is double)
-            { pp.Number = (int)usedRange.Cells[rowCount, 1].Value2; }
-
-            if (usedRange.Cells[rowCount, 2].Value2 is double)
-            { pp.Floor = (int)usedRange.Cells[rowCount, 2].Value2; }
-
-            o.Name = usedRange.Cells[rowCount, 3].Value2 as string;
-
-            if (usedRange.Cells[rowCount, 4].Value2 is double)
-            { o.Number = (int)usedRange.Cells[rowCount, 4].Value2; }
-
-            pp.Tile = usedRange.Cells[rowCount, 5].Value2 as string;
-
-            if (usedRange.Cells[rowCount, 6].Value2 is string)
-            {
-                Asset asset = FindAsset(usedRange.Cells[rowCount, 6].Value2 as string);
-                if (asset.AssetId != 0) { pp.Asset = asset; }
-            }
-            return pp;
-        }
-
-        // returns asset with AssetId == 0 if no matching asset is found
-        private Asset FindAsset(string str)
-        {
-            Asset asset = new Asset();
-
-            var usePeriods = db.UsePeriods
-                .Include(u => u.Asset)
-                .Include(u => u.Status)
-                .Include(u => u.UserAccount)
-                ;
-           
-            string[] substrings = str.Split(' ');
-            
-            if (substrings.Length > 1)
-            {
-                string assetType = substrings[0];
-                string accountFirstName = substrings[1];
-                usePeriods = usePeriods.Where(u => u.UserAccount.Name.Contains(accountFirstName))
-                .Where(u => u.EndDate == null || u.EndDate >= DateTime.Now) // current
-                .Where(u => u.Status.UsePeriodStatusId != 4) // not "uit gebruik"                
-                ;
-                switch (substrings[0])
-                {
-                    case "D":
-                        usePeriods = usePeriods.Where(u => u.Asset is Computer);
-                        break;
-                    case "T":
-                        usePeriods = usePeriods.Where(u => u.Asset is Telephone);
-                        break;
-                    case "P":
-                        usePeriods = usePeriods.Where(u => u.Asset is Printer);
-                        break;
-                    default:
-                        break;
-                }
-                // var upList = usePeriods.ToList();
-                if (usePeriods.Count() == 1) { asset = usePeriods.First().Asset; }
-            }
-            return asset;
-        }
-
-        private void releaseObject(object obj)
-        {
-            try
-            {
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
-                obj = null;
-            }
-            catch (Exception ex)
-            {
-                obj = null;
-                throw ex;
-            }
-            finally
-            {
-                GC.Collect();
-            }
+            return View(db.PatchPoints.ToList());
         }
 
         // GET: PatchPoints/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            PatchPoint patchPoint = db.PatchPoints.Find(id);
+            if (patchPoint == null)
+            {
+                return HttpNotFound();
+            }
+            return View(patchPoint);
         }
 
         // GET: PatchPoints/Create
@@ -155,63 +42,86 @@ namespace AssetManagerMvc.Controllers
         }
 
         // POST: PatchPoints/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "PatchPointId,Number,Floor,RoomName,RoomNumber,Tile,Remark,Function")] PatchPoint patchPoint)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
+                db.PatchPoints.Add(patchPoint);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(patchPoint);
         }
 
         // GET: PatchPoints/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            PatchPoint patchPoint = db.PatchPoints.Find(id);
+            if (patchPoint == null)
+            {
+                return HttpNotFound();
+            }
+            return View(patchPoint);
         }
 
         // POST: PatchPoints/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "PatchPointId,Number,Floor,RoomName,RoomNumber,Tile,Remark,Function")] PatchPoint patchPoint)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
-
+                db.Entry(patchPoint).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return View(patchPoint);
         }
 
         // GET: PatchPoints/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            PatchPoint patchPoint = db.PatchPoints.Find(id);
+            if (patchPoint == null)
+            {
+                return HttpNotFound();
+            }
+            return View(patchPoint);
         }
 
         // POST: PatchPoints/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            PatchPoint patchPoint = db.PatchPoints.Find(id);
+            db.PatchPoints.Remove(patchPoint);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
-                return RedirectToAction("Index");
-            }
-            catch
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
             {
-                return View();
+                db.Dispose();
             }
+            base.Dispose(disposing);
         }
     }
 }

@@ -89,7 +89,16 @@
             </td>
             <td>
                 @if (ViewBag.SelectedCategory == "Telephones")
-                {  @Html.DisplayFor(modelItem => ((Telephone)item.Asset).Number)}
+                {
+                    if (string.IsNullOrWhiteSpace(((Telephone)item.Asset).Number))
+                    {
+                        @Html.DisplayFor(modelItem => ((Telephone)item.Asset).NumberIntern)
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => ((Telephone)item.Asset).Number)
+                    }
+                }
                 else
                 {
                     @Html.DisplayFor(modelItem => item.Asset.SerialNumber)

@@ -8,18 +8,21 @@ namespace AssetManagerMvc.Models
 {
     public class PatchPoint
     {
+        public int PatchPointId { get; set; }
+
         public int Number { get; set; }
-        public int Floor { get; set; }
-        public Office Office { get; set; }
-        public string Tile { get; set; }
-        public Asset Asset { get; set; }
-       
-    }
-    public class Office
-    {
-        [Display(Name = "Office Name")]
-        public string Name { get; set; }
-        [Display(Name = "Office Number")]
-        public int Number { get; set; }
-    }
+        public int Floor { get; set; }        
+
+        [Display(Name = "Room Name")]
+        public string RoomName { get; set; }
+
+        [Display(Name = "Room Number")]
+        public int RoomNumber { get; set; }
+
+        public string Tile { get; set; }        
+        public string Remark { get; set; }
+
+        public string Function { get; set; }       
+
+    }  
 }

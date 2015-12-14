@@ -247,12 +247,17 @@
     <Compile Include="Migrations\201511191109065_telephone.port.Designer.cs">
       <DependentUpon>201511191109065_telephone.port.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512141135029_patchpoint.cs" />
+    <Compile Include="Migrations\201512141135029_patchpoint.Designer.cs">
+      <DependentUpon>201512141135029_patchpoint.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Asset.cs" />
     <Compile Include="Models\AssetManagerContext.cs" />
     <Compile Include="Models\Beamer.cs" />
     <Compile Include="Models\Computer.cs" />
+    <Compile Include="Models\PatchPointsCreator.cs" />
     <Compile Include="Models\RepairInfo.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Incident.cs" />
@@ -370,8 +375,12 @@
     <Content Include="Views\Telephones\_TelephoneType.cshtml" />
     <Content Include="Views\Monitors\_MaxResolution.cshtml" />
     <Content Include="Views\TelephoneList\Index.cshtml" />
-    <Content Include="Views\PatchPoints\Index.cshtml" />
     <Content Include="Views\RepairInfo\Index.cshtml" />
+    <Content Include="Views\PatchPoints\Create.cshtml" />
+    <Content Include="Views\PatchPoints\Delete.cshtml" />
+    <Content Include="Views\PatchPoints\Details.cshtml" />
+    <Content Include="Views\PatchPoints\Edit.cshtml" />
+    <Content Include="Views\PatchPoints\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -423,6 +432,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511191109065_telephone.port.resx">
       <DependentUpon>201511191109065_telephone.port.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512141135029_patchpoint.resx">
+      <DependentUpon>201512141135029_patchpoint.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
