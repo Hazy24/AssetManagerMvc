@@ -27,7 +27,7 @@ namespace AssetManagerMvc.Models
         public DbSet<Monitor> Monitors { get; set; }
         public DbSet<Telephone> Telephones { get; set; }
         public DbSet<PatchPoint> PatchPoints { get; set; }
-
+        public DbSet<Department> Departments { get; set; }
     }
     //public class ObservableListSource<T> : ObservableCollection<T>, IListSource
     //    where T : class

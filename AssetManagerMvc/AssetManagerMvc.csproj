@@ -182,6 +182,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BeamersController.cs" />
     <Compile Include="Controllers\ComputersController.cs" />
+    <Compile Include="Controllers\DepartmentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MonitorsController.cs" />
@@ -251,12 +252,17 @@
     <Compile Include="Migrations\201512141135029_patchpoint.Designer.cs">
       <DependentUpon>201512141135029_patchpoint.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512161250363_departments.cs" />
+    <Compile Include="Migrations\201512161250363_departments.Designer.cs">
+      <DependentUpon>201512161250363_departments.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Asset.cs" />
     <Compile Include="Models\AssetManagerContext.cs" />
     <Compile Include="Models\Beamer.cs" />
     <Compile Include="Models\Computer.cs" />
+    <Compile Include="Models\Department.cs" />
     <Compile Include="Models\PatchPointsCreator.cs" />
     <Compile Include="Models\RepairInfo.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -381,6 +387,11 @@
     <Content Include="Views\PatchPoints\Details.cshtml" />
     <Content Include="Views\PatchPoints\Edit.cshtml" />
     <Content Include="Views\PatchPoints\Index.cshtml" />
+    <Content Include="Views\Departments\Create.cshtml" />
+    <Content Include="Views\Departments\Delete.cshtml" />
+    <Content Include="Views\Departments\Details.cshtml" />
+    <Content Include="Views\Departments\Edit.cshtml" />
+    <Content Include="Views\Departments\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -435,6 +446,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512141135029_patchpoint.resx">
       <DependentUpon>201512141135029_patchpoint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512161250363_departments.resx">
+      <DependentUpon>201512161250363_departments.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

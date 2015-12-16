@@ -8,6 +8,8 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace AssetManagerMvc.Models
 {
@@ -124,7 +126,7 @@ namespace AssetManagerMvc.Models
                 || (u.Asset as Monitor).Size.ToString().Contains(searchString)
                 || (u.Asset as Telephone).TelephoneType.Contains(searchString)
                 || (u.Asset as Telephone).Number.Contains(searchString)
-                || (u.Asset as Telephone).NumberIntern.Contains(searchString)                
+                || (u.Asset as Telephone).NumberIntern.Contains(searchString)
                     );
             return useperiods;
         }
@@ -140,7 +142,7 @@ namespace AssetManagerMvc.Models
             {
                 PdfWriter pdfWriter = PdfWriter.GetInstance(document, stream);
                 pdfWriter.CloseStream = false;
-                Paragraph para = new Paragraph(compoundId, font);                            
+                Paragraph para = new Paragraph(compoundId, font);
                 para.Alignment = Element.ALIGN_CENTER;
                 document.Open();
                 document.Add(para);
@@ -173,13 +175,13 @@ namespace AssetManagerMvc.Models
             {
                 PdfWriter pdfWriter = PdfWriter.GetInstance(document, stream);
                 pdfWriter.CloseStream = false;
-                document.Open();            
+                document.Open();
 
-                
+
                 PdfPTable layoutTable = new PdfPTable(2);
                 layoutTable.WidthPercentage = 100f;
-                layoutTable.SplitLate = false;                
-                
+                layoutTable.SplitLate = false;
+
                 PdfPCell cellTitle = CreateCell(5f, "Telefoonlijst");
                 cellTitle.Colspan = 2;
                 cellTitle.HorizontalAlignment = 1; // centered
@@ -187,8 +189,8 @@ namespace AssetManagerMvc.Models
 
                 PdfPTable tblLeft = new PdfPTable(1);
 
-                PdfPCell cellIntern = CreateCellWithParaTitle(5f, "Interne nummers");                     
-                                
+                PdfPCell cellIntern = CreateCellWithParaTitle(5f, "Interne nummers");
+
                 foreach (var dep in listByDep)
                 {
                     Paragraph para = new Paragraph();
@@ -196,7 +198,7 @@ namespace AssetManagerMvc.Models
                     para.SpacingAfter = 3f;
                     cellIntern.AddElement(para);
 
-                    PdfPTable table = depTable();                   
+                    PdfPTable table = depTable();
 
                     foreach (var number in dep.Values)
                     {
@@ -211,7 +213,7 @@ namespace AssetManagerMvc.Models
                 }
 
                 PdfPCell cellLog = CreateCellWithParaTitle(5f, "log");
-                PdfPTable tableLog = depTable();               
+                PdfPTable tableLog = depTable();
 
                 foreach (var tel in listLog)
                 {
@@ -229,7 +231,7 @@ namespace AssetManagerMvc.Models
                 {
                     PdfPCell cell = new PdfPCell(new Phrase(tel.Name));
                     tableGSM.AddCell(cell);
-                    cell = new PdfPCell(new Phrase(tel.Number));                    
+                    cell = new PdfPCell(new Phrase(tel.Number));
                     tableGSM.AddCell(cell);
                 }
                 cellGSM.AddElement(tableGSM);
@@ -242,7 +244,7 @@ namespace AssetManagerMvc.Models
                 layoutTable.AddCell(nesthousing);
                 layoutTable.AddCell(cellGSM);
 
-                document.Add(layoutTable);                
+                document.Add(layoutTable);
 
                 document.Close();
             }
@@ -278,8 +280,8 @@ namespace AssetManagerMvc.Models
                 para.Add(str);
                 para.SpacingAfter = 10f;
                 c.AddElement(para);
-            }            
-            return c;                
+            }
+            return c;
         }
         private static PdfPTable depTable()
         {
@@ -288,7 +290,7 @@ namespace AssetManagerMvc.Models
             // table.SpacingBefore = 20f;
             table.SpacingAfter = 10f;
             return table;
-        }      
+        }
         // list of intern telephone numbers, no gsm's, without log department
         public static List<Group<string, Telephonelist>> TelephoneListByDepartment(AssetManagerContext db)
         {
@@ -344,7 +346,7 @@ namespace AssetManagerMvc.Models
            .Where(u => u.Asset is Telephone)
            .Where(u => (u.Asset as Telephone).TelephoneType == "GSM")
            .Where(u => u.EndDate == null || u.EndDate >= DateTime.Now)
-           .Where(u => u.UserAccount != null)           
+           .Where(u => u.UserAccount != null)
             .Select(u => new Telephonelist
             {
                 Department = u.UserAccount.Department,
@@ -356,14 +358,14 @@ namespace AssetManagerMvc.Models
         }
 
         public static List<AssetSelectListItem> CompoundIdAndUserAccountNameOrFunction(AssetManagerContext db)
-        {           
+        {
 
             var usePeriods = db.UsePeriods
               .Include(u => u.Asset)
               .Include(u => u.Status)
               .Include(u => u.UserAccount)
-              .Where(u => u.EndDate == null ||u.EndDate >= DateTime.Now) // current
-              .Select(u =>  new { CompoundId = u.Asset.CompoundId, Name = u.UserAccount.Name, Function = u.Function })            
+              .Where(u => u.EndDate == null || u.EndDate >= DateTime.Now) // current
+              .Select(u => new { CompoundId = u.Asset.CompoundId, Name = u.UserAccount.Name, Function = u.Function })
               ;
 
             List<AssetSelectListItem> list = new List<AssetSelectListItem>();
@@ -378,5 +380,75 @@ namespace AssetManagerMvc.Models
 
             return list;
         }
-    }   
+
+        public static void CopyTable(string sourceConnectionString, 
+            string destinationConnectionString, string tableName)
+        {
+            // Create source connection
+            SqlConnection source = new SqlConnection(ConfigurationManager.ConnectionStrings[sourceConnectionString].ConnectionString);
+            // Create destination connection
+            SqlConnection destination = new SqlConnection(ConfigurationManager.ConnectionStrings[destinationConnectionString].ConnectionString);
+            // Clean up destination table. Your destination database must have the 
+            // table with schema which you are copying data to. 
+            // Before executing this code, you must create a table BulkDataTable 
+            // in your database where you are trying to copy data to.
+
+            SqlCommand cmd = new SqlCommand("DELETE FROM " + tableName, destination);
+
+            // Open source and destination connections.
+            source.Open();
+            destination.Open();
+            cmd.ExecuteNonQuery();
+
+            cmd = new SqlCommand("SELECT * FROM " + tableName, source);
+            // Execute reader
+            SqlDataReader reader = cmd.ExecuteReader();
+            // Create SqlBulkCopy
+            SqlBulkCopy bulkData = new SqlBulkCopy(destination,
+                SqlBulkCopyOptions.KeepIdentity, null);
+
+            // Set destination table name
+            bulkData.DestinationTableName = tableName;
+            // Write data
+            bulkData.WriteToServer(reader);
+            // Close objects
+            bulkData.Close();
+            destination.Close();
+            source.Close();
+        }
+        public static void CopyDataFromServerDbToLocalDb()
+        {
+            if (!ConfigurationManager.ConnectionStrings["AssetManagerContextLocal"]
+                .ConnectionString.Contains("Data Source=(LocalDb)")) { return; }
+            ClearAllTablesLocalDb();
+            CopyTable("AssetManagerContextServer", "AssetManagerContextLocal", "UseperiodStatus");
+            CopyTable("AssetManagerContextServer", "AssetManagerContextLocal", "Assets");
+            CopyTable("AssetManagerContextServer", "AssetManagerContextLocal", "UserAccounts");
+            CopyTable("AssetManagerContextServer", "AssetManagerContextLocal", "Departments");
+            CopyTable("AssetManagerContextServer", "AssetManagerContextLocal", "PatchPoints");
+            CopyTable("AssetManagerContextServer", "AssetManagerContextLocal", "UsePeriods");       
+            
+        }
+        private static void ClearAllTablesLocalDb()
+        {
+            SqlConnection local = new SqlConnection(ConfigurationManager
+                .ConnectionStrings["AssetManagerContextLocal"].ConnectionString);
+            
+            local.Open();
+            SqlCommand cmd = new SqlCommand("DELETE FROM UsePeriods", local);
+            cmd.ExecuteNonQuery();
+            cmd = new SqlCommand("DELETE FROM UseperiodStatus", local);
+            cmd.ExecuteNonQuery();
+            cmd = new SqlCommand("DELETE FROM Assets", local);
+            cmd.ExecuteNonQuery();
+            cmd = new SqlCommand("DELETE FROM UserAccounts", local);
+            cmd.ExecuteNonQuery();
+            cmd = new SqlCommand("DELETE FROM Departments", local);
+            cmd.ExecuteNonQuery();
+            cmd = new SqlCommand("DELETE FROM PatchPoints", local);
+            cmd.ExecuteNonQuery();
+            
+            local.Close();
+        }
+    }
 }

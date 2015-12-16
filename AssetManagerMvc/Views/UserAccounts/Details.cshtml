@@ -157,7 +157,7 @@
                     {
                         <tr>
                             <td>
-                                @Html.DisplayFor(modelItem => item.StartDate)
+                                @Html.ActionLink(item.StartDate.ToString(), "Details", "UsePeriods", new { id = item.UsePeriodId }, null)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.EndDate)
