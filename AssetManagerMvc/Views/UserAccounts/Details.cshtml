@@ -64,7 +64,7 @@
 
         <dd>
             @Html.DisplayFor(model => model.Department)
-        </dd>    
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Remark)
         </dt>
@@ -135,6 +135,45 @@
         <dd>
             @Html.DisplayFor(model => model.LaptopStand)
         </dd>
+        @if (Model.UsePeriods.Count > 0)
+        {
+            <dt style="position: relative; top: 8px;">
+                @Html.DisplayNameFor(model => model.UsePeriods)
+            </dt>
+            <dd>
+                <table class="table alternating">
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.UsePeriods.First().StartDate)</th>
+                        <th>@Html.DisplayNameFor(model => model.UsePeriods.First().EndDate)</th>
+                        <th>@Html.DisplayNameFor(model => model.UsePeriods.First().Status)</th>
+                        <th>@Html.DisplayNameFor(model => model.UsePeriods.First().Asset.CompoundId)</th>
+                        <th>@Html.DisplayNameFor(model => model.UsePeriods.First().Asset.ModelName)</th>
+                    </tr>
+                    @foreach (var item in Model.UsePeriods
+                    .OrderBy(u => u.AssetId)
+                    .ThenBy(u => u.EndDate)
+                    .ThenBy(u => u.StartDate))
+                                      
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StartDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EndDate)
+                            </td>
+                            @Html.DisplayFor(modelItem => item.Status, "UseperiodStatusTableCell")
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Asset.CompoundId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Asset.ModelName)
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </dd>
+        }
     </dl>
 </div>
 <p>

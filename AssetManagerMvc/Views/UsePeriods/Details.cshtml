@@ -115,8 +115,9 @@
                         <th>@Html.DisplayNameFor(model => model.Function)</th>
                     </tr>
                     @foreach (var item in Model.Asset.UsePeriods
-.Where(up => up.UsePeriodId != Model.UsePeriodId)
-.OrderBy(up => up.StartDate))
+                    .Where(up => up.UsePeriodId != Model.UsePeriodId)
+                    .OrderBy(up => up.EndDate)
+                    .ThenBy(up => up.StartDate))
                     {
                         <tr>
                             <td>

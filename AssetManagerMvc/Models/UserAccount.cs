@@ -37,6 +37,8 @@ namespace AssetManagerMvc.Models
         [Display(Name = "Laptop Stand")]
         public int LaptopStand { get; set; }
 
+        public virtual ICollection<UsePeriod> UsePeriods { get; set; }
+
 
         public static int UpdateUserAccounts()
         {

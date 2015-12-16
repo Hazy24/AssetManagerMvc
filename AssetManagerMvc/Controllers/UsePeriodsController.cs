@@ -58,7 +58,9 @@ namespace AssetManagerMvc.Controllers
                     usePeriods = usePeriods.Where(u => u.Asset is Telephone);
                     break;
                 default:
+                    // set category to computers if we come from e.g. RepairInfo
                     usePeriods = usePeriods.Where(u => u.Asset is Computer);
+                    category = "Computers";
                     break;
             }
             // hideUitGebruik

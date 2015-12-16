@@ -366,7 +366,7 @@ namespace AssetManagerMvc.Models
               .Select(u =>  new { CompoundId = u.Asset.CompoundId, Name = u.UserAccount.Name, Function = u.Function })            
               ;
 
-            List<AssetSelectListItem> list2 = new List<AssetSelectListItem>();
+            List<AssetSelectListItem> list = new List<AssetSelectListItem>();
             foreach (var item in usePeriods)
             {
                 AssetSelectListItem asli = new AssetSelectListItem();
@@ -376,7 +376,7 @@ namespace AssetManagerMvc.Models
             }
 
 
-            return list2;
+            return list;
         }
     }   
 }
