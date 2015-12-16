@@ -144,27 +144,29 @@
             <dd>
                 <table class="table alternating">
                     <tr>
+                        <th>@Html.DisplayNameFor(model => model.UsePeriods.First().Asset.CompoundId)</th>
                         <th>@Html.DisplayNameFor(model => model.UsePeriods.First().StartDate)</th>
                         <th>@Html.DisplayNameFor(model => model.UsePeriods.First().Status)</th>
-                        <th>@Html.DisplayNameFor(model => model.UsePeriods.First().Asset.CompoundId)</th>
                         <th>@Html.DisplayNameFor(model => model.UsePeriods.First().Asset.ModelName)</th>
                         <th>Extra</th>
+                        <th></th>
                     </tr>
                     @foreach (var item in Model.UsePeriods
-                .Where(u => u.EndDate == null || u.EndDate >= DateTime.Now)
-                .OrderBy(u => u.AssetId)
-                .ThenBy(u => u.EndDate)
-                .ThenBy(u => u.StartDate))
+            .Where(u => u.EndDate == null || u.EndDate >= DateTime.Now)
+            .OrderBy(u => u.AssetId)
+            .ThenBy(u => u.EndDate)
+            .ThenBy(u => u.StartDate))
                     {
                         <tr>
-                            <td>
-                                <a href="@Url.Action("Details", "UsePeriods", new { id = item.UsePeriodId })">@Html.DisplayFor(modelItem => item.StartDate)</a>
-                            </td>
-                            @Html.DisplayFor(modelItem => item.Status, "UseperiodStatusTableCell")
                             <td>
                                 @Html.ActionLink(item.Asset.CompoundId, "Details",
                                     item.Asset.GetType().BaseType.Name + "s", new { id = item.AssetId }, null)
                             </td>
+                            <td>
+                                @*<a href="@Url.Action("Details", "UsePeriods", new { id = item.UsePeriodId })">@Html.DisplayFor(modelItem => item.StartDate)</a>*@
+                                @Html.DisplayFor(modelItem => item.StartDate)
+                            </td>
+                            @Html.DisplayFor(modelItem => item.Status, "UseperiodStatusTableCell")
                             <td>
                                 @Html.DisplayFor(modelItem => item.Asset.ModelName)
                             </td>
@@ -173,6 +175,9 @@
                                 { @Html.DisplayFor(modelItem => ((Computer)item.Asset).ComputerType)}
                                 else if (item.Asset is Telephone)
                                 { @Html.DisplayFor(modelItem => ((Telephone)item.Asset).TelephoneType)}
+                            </td>
+                            <td>
+                                @Html.ActionLink("Details", "Details", "Useperiods", new { id = item.UsePeriodId }, null)
                             </td>
                         </tr>
                     }

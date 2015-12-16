@@ -1,0 +1,44 @@
+﻿@model AssetManagerMvc.Models.Asset
+
+@if (Model.UsePeriods.Count > 0)
+{
+    <dt style="position: relative; top: 8px;">
+        @Html.DisplayNameFor(model => model.UsePeriods)
+    </dt>
+    <dd>
+        <table class="table alternating">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.UsePeriods.First().StartDate)</th>
+                <th>@Html.DisplayNameFor(model => model.UsePeriods.First().EndDate)</th>
+                <th>@Html.DisplayNameFor(model => model.UsePeriods.First().Status)</th>
+                <th>@Html.DisplayNameFor(model => model.UsePeriods.First().UserAccount.Name)</th>
+                <th>@Html.DisplayNameFor(model => model.UsePeriods.First().Function)</th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model.UsePeriods
+                        .OrderBy(up => up.EndDate)
+                        .ThenBy(up => up.StartDate))
+            {
+                <tr>
+                    <td>
+                        @*<a href="@Url.Action("Details", "UsePeriods", new { id = item.UsePeriodId })">@Html.DisplayFor(modelItem => item.StartDate)</a>*@
+                        @Html.DisplayFor(modelItem => item.StartDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+                    @Html.DisplayFor(modelItem => item.Status, "UseperiodStatusTableCell")
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserAccount.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Function)
+                    </td>
+                    <td>                       
+                        @Html.ActionLink("Details", "Details", "Useperiods", new { id = item.UsePeriodId }, null)                        
+                    </td>
+                </tr>
+            }
+        </table>
+    </dd>
+}
