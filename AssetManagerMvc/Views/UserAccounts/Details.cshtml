@@ -1,4 +1,5 @@
 ﻿@model AssetManagerMvc.Models.UserAccount
+@using AssetManagerMvc.Models
 
 @{
     ViewBag.Title = "Details";
@@ -144,30 +145,34 @@
                 <table class="table alternating">
                     <tr>
                         <th>@Html.DisplayNameFor(model => model.UsePeriods.First().StartDate)</th>
-                        <th>@Html.DisplayNameFor(model => model.UsePeriods.First().EndDate)</th>
                         <th>@Html.DisplayNameFor(model => model.UsePeriods.First().Status)</th>
                         <th>@Html.DisplayNameFor(model => model.UsePeriods.First().Asset.CompoundId)</th>
                         <th>@Html.DisplayNameFor(model => model.UsePeriods.First().Asset.ModelName)</th>
+                        <th>Extra</th>
                     </tr>
                     @foreach (var item in Model.UsePeriods
-                    .OrderBy(u => u.AssetId)
-                    .ThenBy(u => u.EndDate)
-                    .ThenBy(u => u.StartDate))
-                                      
+                .Where(u => u.EndDate == null || u.EndDate >= DateTime.Now)
+                .OrderBy(u => u.AssetId)
+                .ThenBy(u => u.EndDate)
+                .ThenBy(u => u.StartDate))
                     {
                         <tr>
                             <td>
-                                @Html.ActionLink(item.StartDate.ToString(), "Details", "UsePeriods", new { id = item.UsePeriodId }, null)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.EndDate)
+                                <a href="@Url.Action("Details", "UsePeriods", new { id = item.UsePeriodId })">@Html.DisplayFor(modelItem => item.StartDate)</a>
                             </td>
                             @Html.DisplayFor(modelItem => item.Status, "UseperiodStatusTableCell")
                             <td>
-                                @Html.DisplayFor(modelItem => item.Asset.CompoundId)
+                                @Html.ActionLink(item.Asset.CompoundId, "Details",
+                                    item.Asset.GetType().BaseType.Name + "s", new { id = item.AssetId }, null)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Asset.ModelName)
+                            </td>
+                            <td>
+                                @if (item.Asset is Computer)
+                                { @Html.DisplayFor(modelItem => ((Computer)item.Asset).ComputerType)}
+                                else if (item.Asset is Telephone)
+                                { @Html.DisplayFor(modelItem => ((Telephone)item.Asset).TelephoneType)}
                             </td>
                         </tr>
                     }
