@@ -65,12 +65,12 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Department, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.DepartmentId, "Department", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Department, new { htmlAttributes = new { @class = "form-control", @readOnly = "true" } })
-                @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+                @Html.DropDownList("DepartmentId", null, htmlAttributes: new { @class = "form-control", @readOnly = "true" })
+                @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
             </div>
-        </div>       
+        </div>    
         <div class="form-group">
             @Html.LabelFor(model => model.Remark, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">

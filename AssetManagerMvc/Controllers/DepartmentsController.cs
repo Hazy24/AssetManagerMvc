@@ -46,7 +46,7 @@ namespace AssetManagerMvc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "DepartmentId,Name,Abbreviation")] Department department)
+        public ActionResult Create([Bind(Include = "DepartmentId,Name,LdapName")] Department department)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace AssetManagerMvc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "DepartmentId,Name,Abbreviation")] Department department)
+        public ActionResult Edit([Bind(Include = "DepartmentId,Name,LdapName")] Department department)
         {
             if (ModelState.IsValid)
             {

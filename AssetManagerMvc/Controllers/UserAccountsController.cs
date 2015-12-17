@@ -18,13 +18,15 @@ namespace AssetManagerMvc.Controllers
         // GET: UserAccounts
         public ActionResult Index(string sortOrder, string searchString)
         {
-            var useraccounts = from ua in db.UserAccounts
-                               select ua;
+            var useraccounts = db.UserAccounts
+                               .Include(u => u.Department)
+                               ;
             if (!String.IsNullOrEmpty(searchString))
             {
                 useraccounts = useraccounts.Where(ua => ua.Name.Contains(searchString)
                 || ua.Company.Contains(searchString)
-                || ua.Department.Contains(searchString)
+                || ua.Department.Name.Contains(searchString)
+                || ua.Department.LdapName.Contains(searchString)
                 || ua.Mail.Contains(searchString)
                 || ua.UserPrincipalName.Contains(searchString)
 
@@ -76,10 +78,10 @@ namespace AssetManagerMvc.Controllers
                     useraccounts = useraccounts.OrderByDescending(ua => ua.Company);
                     break;
                 case "department":
-                    useraccounts = useraccounts.OrderBy(ua => ua.Department);
+                    useraccounts = useraccounts.OrderBy(ua => ua.Department.LdapName);
                     break;
                 case "department_desc":
-                    useraccounts = useraccounts.OrderByDescending(ua => ua.Department);
+                    useraccounts = useraccounts.OrderByDescending(ua => ua.Department.LdapName);
                     break;
 
                 default:  // name ascending 
@@ -94,15 +96,15 @@ namespace AssetManagerMvc.Controllers
         {
             try
             {
-                int added = UserAccount.UpdateUserAccounts();
-                if (added != 1)
-                { ViewBag.UpdateResult = "Success! Added " + added + " users."; }
-                else
-                { ViewBag.UpdateResult = "Success! Added 1 user."; }
+                int added, updated;
+                UserAccount.UpdateUserAccounts(out added, out updated);
+                string useradded = added == 1 ? " user " : " users ";
+                string userupdated = updated == 1 ? " user." : " users.";
+                ViewBag.UpdateResult = "Success! Added " + added + useradded + 
+                    "and updated " + updated + userupdated;               
             }
             catch (Exception ex)
             {
-
                 ViewBag.UpdateResult = ex.InnerException.Message;
             }
 
@@ -110,7 +112,7 @@ namespace AssetManagerMvc.Controllers
         }
         // GET: UserAccounts/Details/5
         public ActionResult Details(int? id)
-        {                 
+        {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -123,28 +125,9 @@ namespace AssetManagerMvc.Controllers
             return View(userAccount);
         }
 
-        // GET: UserAccounts/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+       
 
-        // POST: UserAccounts/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserAccountId,Name,GivenName,UserPrincipalName,Sn,Mail,Company,Department,IsAdmin")] UserAccount userAccount)
-        {
-            if (ModelState.IsValid)
-            {
-                db.UserAccounts.Add(userAccount);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(userAccount);
-        }
+     
 
         // GET: UserAccounts/Edit/5
         public ActionResult Edit(int? id)
@@ -158,6 +141,8 @@ namespace AssetManagerMvc.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "Name", userAccount.DepartmentId);
+
             return View(userAccount);
         }
 
@@ -166,7 +151,7 @@ namespace AssetManagerMvc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserAccountId,Name,GivenName,UserPrincipalName,Sn,Mail,Company,Department,Remark,Headset,Speakers,Keyboard,Mouse,WirelessMouse,UsbStick,LaptopBag")] UserAccount userAccount)
+        public ActionResult Edit([Bind(Include = "UserAccountId,Name,GivenName,UserPrincipalName,Sn,Mail,Company,DepartmentId,Remark,Headset,Speakers,Keyboard,Mouse,WirelessMouse,UsbStick,LaptopBag,LaptopStand")] UserAccount userAccount)
         {
             if (ModelState.IsValid)
             {
@@ -174,34 +159,10 @@ namespace AssetManagerMvc.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(userAccount);
-        }
+            ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "Name", userAccount.DepartmentId);
 
-        // GET: UserAccounts/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UserAccount userAccount = db.UserAccounts.Find(id);
-            if (userAccount == null)
-            {
-                return HttpNotFound();
-            }
             return View(userAccount);
-        }
-
-        // POST: UserAccounts/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            UserAccount userAccount = db.UserAccounts.Find(id);
-            db.UserAccounts.Remove(userAccount);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+        }          
 
         protected override void Dispose(bool disposing)
         {

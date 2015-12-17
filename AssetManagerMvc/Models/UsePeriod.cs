@@ -35,7 +35,7 @@ namespace AssetManagerMvc.Models
             dan eventueel naar id. datums worden descending gesorteerd (nieuwste bovenaan).
             Niet ingevulde datums worden als in de oneindige toekomst beschouwd.
             Uren en minuten worden genegeerd omdat anders automatisch gegenereerde
-            en handmatig ingevulde datums onverwacht vergelijkingsresultaten kunnen geven (bij
+            en handmatig ingevulde datums onverwachte vergelijkingsresultaten kunnen geven (bij
             handmatige is het 0:00 uur, bij automatische is het datetime.now).
             Als beide datums identiek zijn worden de hoogste UsperiodId's (= later
             aangemaakt) bovenaan gezet.

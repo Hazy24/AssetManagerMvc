@@ -1,5 +1,4 @@
-﻿@using AssetManagerMvc.Models
-@model List<Group<string, Telephonelist>>
+﻿@model IEnumerable<AssetManagerMvc.Models.TelephoneListItem>
 
 @{
     ViewBag.Title = "Index";
@@ -10,22 +9,24 @@
 @Html.ActionLink("Print", "Print")
 
 <table class="table">
-    <tr>        
+    <tr>
         <th>
             Name
         </th>
         <th>
             NumberIntern
         </th>
+        <th>
+            Department
+        </th>
     </tr>
 
-    @foreach (var group in Model)
+    @foreach (var item in Model)
     {
-        <tr><th colspan="2">@group.Key</th></tr>
-        foreach (var tel in group.Values)
-        {
-            <tr><td>@tel.Name</td><td>@tel.NumberIntern</td></tr>
-        }
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.NumberIntern</td>
+            <td>@item.Department</td>
+        </tr>
     }
-
 </table>

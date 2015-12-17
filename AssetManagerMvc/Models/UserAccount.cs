@@ -20,7 +20,10 @@ namespace AssetManagerMvc.Models
         [Display(Name = "Email")]
         public string Mail { get; set; }
         public string Company { get; set; }
-        public string Department { get; set; }
+        public string DepartmentString { get; set; }
+
+        public int? DepartmentId { get; set; }
+        public virtual Department Department { get; set; }
 
         [DataType(DataType.MultilineText)]
         public string Remark { get; set; }
@@ -39,30 +42,47 @@ namespace AssetManagerMvc.Models
 
         public virtual ICollection<UsePeriod> UsePeriods { get; set; }
 
-
-        public static int UpdateUserAccounts()
+        public static void AddDepartments(AssetManagerContext db)
         {
-            int added = 0;
-            DirectoryEntry entry = new DirectoryEntry("LDAP://OU=Internal Windows Users,OU=Managed Users,DC=owwoft,DC=int");
-            added += UpdateUserAccounts(entry);
-            entry = new DirectoryEntry("LDAP://OU=Internal ftcc users, OU=Managed Users,DC=owwoft,DC=int");
-            added += UpdateUserAccounts(entry);
-            entry = new DirectoryEntry("LDAP://OU=Internal MAC Users, OU=Managed Users,DC=owwoft,DC=int");
-            added += UpdateUserAccounts(entry);            
-            return added;
+            List<Department> Departments = db.Departments.ToList();
+            foreach (UserAccount useraccount in db.UserAccounts)
+            {
+                useraccount.Department = Departments.Find(d => d.LdapName == useraccount.DepartmentString);
+            }
+            db.SaveChanges();
         }
-        private static int UpdateUserAccounts(DirectoryEntry entry)
+        public static void UpdateUserAccounts(out int addedTotal, out int updatedTotal)
         {
+            int added, updated;
+            addedTotal = 0;
+            updatedTotal = 0;
+            DirectoryEntry entry = new DirectoryEntry("LDAP://OU=Internal Windows Users,OU=Managed Users,DC=owwoft,DC=int");
+            UpdateUserAccounts(entry, out added, out updated);
+            addedTotal += added;
+            updatedTotal += updated;
+            entry = new DirectoryEntry("LDAP://OU=Internal ftcc users, OU=Managed Users,DC=owwoft,DC=int");
+            UpdateUserAccounts(entry, out added, out updated);
+            addedTotal += added;
+            updatedTotal += updated;
+            entry = new DirectoryEntry("LDAP://OU=Internal MAC Users, OU=Managed Users,DC=owwoft,DC=int");
+            UpdateUserAccounts(entry, out added, out updated);
+            addedTotal += added;
+            updatedTotal += updated;
+        }
+        private static void UpdateUserAccounts(DirectoryEntry entry, out int added, out int updated)
+        {
+            added = 0;
+            updated = 0;
             using (AssetManagerContext _context = new AssetManagerContext())
             {
-                int added = 0;
+                List<Department> Departments = _context.Departments.ToList();
                 DirectorySearcher mySearcher = new DirectorySearcher(entry);
                 SearchResultCollection src = mySearcher.FindAll();
                 UserAccount ua;
                 for (int i = 0; i < src.Count; i++)
                 {
                     if (src[i].Properties.Contains("mail"))
-                    {                        
+                    {
                         string mail = src[i].Properties["mail"][0].ToString();
 
                         ua = new UserAccount();
@@ -71,11 +91,21 @@ namespace AssetManagerMvc.Models
                         ua.Name = PropertyValueIfExists(src[i], "name");
                         ua.UserPrincipalName = PropertyValueIfExists(src[i], "userprincipalname");
                         ua.Company = PropertyValueIfExists(src[i], "company");
-                        ua.Department = PropertyValueIfExists(src[i], "department");
+                        ua.DepartmentString = PropertyValueIfExists(src[i], "department");
+                        ua.Department = Departments.Find(d => d.LdapName == ua.DepartmentString);
                         ua.Mail = PropertyValueIfExists(src[i], "mail");
                         if (_context.UserAccounts.Any(o => o.Mail == mail))
                         {
                             // todo update
+                            UserAccount existingAccount = _context.UserAccounts.First(o => o.Mail == mail);
+                            existingAccount.GivenName = ua.GivenName;
+                            existingAccount.Sn = ua.Sn;
+                            existingAccount.Name = ua.Name;
+                            existingAccount.UserPrincipalName = ua.UserPrincipalName;
+                            existingAccount.Company = ua.Company;
+                            existingAccount.DepartmentString = ua.DepartmentString;
+                            existingAccount.Department = ua.Department;
+                            updated++;
                         }
                         else
                         {
@@ -85,7 +115,6 @@ namespace AssetManagerMvc.Models
                     }
                 }
                 _context.SaveChanges();
-                return added;
             }
         }
         private static string PropertyValueIfExists(SearchResult searchResult, string propertyName)

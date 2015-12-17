@@ -60,11 +60,18 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Department)
+            @Html.DisplayNameFor(model => model.Department.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Department)
+            @Html.DisplayFor(model => model.Department.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Department.LdapName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Department.LdapName)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Remark)
@@ -153,9 +160,8 @@
                     </tr>
                     @foreach (var item in Model.UsePeriods
             .Where(u => u.EndDate == null || u.EndDate >= DateTime.Now)
-            .OrderBy(u => u.AssetId)
-            .ThenBy(u => u.EndDate)
-            .ThenBy(u => u.StartDate))
+            .OrderBy(u => u.AssetId))
+            
                     {
                         <tr>
                             <td>

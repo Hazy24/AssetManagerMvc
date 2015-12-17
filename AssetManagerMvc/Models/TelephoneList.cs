@@ -5,7 +5,7 @@ using System.Web;
 
 namespace AssetManagerMvc.Models
 {
-    public class Telephonelist
+    public class TelephoneListItem
     {
         public string Department { get; set; }
         public string Name { get; set; }

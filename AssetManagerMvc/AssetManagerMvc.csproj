@@ -256,6 +256,18 @@
     <Compile Include="Migrations\201512161250363_departments.Designer.cs">
       <DependentUpon>201512161250363_departments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512171313467_renametodepartmentstring.cs" />
+    <Compile Include="Migrations\201512171313467_renametodepartmentstring.Designer.cs">
+      <DependentUpon>201512171313467_renametodepartmentstring.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512171327537_abbreviattiontoldapname.cs" />
+    <Compile Include="Migrations\201512171327537_abbreviattiontoldapname.Designer.cs">
+      <DependentUpon>201512171327537_abbreviattiontoldapname.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512171349301_useraccountdepartment.cs" />
+    <Compile Include="Migrations\201512171349301_useraccountdepartment.Designer.cs">
+      <DependentUpon>201512171349301_useraccountdepartment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Asset.cs" />
@@ -350,8 +362,6 @@
     <Content Include="Views\UsePeriods\Edit.cshtml" />
     <Content Include="Views\UsePeriods\Index.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
-    <Content Include="Views\UserAccounts\Create.cshtml" />
-    <Content Include="Views\UserAccounts\Delete.cshtml" />
     <Content Include="Views\UserAccounts\Details.cshtml" />
     <Content Include="Views\UserAccounts\Edit.cshtml" />
     <Content Include="Views\UserAccounts\Index.cshtml" />
@@ -450,6 +460,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512161250363_departments.resx">
       <DependentUpon>201512161250363_departments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512171313467_renametodepartmentstring.resx">
+      <DependentUpon>201512171313467_renametodepartmentstring.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512171327537_abbreviattiontoldapname.resx">
+      <DependentUpon>201512171327537_abbreviattiontoldapname.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512171349301_useraccountdepartment.resx">
+      <DependentUpon>201512171349301_useraccountdepartment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
