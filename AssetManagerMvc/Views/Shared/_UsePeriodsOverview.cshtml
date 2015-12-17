@@ -15,9 +15,9 @@
                 <th>@Html.DisplayNameFor(model => model.UsePeriods.First().Function)</th>
                 <th></th>
             </tr>
-            @foreach (var item in Model.UsePeriods
-                        .OrderBy(up => up.EndDate)
-                        .ThenBy(up => up.StartDate))
+            @{var usePeriods = Model.UsePeriods.ToList();}
+            @{usePeriods.Sort();}
+            @foreach (var item in usePeriods)
             {
                 <tr>
                     <td>

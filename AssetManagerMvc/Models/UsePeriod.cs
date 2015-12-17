@@ -7,7 +7,7 @@ using System.Web;
 
 namespace AssetManagerMvc.Models
 {
-    public class UsePeriod
+    public class UsePeriod : IComparable<UsePeriod>
     {
         public UsePeriod() { }
         public UsePeriod(Asset asset, int statusId)
@@ -26,10 +26,44 @@ namespace AssetManagerMvc.Models
             copy.EndDate = this.EndDate;
             copy.Remark = this.Remark;
             copy.Function = this.Function;
-            copy.UserIsAdmin = this.UserIsAdmin;            
+            copy.UserIsAdmin = this.UserIsAdmin;
 
             return copy;
         }
+        /* 
+            Voor sorteren kijk eerst naar de einddatum, dan naar de startdatum, en
+            dan eventueel naar id. datums worden descending gesorteerd (nieuwste bovenaan).
+            Niet ingevulde datums worden als in de oneindige toekomst beschouwd.
+            Uren en minuten worden genegeerd omdat anders automatisch gegenereerde
+            en handmatig ingevulde datums onverwacht vergelijkingsresultaten kunnen geven (bij
+            handmatige is het 0:00 uur, bij automatische is het datetime.now).
+            Als beide datums identiek zijn worden de hoogste UsperiodId's (= later
+            aangemaakt) bovenaan gezet.
+        */
+
+        public int CompareTo(UsePeriod otherUseperiod)
+        {
+            int result = CompareNullableDateTimeDescending(this.EndDate, otherUseperiod.EndDate);
+            if (result != 0) return result; //end date differs
+            else
+            {
+                result = CompareNullableDateTimeDescending(this.StartDate, otherUseperiod.StartDate);
+                if (result != 0) return result; //start date differs
+                else return otherUseperiod.UsePeriodId.CompareTo(this.UsePeriodId); // latest id on top
+            }
+        }
+
+        
+        private int CompareNullableDateTimeDescending(DateTime? x, DateTime? y)
+        {
+            if (!x.HasValue && !y.HasValue) { return 0; }
+            // null dates are treated as in the future, instead of in the past as is default in .Net
+            else if (x.HasValue && !y.HasValue) { return 1; }
+            else if (!x.HasValue && y.HasValue) { return -1; }
+
+            else { return y.Value.Date.CompareTo(x.Value.Date); }
+        }
+
 
         public int UsePeriodId { get; set; }
         public int? UserAccountId { get; set; }
