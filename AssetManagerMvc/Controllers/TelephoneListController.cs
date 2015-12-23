@@ -10,6 +10,7 @@ using AssetManagerMvc.Models;
 using System.IO;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using System.Diagnostics;
 
 namespace AssetManagerMvc.Controllers
 {
@@ -19,38 +20,300 @@ namespace AssetManagerMvc.Controllers
 
         // GET: TelephoneList
         public ActionResult Index()
-        {                       
-            return View(internWithoutLog());
+        {
+            List<TelephoneListItem> list = InternWithoutLog();
+            list.AddRange(ExternLog());
+            list.AddRange(GSM());
+            list.AddRange(WithFunction());
+            return View(list);
         }
 
         public ActionResult Print()
         {
-            return File(TelephoneListPDFStream(), "application/pdf", "test.pdf");
+            return File(TelephoneListPDFStream(), "application/pdf", "telefoonlijst.pdf");
         }
-        private List<TelephoneListItem> internWithoutLog()
+        private List<TelephoneListItem> InternWithoutLog()
         {
             List<TelephoneListItem> list = db.UsePeriods
                .Include(u => u.Asset)
                .Include(u => u.Status)
-               .Include(u => u.UserAccount)
+               .Include(u => u.UserAccount)              
                .Where(u => u.Asset is Telephone)
                .Where(u => (u.Asset as Telephone).TelephoneType != "GSM")
                .Where(u => u.EndDate == null || u.EndDate >= DateTime.Now)
                .Where(u => u.UserAccount != null)
-               .Where(u => u.UserAccount.DepartmentString != "log")
+               .Where(u => u.UserAccount.Department.LdapName != "log")
+               .Where(u => u.Status.UsePeriodStatusId == 1) 
                .OrderBy( u => u.UserAccount.Name)
                .Select(u => new TelephoneListItem
                {
-                   Department = u.UserAccount.DepartmentString,
+                   Department = u.UserAccount.Department.Name,
                    Name = u.UserAccount.Name,
+                   Number = (u.Asset as Telephone).Number,
+                   NumberIntern = (u.Asset as Telephone).NumberIntern
+               })
+               .ToList();
+            return list;
+        }
+        private List<TelephoneListItem> ExternLog()
+        {
+            List<TelephoneListItem> list = db.UsePeriods
+               .Include(u => u.Asset)
+               .Include(u => u.Status)
+               .Include(u => u.UserAccount)               
+               .Where(u => u.Asset is Telephone)
+               .Where(u => (u.Asset as Telephone).TelephoneType != "GSM")
+               .Where(u => u.EndDate == null || u.EndDate >= DateTime.Now)
+               .Where(u => u.UserAccount != null)
+               .Where(u => u.UserAccount.Department.LdapName == "log")
+               .Where(u => u.Status.UsePeriodStatusId == 1) // afgeleverd en in werking  
+               .OrderBy(u => u.UserAccount.Name)
+               .Select(u => new TelephoneListItem
+               {
+                   Department = u.UserAccount.Department.Name,
+                   Name = u.UserAccount.Name,
+                   Number = (u.Asset as Telephone).Number,
+                   NumberIntern = (u.Asset as Telephone).NumberIntern
+               })
+               .ToList();
+            return list;
+        }
+        private List<TelephoneListItem> GSM()
+        {
+            List<TelephoneListItem> list = db.UsePeriods
+               .Include(u => u.Asset)
+               .Include(u => u.Status)
+               .Include(u => u.UserAccount)               
+               .Where(u => u.Asset is Telephone)
+               .Where(u => (u.Asset as Telephone).TelephoneType == "GSM")
+               .Where(u => u.EndDate == null || u.EndDate >= DateTime.Now)
+               .Where(u => u.UserAccount != null)
+               .Where(u => u.Status.UsePeriodStatusId == 1) // afgeleverd en in werking        
+               .OrderBy(u => u.UserAccount.Name)
+               .Select(u => new TelephoneListItem
+               {                   
+                   Name = u.UserAccount.Name,
+                   Number = (u.Asset as Telephone).Number,
+                   NumberIntern = (u.Asset as Telephone).NumberIntern
+               })
+               .ToList();
+            return list;
+        }
+        private List<TelephoneListItem> WithFunction()
+        {
+            List<TelephoneListItem> list = db.UsePeriods
+               .Include(u => u.Asset)
+               .Include(u => u.Status)
+               .Include(u => u.UserAccount)               
+               .Where(u => u.Asset is Telephone)               
+               .Where(u => u.EndDate == null || u.EndDate >= DateTime.Now)
+               .Where(u => u.UserAccount == null)
+               .Where(u => u.Status.UsePeriodStatusId == 1) // afgeleverd en in werking  
+               .Where(u => !string.IsNullOrEmpty((u.Asset as Telephone).NumberIntern))         
+               .OrderBy(u => u.Function)
+               .Select(u => new TelephoneListItem
+               {                   
+                   Name = u.Function,
+                   Number = (u.Asset as Telephone).Number,
                    NumberIntern = (u.Asset as Telephone).NumberIntern
                })
                .ToList();
 
-
             return list;
         }
         private MemoryStream TelephoneListPDFStream()
+        {
+            MemoryStream stream = new MemoryStream();
+            Document document = new Document();
+
+            try
+            {
+                PdfWriter pdfWriter = PdfWriter.GetInstance(document, stream);
+                pdfWriter.CloseStream = false;
+                document.Open();
+
+                string fontpath = Server.MapPath(@"~/fonts/");
+                BaseFont OxfamGlobalHeadline = BaseFont.CreateFont(fontpath + "OxfamGlobalHeadline.ttf", 
+                    BaseFont.CP1252, BaseFont.EMBEDDED);
+                //Font font = new Font(customfont, 12);
+                //string s = "My expensive custom font.";
+                //document.Add(new Paragraph(s, font));
+
+                Paragraph heading = new Paragraph("TELEFOONLIJST", new Font(OxfamGlobalHeadline, 28f, Font.BOLD));
+                heading.SpacingAfter = 40f;
+                heading.Alignment = Element.ALIGN_CENTER;
+                document.Add(heading);
+
+                int rowsPerPage = 43;             
+
+                MultiColumnText columns = new MultiColumnText();
+                //float left, float right, float gutterwidth, int numcolumns
+                columns.AddRegularColumns(36f, document.PageSize.Width - 36f, 24f, 2);                            
+                columns.AddElement(GetPdfPtableInternWithoutLog(rowsPerPage));
+                columns.AddElement(new Paragraph("OFTL", 
+                    new Font(Font.HELVETICA, 9f, Font.BOLD)));
+                columns.AddElement(GetPdfPtableExternLog());
+
+                document.Add(columns);
+
+                document.NewPage();
+                document.Add(heading);
+
+                columns = new MultiColumnText();
+                //float left, float right, float gutterwidth, int numcolumns
+                columns.AddRegularColumns(36f, document.PageSize.Width - 36f, 24f, 2);
+                columns.AddElement(GetPdfPtableGSMAndFunction(rowsPerPage));               
+
+                document.Add(columns);
+            }
+            catch (DocumentException de)
+            {
+                Console.Error.WriteLine(de.Message + "My DocumentException");
+            }
+            catch (IOException ioe)
+            {
+                Console.Error.WriteLine(ioe.Message + "My IOException");
+            }
+
+            document.Close();
+            stream.Flush();
+            stream.Position = 0;
+
+            return stream;
+        }
+
+        private IElement GetPdfPtableGSMAndFunction(int rowsPerPage)
+        {
+            List<TelephoneListItem> lstGSM = GSM();
+            // lstGSM.Add(new TelephoneListItem { Name = "Extra GSM", Number = "0456 78 90 12" });
+            PdfPTable tableGSMAndFunction = new PdfPTable(2);            
+            tableGSMAndFunction.WidthPercentage = 100f;
+            PdfPCell cell;
+
+            for (int i = 0; i < lstGSM.Count; i++)
+            {
+                TelephoneListItem number = lstGSM[i];
+                cell = new PdfPCell(new Phrase(number.Name,
+                  new Font(Font.HELVETICA, 9f, Font.NORMAL)));
+                cell.Border = (i == 0 || i == rowsPerPage) ? Rectangle.BOTTOM_BORDER | Rectangle.RIGHT_BORDER :
+                    Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER;
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.FixedHeight = 16f;
+                tableGSMAndFunction.AddCell(cell);
+                cell = new PdfPCell(new Phrase(number.Number,
+                    new Font(Font.HELVETICA, 9f, Font.BOLD)));
+                cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.Border = (i == 0 || i == rowsPerPage) ? Rectangle.BOTTOM_BORDER : Rectangle.TOP_BORDER;
+                tableGSMAndFunction.AddCell(cell);
+            }
+            cell = new PdfPCell(new Phrase(" ", new Font(Font.HELVETICA, 9f, Font.NORMAL)));
+            cell.Border = Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER;
+            tableGSMAndFunction.AddCell(cell);
+            cell = new PdfPCell(new Phrase(" ", new Font(Font.HELVETICA, 9f, Font.NORMAL)));
+            cell.Border = Rectangle.TOP_BORDER;
+            tableGSMAndFunction.AddCell(cell);
+
+            List<TelephoneListItem> lstFunction = WithFunction();
+            for (int i = 0; i < lstFunction.Count; i++)
+            {
+                TelephoneListItem number = lstFunction[i];
+                cell = new PdfPCell(new Phrase(number.Name,
+                  new Font(Font.HELVETICA, 9f, Font.NORMAL)));
+                cell.Border = (i + lstGSM.Count == rowsPerPage - 1) ? Rectangle.BOTTOM_BORDER | Rectangle.RIGHT_BORDER :
+                    Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER;
+                if (i + lstGSM.Count == rowsPerPage - 1)
+                {
+                    if (i == lstFunction.Count - 1) { cell.Border = Rectangle.RIGHT_BORDER; }
+                    else { cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.RIGHT_BORDER; }
+                }
+                else { cell.Border = Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER; }
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.FixedHeight = 16f;
+                tableGSMAndFunction.AddCell(cell);
+                cell = new PdfPCell(new Phrase(number.NumberIntern,
+                    new Font(Font.HELVETICA, 9f, Font.BOLD)));
+                cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.Border = (i + lstGSM.Count == rowsPerPage - 1) ? Rectangle.BOTTOM_BORDER : Rectangle.TOP_BORDER;
+                if (i + lstGSM.Count == rowsPerPage - 1)
+                {
+                    if (i == lstFunction.Count - 1) { cell.Border = Rectangle.NO_BORDER; }
+                    else { cell.Border = Rectangle.BOTTOM_BORDER; }
+                }
+                else { cell.Border = Rectangle.TOP_BORDER ; }
+                tableGSMAndFunction.AddCell(cell);
+            }
+
+
+            return tableGSMAndFunction;
+        }
+
+        private PdfPTable GetPdfPtableExternLog()
+        {
+            List<TelephoneListItem> lstExternLog = ExternLog();
+            PdfPTable tblExternLog = new PdfPTable(2);
+            tblExternLog.SpacingBefore = 15f;
+            //float[] widths = new float[] { 3f, 1f, 3f };
+            //tblInternWithoutLog.SetWidths(widths);
+            tblExternLog.WidthPercentage = 100f;
+
+            for (int i = 0; i < lstExternLog.Count; i++)
+            {
+                TelephoneListItem number = lstExternLog[i];
+                PdfPCell cell = new PdfPCell(new Phrase(number.Name,
+                  new Font(Font.HELVETICA, 9f, Font.NORMAL)));
+                cell.Border = (i == 0 || i == 44) ? Rectangle.BOTTOM_BORDER | Rectangle.RIGHT_BORDER :
+                    Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER;
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.FixedHeight = 16f;
+                tblExternLog.AddCell(cell);
+                cell = new PdfPCell(new Phrase(number.Number,
+                    new Font(Font.HELVETICA, 9f, Font.BOLD)));
+                cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.Border = (i == 0 || i == 44) ? Rectangle.BOTTOM_BORDER : Rectangle.TOP_BORDER;
+                tblExternLog.AddCell(cell);               
+            }
+            return tblExternLog;
+        }
+
+        private PdfPTable GetPdfPtableInternWithoutLog(int rowsPerPage)
+        {
+            List<TelephoneListItem> lstInternWithoutLog = InternWithoutLog();
+            PdfPTable tblInternWithoutLog = new PdfPTable(3);
+            tblInternWithoutLog.SpacingAfter = 15f;
+            float[] widths = new float[] { 3f, 1f, 3f };
+            tblInternWithoutLog.SetWidths(widths);
+            tblInternWithoutLog.WidthPercentage = 100f;
+
+            for (int i = 0; i < lstInternWithoutLog.Count; i++)
+            {
+                TelephoneListItem number = lstInternWithoutLog[i];
+                PdfPCell cell = new PdfPCell(new Phrase(number.Name,
+                  new Font(Font.HELVETICA, 9f, Font.NORMAL)));
+                cell.Border = (i == 0 || i == rowsPerPage) ? Rectangle.BOTTOM_BORDER | Rectangle.RIGHT_BORDER :
+                    Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER;
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.FixedHeight = 16f;
+                tblInternWithoutLog.AddCell(cell);
+                cell = new PdfPCell(new Phrase(number.NumberIntern,
+                    new Font(Font.HELVETICA, 9f, Font.BOLD)));
+                cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.Border = (i == 0 || i == rowsPerPage) ? Rectangle.BOTTOM_BORDER | Rectangle.RIGHT_BORDER :
+                    Rectangle.TOP_BORDER | Rectangle.RIGHT_BORDER;
+                tblInternWithoutLog.AddCell(cell);
+                cell = new PdfPCell(new Phrase(number.Department,
+                    new Font(Font.HELVETICA, 9f, Font.NORMAL)));
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.Border = (i == 0 || i == rowsPerPage) ? Rectangle.BOTTOM_BORDER : Rectangle.TOP_BORDER;
+                tblInternWithoutLog.AddCell(cell);
+            }
+            return tblInternWithoutLog;
+        }
+
+        private MemoryStream TelephoneListPDFStreamOld()
         {
             MemoryStream stream = new MemoryStream();
             Document document = new Document();
