@@ -1,14 +1,22 @@
 ﻿@model IEnumerable<AssetManagerMvc.Models.TelephoneListItem>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Telephone List";
 }
 
-<h2>Index</h2>
+<h2>Telephone List</h2>
+
+@using (Html.BeginForm("Index", "TelephoneList", FormMethod.Get))
+{
+    <p>
+        Filter: @Html.TextBox("SearchString")
+        <input type="submit" value="Filter" />
+    </p>
+}
 
 @Html.ActionLink("Print", "Print")
 
-<table class="table">
+<table class="table alternating">
     <tr>
         <th>
             Name
