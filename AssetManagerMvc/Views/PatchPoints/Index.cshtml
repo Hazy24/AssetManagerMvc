@@ -4,12 +4,21 @@
     ViewBag.Title = "PatchPoints";
 }
 
-<h2>Index</h2>
+<h2>Patch Points</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+
+@using (Html.BeginForm("Index", "Computers", FormMethod.Get))
+{
+    <p>
+        Filter: @Html.TextBox("SearchString")
+        <input type="submit" value="Filter" />
+    </p>
+}
+
+<table class="table alternating">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Number)
@@ -25,10 +34,7 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Tile)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Remark)
-        </th>
+        </th>        
         <th>
             @Html.DisplayNameFor(model => model.Function)
         </th>
@@ -51,10 +57,7 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Tile)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Remark)
-        </td>
+        </td>        
         <td>
             @Html.DisplayFor(modelItem => item.Function)
         </td>
