@@ -101,7 +101,7 @@ namespace AssetManagerMvc.Controllers
             db.SaveChanges();
 
 
-            string fileName = Server.MapPath("~/Docs/deliverInfo.docx");
+            string fileName = Server.MapPath("~/Docs/Computerfiche.docx");
             MemoryStream ms = new MemoryStream();
 
             using (DocX document = DocX.Load(fileName))
