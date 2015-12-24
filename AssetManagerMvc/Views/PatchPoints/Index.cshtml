@@ -22,7 +22,7 @@
     <tr>
         <th>
             @Html.ActionLink("Number", "Index", new { sortOrder = ViewBag.NumberSortParm, searchString = ViewBag.CurrentFilter })
-        </th>        
+        </th>
         <th>
             @Html.ActionLink("Floor", "Index", new { sortOrder = ViewBag.FloorSortParm, searchString = ViewBag.CurrentFilter })
         </th>
@@ -33,40 +33,67 @@
             @Html.ActionLink("Room Number", "Index", new { sortOrder = ViewBag.RoomNumberSortParm, searchString = ViewBag.CurrentFilter })
         </th>
         <th>
-           @Html.ActionLink("Tile", "Index", new { sortOrder = ViewBag.TileSortParm, searchString = ViewBag.CurrentFilter })
-        </th>        
+            @Html.ActionLink("Tile", "Index", new { sortOrder = ViewBag.TileSortParm, searchString = ViewBag.CurrentFilter })
+        </th>
         <th>
-           @Html.ActionLink("Function", "Index", new { sortOrder = ViewBag.FunctionSortParm, searchString = ViewBag.CurrentFilter })
+            @Html.ActionLink("Function", "Index", new { sortOrder = ViewBag.FunctionSortParm, searchString = ViewBag.CurrentFilter })
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Number)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Floor)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RoomName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RoomNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tile)
-        </td>        
-        <td>
-            @Html.DisplayFor(modelItem => item.Function)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PatchPointId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PatchPointId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PatchPointId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+
+        string functionClass = string.Empty;
+        if (!string.IsNullOrWhiteSpace(item.Function))
+        {
+            switch (item.Function[0])
+            {
+                case 'D':
+                    functionClass = "ppDesktop";
+                    break;
+                case 'T':
+                    functionClass = "ppTelephone";
+                    break;
+                case 'V':
+                    functionClass = "ppVoip";
+                    break;
+                case 'W':
+                    functionClass = "ppWand";
+                    break;
+                case 'P':
+                    functionClass = "ppPrinter";
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Floor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tile)
+            </td>
+            <td class="@functionClass">
+                @Html.DisplayFor(modelItem => item.Function)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.PatchPointId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.PatchPointId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.PatchPointId })
+            </td>
+        </tr>
+    }
 
 </table>

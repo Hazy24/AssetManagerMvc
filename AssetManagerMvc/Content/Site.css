@@ -30,4 +30,19 @@ textarea {
 .alternating tr:nth-child(even) {
     background-color: #eee;
 }
+td.ppDesktop {
+    background-color: #92D050
+}
+td.ppTelephone {
+    background-color: #9BC2E6
+}
+td.ppVoip {
+    background-color: #F4B084
+}
+td.ppWand {
+    background-color: #FFFF00
+}
+td.ppPrinter {
+    background-color: #FF33CC
+}
     
