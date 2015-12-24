@@ -10,7 +10,7 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 
-@using (Html.BeginForm("Index", "Computers", FormMethod.Get))
+@using (Html.BeginForm("Index", "PatchPoints", FormMethod.Get))
 {
     <p>
         Filter: @Html.TextBox("SearchString")
@@ -21,22 +21,22 @@
 <table class="table alternating">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Number)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Floor)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RoomName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RoomNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Tile)
+            @Html.ActionLink("Number", "Index", new { sortOrder = ViewBag.NumberSortParm, searchString = ViewBag.CurrentFilter })
         </th>        
         <th>
-            @Html.DisplayNameFor(model => model.Function)
+            @Html.ActionLink("Floor", "Index", new { sortOrder = ViewBag.FloorSortParm, searchString = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Room Name", "Index", new { sortOrder = ViewBag.RoomNameSortParm, searchString = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Room Number", "Index", new { sortOrder = ViewBag.RoomNumberSortParm, searchString = ViewBag.CurrentFilter })
+        </th>
+        <th>
+           @Html.ActionLink("Tile", "Index", new { sortOrder = ViewBag.TileSortParm, searchString = ViewBag.CurrentFilter })
+        </th>        
+        <th>
+           @Html.ActionLink("Function", "Index", new { sortOrder = ViewBag.FunctionSortParm, searchString = ViewBag.CurrentFilter })
         </th>
         <th></th>
     </tr>

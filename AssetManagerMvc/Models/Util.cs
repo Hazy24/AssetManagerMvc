@@ -99,7 +99,6 @@ namespace AssetManagerMvc.Models
 
             return telephones;
         }
-
         public static IQueryable<UsePeriod> TextSearch(this IQueryable<UsePeriod> useperiods, string searchString)
         {
             useperiods = useperiods.Where
@@ -129,6 +128,29 @@ namespace AssetManagerMvc.Models
                 || (u.Asset as Telephone).NumberIntern.Contains(searchString)
                     );
             return useperiods;
+        }
+        public static IQueryable<PatchPoint> TextSearch(this IQueryable<PatchPoint> patchpoints, string searchString)
+
+        {
+            int number;
+            if (Int32.TryParse(searchString, out number))
+            {
+                patchpoints = patchpoints.Where
+                     (pp => pp.Floor == number
+                     || pp.Number == number
+                      || pp.RoomNumber == number
+                      );
+            }
+            else
+            {
+                patchpoints = patchpoints.Where
+                    (pp => pp.Function.Contains(searchString)                   
+                    || pp.Remark.Contains(searchString)
+                    || pp.RoomName.Contains(searchString)                    
+                    || pp.Tile.Contains(searchString)
+                    );
+            }
+            return patchpoints;
         }
         public static MemoryStream CompoundIdtoPDFStream(string compoundId)
         {

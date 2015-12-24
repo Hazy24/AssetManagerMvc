@@ -15,9 +15,65 @@ namespace AssetManagerMvc.Controllers
         private AssetManagerContext db = new AssetManagerContext();
 
         // GET: PatchPoints
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString)
         {
-            return View(db.PatchPoints.ToList());
+            var patchpoints = from pp in db.PatchPoints
+                              select pp;
+
+            if (!String.IsNullOrWhiteSpace(searchString))
+            {
+                patchpoints = patchpoints.TextSearch(searchString);
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            ViewBag.NumberSortParm = String.IsNullOrEmpty(sortOrder) ? "number_desc" : "";
+            ViewBag.FloorSortParm = sortOrder == "floor" ? "floor_desc" : "floor";
+            ViewBag.RoomNameSortParm = sortOrder == "roomname" ? "roomname_desc" : "roomname";
+            ViewBag.RoomNumberSortParm = sortOrder == "roomnumber" ? "roomnumber_desc" : "roomnumber";
+            ViewBag.TileSortParm = sortOrder == "tile" ? "tile_desc" : "tile";
+            ViewBag.FunctionSortParm = sortOrder == "function" ? "function_desc" : "function";
+
+            switch (sortOrder)
+            {
+                case "number_desc":
+                    patchpoints = patchpoints.OrderByDescending(pp => pp.Number);
+                    break;
+                case "floor":
+                    patchpoints = patchpoints.OrderBy(pp => pp.Floor);
+                    break;
+                case "floor_desc":
+                    patchpoints = patchpoints.OrderByDescending(pp => pp.Floor);
+                    break;
+                case "roomname":
+                    patchpoints = patchpoints.OrderBy(pp => pp.RoomName);
+                    break;
+                case "roomname_desc":
+                    patchpoints = patchpoints.OrderByDescending(pp => pp.RoomName);
+                    break;
+                case "roomnumber":
+                    patchpoints = patchpoints.OrderBy(pp => pp.RoomNumber);
+                    break;
+                case "roomnumber_desc":
+                    patchpoints = patchpoints.OrderByDescending(pp => pp.RoomNumber);
+                    break;
+                case "tile":
+                    patchpoints = patchpoints.OrderBy(pp => pp.Tile);
+                    break;
+                case "tile_desc":
+                    patchpoints = patchpoints.OrderByDescending(pp => pp.Tile);
+                    break;
+                case "function":
+                    patchpoints = patchpoints.OrderBy(pp => pp.Function);
+                    break;
+                case "function_desc":
+                    patchpoints = patchpoints.OrderByDescending(pp => pp.Function);
+                    break;
+                default:  // number ascending 
+                    patchpoints = patchpoints.OrderBy(pp => pp.Number);
+                    break;
+            }
+            return View(patchpoints);
         }
 
         // GET: PatchPoints/Details/5
