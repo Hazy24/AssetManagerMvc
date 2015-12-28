@@ -268,6 +268,14 @@
     <Compile Include="Migrations\201512171349301_useraccountdepartment.Designer.cs">
       <DependentUpon>201512171349301_useraccountdepartment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512281333134_asset-remark.cs" />
+    <Compile Include="Migrations\201512281333134_asset-remark.Designer.cs">
+      <DependentUpon>201512281333134_asset-remark.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512281350515_add-misc-and-network.cs" />
+    <Compile Include="Migrations\201512281350515_add-misc-and-network.Designer.cs">
+      <DependentUpon>201512281350515_add-misc-and-network.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Asset.cs" />
@@ -275,6 +283,8 @@
     <Compile Include="Models\Beamer.cs" />
     <Compile Include="Models\Computer.cs" />
     <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\Miscellaneous.cs" />
+    <Compile Include="Models\Network.cs" />
     <Compile Include="Models\PatchPointsCreator.cs" />
     <Compile Include="Models\RepairInfo.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -476,6 +486,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512171349301_useraccountdepartment.resx">
       <DependentUpon>201512171349301_useraccountdepartment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512281333134_asset-remark.resx">
+      <DependentUpon>201512281333134_asset-remark.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512281350515_add-misc-and-network.resx">
+      <DependentUpon>201512281350515_add-misc-and-network.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

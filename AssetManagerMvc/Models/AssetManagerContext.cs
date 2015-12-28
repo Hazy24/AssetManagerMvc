@@ -28,6 +28,8 @@ namespace AssetManagerMvc.Models
         public DbSet<Telephone> Telephones { get; set; }
         public DbSet<PatchPoint> PatchPoints { get; set; }
         public DbSet<Department> Departments { get; set; }
+        public DbSet<Miscellaneous> Miscellaneous { get; set; }
+        public DbSet<Network> Networks { get; set; }
     }
     //public class ObservableListSource<T> : ObservableCollection<T>, IListSource
     //    where T : class

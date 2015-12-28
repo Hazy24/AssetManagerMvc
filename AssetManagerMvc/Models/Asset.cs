@@ -27,9 +27,15 @@ namespace AssetManagerMvc.Models
         [Display(Name = "Price")]
         public decimal? PurchasePrice { get; set; }
 
+        [DataType(DataType.MultilineText)]
+        public string Remark { get; set; }
+
         public string Owner { get; set; }
         public string Supplier { get; set; }
         public string Manufacturer { get; set; }
+
+        [Display(Name = "Ip Address")]
+        public string IpAddress { get; set; }
 
         [NotMapped]
         public string CompoundId
