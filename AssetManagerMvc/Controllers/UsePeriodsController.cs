@@ -18,7 +18,7 @@ namespace AssetManagerMvc.Controllers
 
         // GET: UsePeriods
         public ActionResult Index(string sortOrder, string searchString, bool? current,
-            bool? hideUitGebruik, string category, bool? repair)
+            bool? hideUitGebruik, string category, bool? repair, int? assetId)
         {
             var usePeriods = db.UsePeriods
                 .Include(u => u.Asset)
@@ -36,7 +36,7 @@ namespace AssetManagerMvc.Controllers
                     // only"/" is in the path when running locally
                     match = Regex.Match(Request.UrlReferrer.AbsolutePath, @"/([A-Za-z]+)");
                     if (match.Success && match.Groups.Count > 1) { category = match.Groups[1].Value; }
-                }              
+                }
             }
 
             // filters
@@ -71,6 +71,10 @@ namespace AssetManagerMvc.Controllers
             {
                 usePeriods = usePeriods.Where(up => up.EndDate == null ||
                 up.EndDate >= DateTime.Now);
+            }
+            if (assetId.HasValue)
+            {
+                usePeriods = usePeriods.Where(u => u.AssetId == assetId.Value);
             }
 
             if (!String.IsNullOrEmpty(searchString))
@@ -165,12 +169,13 @@ namespace AssetManagerMvc.Controllers
 
             // repair doc
             if (repair == true)
-            {                
+            {
                 ViewBag.RepairInfo = true;
-                TempData.Keep("repairDoc");                
+                TempData.Keep("repairDoc");
             }
-
-            return View(usePeriods.ToList());
+            List<UsePeriod> usePeriodsList = usePeriods.ToList();
+            if (assetId.HasValue && String.IsNullOrEmpty(sortOrder)) { usePeriodsList.Sort(); }            
+            return View(usePeriodsList);
         }
 
         // GET: UsePeriods/Details/5
@@ -196,10 +201,10 @@ namespace AssetManagerMvc.Controllers
 
             if (oldUsePeriodId != null)
             {
-                UsePeriod oldUsePeriod = db.UsePeriods.Find(oldUsePeriodId);                
+                UsePeriod oldUsePeriod = db.UsePeriods.Find(oldUsePeriodId);
                 oldUsePeriod.EndDate = DateTime.Today;
                 db.SaveChanges();
-                SetCreateAndEditViewbag(category, oldUsePeriod.AssetId, null, 
+                SetCreateAndEditViewbag(category, oldUsePeriod.AssetId, null,
                     oldUsePeriod.UserAccountId, oldUsePeriod.Function);
             }
             else

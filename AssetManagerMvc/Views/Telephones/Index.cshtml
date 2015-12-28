@@ -43,7 +43,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.CompoundId)
+            @Html.ActionLink(item.CompoundId, "Index", "UsePeriods", new { assetId = item.AssetId, current = false, hideUitGebruik = false }, null)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Number)
