@@ -1,2 +1,11 @@
 ﻿@model AssetManagerMvc.Models.Computer
 
+<div class="form-group">
+    @Html.LabelFor(model => model.ComputerType, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10" style="float: left;">
+        @Html.DropDownList("ComputerType", null, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.ComputerType, "", new { @class = "text-danger" })
+        <a id="typeLink" href="javascript:" onclick="changeToText('ComputerType', 'typeLink'); return false;">New type?</a>
+    </div>
+</div>
+

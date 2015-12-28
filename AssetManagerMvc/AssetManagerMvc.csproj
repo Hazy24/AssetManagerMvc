@@ -283,6 +283,7 @@
     <Compile Include="Models\Beamer.cs" />
     <Compile Include="Models\Computer.cs" />
     <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\DropDownListText.cs" />
     <Compile Include="Models\Miscellaneous.cs" />
     <Compile Include="Models\Network.cs" />
     <Compile Include="Models\PatchPointsCreator.cs" />
@@ -416,7 +417,7 @@
     <Content Include="Views\Departments\Index.cshtml" />
     <Content Include="Views\Shared\_UsePeriodsOverview.cshtml" />
     <Content Include="Views\Computers\_ComputerType.cshtml" />
-    <Content Include="Views\Computers\_Office.cshtml" />
+    <Content Include="Views\Computers\_OfficeVersion.cshtml" />
     <Content Include="Views\Computers\_Browser.cshtml" />
     <Content Include="Views\Computers\_AntiVirus.cshtml" />
     <Content Include="Views\Shared\DropDownListText.cshtml" />
