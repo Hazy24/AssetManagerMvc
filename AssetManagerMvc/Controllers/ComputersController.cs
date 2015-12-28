@@ -10,6 +10,7 @@ using AssetManagerMvc.Models;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.IO;
+using System.Linq.Expressions;
 
 namespace AssetManagerMvc.Controllers
 {
@@ -90,7 +91,7 @@ namespace AssetManagerMvc.Controllers
         }
         //Print CompoundId to PDF
         public ActionResult Print(string compoundId)
-        {            
+        {
             return File(Util.CompoundIdtoPDFStream(compoundId), "application/pdf", compoundId + ".pdf");
         }
         // GET: Computers/Details/5
@@ -199,5 +200,12 @@ namespace AssetManagerMvc.Controllers
             }
             base.Dispose(disposing);
         }
+        public ActionResult InitializeUserControl(Type TModel,string value)
+        {
+            Expression<Func<string, string>> exp;
+            //    string a = testing;
+            return View();
+        }
     }
+
 }

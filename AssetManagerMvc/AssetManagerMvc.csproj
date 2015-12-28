@@ -405,6 +405,11 @@
     <Content Include="Views\Departments\Edit.cshtml" />
     <Content Include="Views\Departments\Index.cshtml" />
     <Content Include="Views\Shared\_UsePeriodsOverview.cshtml" />
+    <Content Include="Views\Computers\_ComputerType.cshtml" />
+    <Content Include="Views\Computers\_Office.cshtml" />
+    <Content Include="Views\Computers\_Browser.cshtml" />
+    <Content Include="Views\Computers\_AntiVirus.cshtml" />
+    <Content Include="Views\Shared\DropDownListText.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
