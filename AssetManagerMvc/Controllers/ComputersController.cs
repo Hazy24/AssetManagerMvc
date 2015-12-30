@@ -151,6 +151,8 @@ namespace AssetManagerMvc.Controllers
             {
                 return HttpNotFound();
             }
+            SetCreateAndEditViewbag(computer.AntiVirus, computer.Browser, computer.ComputerType,
+                computer.OfficeVersion);
             return View(computer);
         }
 
@@ -167,6 +169,8 @@ namespace AssetManagerMvc.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            SetCreateAndEditViewbag(computer.AntiVirus, computer.Browser, computer.ComputerType,
+                computer.OfficeVersion);
             return View(computer);
         }
 

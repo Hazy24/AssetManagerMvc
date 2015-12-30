@@ -6,6 +6,6 @@
     <div class="col-md-10" style="float: left;">
         @Html.DropDownList("Browser", null, htmlAttributes: new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.Browser, "", new { @class = "text-danger" })
-        <a id="typeLink" href="javascript:" onclick="changeToText('Browser', 'typeLink'); return false;">New?</a>
+        <a id="typeLink" href="javascript:" onclick="changeToText('Browser', 'typeLink'); return false;">New browser?</a>
     </div>
 </div>
