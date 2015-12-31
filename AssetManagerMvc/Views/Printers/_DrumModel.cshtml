@@ -1,0 +1,10 @@
+﻿@model AssetManagerMvc.Models.Printer
+
+<div class="form-group">
+    @Html.LabelFor(model => model.DrumModel, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10" style="float: left;">
+        @Html.DropDownList("DrumModel", null, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.DrumModel, "", new { @class = "text-danger" })
+        <a id="typeLink" href="javascript:" onclick="changeToText('DrumModel', 'typeLink'); return false;">New drum model?</a>
+    </div>
+</div>

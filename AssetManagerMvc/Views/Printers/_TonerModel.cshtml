@@ -1,0 +1,11 @@
+﻿@model AssetManagerMvc.Models.Printer
+
+<div class="form-group">
+    @Html.LabelFor(model => model.TonerModel, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10" style="float: left;">
+        @Html.DropDownList("TonerModel", null, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.TonerModel, "", new { @class = "text-danger" })
+        <a id="typeLink" href="javascript:" onclick="changeToText('TonerModel', 'typeLink'); return false;">New toner model?</a>
+    </div>
+</div>
+

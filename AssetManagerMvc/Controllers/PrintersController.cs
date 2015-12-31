@@ -180,6 +180,8 @@ namespace AssetManagerMvc.Controllers
             ViewBag.Owner = AssetSelectList(db, "Owner", printer.Owner);
             ViewBag.Manufacturer = GenericSelectList(db, typeof(Printer), "Manufacturer", printer.Manufacturer);
             ViewBag.ModelName = GenericSelectList(db, typeof(Printer), "ModelName", printer.ModelName);
+            ViewBag.TonerModel = GenericSelectList(db, typeof(Printer), "TonerModel", printer.TonerModel);
+            ViewBag.DrumModel = GenericSelectList(db, typeof(Printer), "DrumModel", printer.DrumModel);
         }
         // GET: Printers/Delete/5
         public ActionResult Delete(int? id)

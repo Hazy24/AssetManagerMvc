@@ -427,6 +427,8 @@
     <Content Include="Views\Shared\_Manufacturer.cshtml" />
     <Content Include="Views\Shared\_ModelName.cshtml" />
     <Content Include="Views\Computers\_OperatingSystem.cshtml" />
+    <Content Include="Views\Printers\_TonerModel.cshtml" />
+    <Content Include="Views\Printers\_DrumModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
