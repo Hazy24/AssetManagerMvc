@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AssetManagerMvc.Models;
+using static AssetManagerMvc.Models.CustomHelpers;
 
 namespace AssetManagerMvc.Controllers
 {
@@ -100,7 +101,7 @@ namespace AssetManagerMvc.Controllers
         // GET: Monitors/Create
         public ActionResult Create()
         {
-            SetCreateAndEditViewbag();
+            SetCreateAndEditViewbag(new Monitor());
             return View();
         }
 
@@ -121,7 +122,7 @@ namespace AssetManagerMvc.Controllers
                 return RedirectToAction("Index");
             }
 
-            SetCreateAndEditViewbag(monitor.MaxResolution);
+            SetCreateAndEditViewbag(monitor);
             return View(monitor);
         }
 
@@ -137,7 +138,7 @@ namespace AssetManagerMvc.Controllers
             {
                 return HttpNotFound();
             }
-            SetCreateAndEditViewbag(monitor.MaxResolution);
+            SetCreateAndEditViewbag(monitor);
             return View(monitor);
         }
 
@@ -154,7 +155,7 @@ namespace AssetManagerMvc.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            SetCreateAndEditViewbag(monitor.MaxResolution);
+            SetCreateAndEditViewbag(monitor);
             return View(monitor);
         }
 
@@ -169,24 +170,17 @@ namespace AssetManagerMvc.Controllers
             if (monitor == null)
             {
                 return HttpNotFound();
-            }
+            }            
             return View(monitor);
         }
 
-        private void SetCreateAndEditViewbag(string maxResolution = null)
+        private void SetCreateAndEditViewbag(Monitor monitor)
         {
-            if (string.IsNullOrEmpty(maxResolution))
-            {
-                ViewBag.MaxResolution = new SelectList(db.Monitors, "MaxResolution", "MaxResolution")
-                .GroupBy(f => f.Text).Select(f => f.First()) // == Distinct              
-                .OrderBy(f => f.Text);
-            }
-            else
-            {
-                ViewBag.MaxResolution = new SelectList(db.Monitors, "MaxResolution", "MaxResolution", maxResolution)
-                .GroupBy(f => f.Text).Select(f => f.First()) // == Distinct              
-                .OrderBy(f => f.Text);
-            }
+            ViewBag.MaxResolution = GenericSelectList(db, typeof(Monitor), "MaxResolution", monitor.MaxResolution);
+            ViewBag.Supplier = AssetSelectList(db, "Supplier", monitor.Supplier);
+            ViewBag.Owner = AssetSelectList(db, "Owner", monitor.Owner);
+            ViewBag.Manufacturer = GenericSelectList(db, typeof(Monitor), "Manufacturer", monitor.Manufacturer);
+            ViewBag.ModelName = GenericSelectList(db, typeof(Monitor), "ModelName", monitor.ModelName);           
         }
 
         // POST: Monitors/Delete/5

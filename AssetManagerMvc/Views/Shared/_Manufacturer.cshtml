@@ -1,0 +1,10 @@
+﻿@model AssetManagerMvc.Models.Asset
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Manufacturer, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10" style="float: left;">
+        @Html.DropDownList("Manufacturer", null, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Manufacturer, "", new { @class = "text-danger" })
+        <a id="typeLink" href="javascript:" onclick="changeToText('Manufacturer', 'typeLink'); return false;">New manufacturer?</a>
+    </div>
+</div>

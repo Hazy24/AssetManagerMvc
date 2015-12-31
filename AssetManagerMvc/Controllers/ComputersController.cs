@@ -12,6 +12,7 @@ using iTextSharp.text.pdf;
 using System.IO;
 using System.Linq.Expressions;
 using System.Web.Mvc.Html;
+using static AssetManagerMvc.Models.CustomHelpers;
 
 namespace AssetManagerMvc.Controllers
 {
@@ -113,7 +114,7 @@ namespace AssetManagerMvc.Controllers
         // GET: Computers/Create
         public ActionResult Create()
         {
-            SetCreateAndEditViewbag();
+            SetCreateAndEditViewbag(new Computer());
             return View();
         }
 
@@ -133,9 +134,8 @@ namespace AssetManagerMvc.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            SetCreateAndEditViewbag(computer.AntiVirus, computer.Browser, computer.ComputerType,
-                computer.OfficeVersion);
-            
+            SetCreateAndEditViewbag(computer);
+
             return View(computer);
         }
 
@@ -151,8 +151,7 @@ namespace AssetManagerMvc.Controllers
             {
                 return HttpNotFound();
             }
-            SetCreateAndEditViewbag(computer.AntiVirus, computer.Browser, computer.ComputerType,
-                computer.OfficeVersion);
+            SetCreateAndEditViewbag(computer);
             return View(computer);
         }
 
@@ -169,62 +168,21 @@ namespace AssetManagerMvc.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            SetCreateAndEditViewbag(computer.AntiVirus, computer.Browser, computer.ComputerType,
-                computer.OfficeVersion);
+            SetCreateAndEditViewbag(computer);
             return View(computer);
         }
 
-        private void SetCreateAndEditViewbag(string antiVirus = null, string browser = null,
-            string computerType = null, string officeVersion =null)
+        private void SetCreateAndEditViewbag(Computer computer)
         {
-            if (string.IsNullOrEmpty(antiVirus))
-            {
-                ViewBag.AntiVirus = new SelectList(db.Computers, "AntiVirus", "AntiVirus")
-                .GroupBy(f => f.Text).Select(f => f.First()) // == Distinct              
-                .OrderBy(f => f.Text);
-            }
-            else
-            {
-                ViewBag.AntiVirus = new SelectList(db.Computers, "AntiVirus", "AntiVirus", antiVirus)
-                .GroupBy(f => f.Text).Select(f => f.First()) // == Distinct              
-                .OrderBy(f => f.Text);
-            }
-            if (string.IsNullOrEmpty(browser))
-            {
-                ViewBag.Browser = new SelectList(db.Computers, "Browser", "Browser")
-                .GroupBy(f => f.Text).Select(f => f.First()) // == Distinct              
-                .OrderBy(f => f.Text);
-            }
-            else
-            {
-                ViewBag.Browser = new SelectList(db.Computers, "Browser", "Browser", browser)
-                .GroupBy(f => f.Text).Select(f => f.First()) // == Distinct              
-                .OrderBy(f => f.Text);
-            }
-            if (string.IsNullOrEmpty(computerType))
-            {
-                ViewBag.ComputerType = new SelectList(db.Computers, "ComputerType", "ComputerType")
-                .GroupBy(f => f.Text).Select(f => f.First()) // == Distinct              
-                .OrderBy(f => f.Text);
-            }
-            else
-            {
-                ViewBag.ComputerType = new SelectList(db.Computers, "ComputerType", "ComputerType", computerType)
-                .GroupBy(f => f.Text).Select(f => f.First()) // == Distinct              
-                .OrderBy(f => f.Text);
-            }
-            if (string.IsNullOrEmpty(officeVersion))
-            {
-                ViewBag.OfficeVersion = new SelectList(db.Computers, "OfficeVersion", "OfficeVersion")
-                .GroupBy(f => f.Text).Select(f => f.First()) // == Distinct              
-                .OrderBy(f => f.Text);
-            }
-            else
-            {
-                ViewBag.OfficeVersion = new SelectList(db.Computers, "OfficeVersion", "OfficeVersion", officeVersion)
-                .GroupBy(f => f.Text).Select(f => f.First()) // == Distinct              
-                .OrderBy(f => f.Text);
-            }
+            ViewBag.AntiVirus = GenericSelectList(db, typeof(Computer), "AntiVirus", computer.AntiVirus);
+            ViewBag.Browser = GenericSelectList(db, typeof(Computer), "Browser", computer.Browser);
+            ViewBag.ComputerType = GenericSelectList(db, typeof(Computer), "ComputerType", computer.ComputerType);
+            ViewBag.OfficeVersion = GenericSelectList(db, typeof(Computer), "OfficeVersion", computer.OfficeVersion);
+            ViewBag.OperatingSystem = GenericSelectList(db, typeof(Computer), "OperatingSystem", computer.OperatingSystem);
+            ViewBag.Supplier = AssetSelectList(db, "Supplier", computer.Supplier);
+            ViewBag.Owner = AssetSelectList(db, "Owner", computer.Owner);
+            ViewBag.Manufacturer = GenericSelectList(db, typeof(Computer), "Manufacturer", computer.Manufacturer);
+            ViewBag.ModelName = GenericSelectList(db, typeof(Computer), "ModelName", computer.ModelName);
         }
         // GET: Computers/Delete/5
         public ActionResult Delete(int? id)
@@ -260,7 +218,7 @@ namespace AssetManagerMvc.Controllers
             }
             base.Dispose(disposing);
         }
-        public ActionResult InitializeUserControl(Type TModel,string value)
+        public ActionResult InitializeUserControl(Type TModel, string value)
         {
             Expression<Func<string, string>> exp;
             //    string a = testing;

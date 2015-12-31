@@ -9,17 +9,18 @@ namespace AssetManagerMvc.Models
     public class Computer : Asset
     {
         [Display(Name = "Computer Name")]
-        public string ComputerName { get; set; }
+        public string ComputerName { get; set; } = string.Empty;
         [Required]
         [Display(Name = "Computer Type")]
-        public string ComputerType { get; set; }
+        public string ComputerType { get; set; } = string.Empty;
         [Display(Name = "Office Version")]
-        public string OfficeVersion { get; set; }
+        public string OfficeVersion { get; set; } = string.Empty;
         [Display(Name = "Operating System")]
-        public string OperatingSystem { get; set; }        
-        public string Browser { get; set; }
-        public string AntiVirus { get; set; }
+        public string OperatingSystem { get; set; } = string.Empty;
+        public string Browser { get; set; } = string.Empty;
+        public string AntiVirus { get; set; } = string.Empty;
         [Display(Name = "TeamViewer")]
-        public bool IsTeamViewerInstalled { get; set; }
+        public bool IsTeamViewerInstalled { get; set; } = false;
+       
     }
 }

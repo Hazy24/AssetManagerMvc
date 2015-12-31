@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AssetManagerMvc.Models;
+using static AssetManagerMvc.Models.CustomHelpers;
 
 namespace AssetManagerMvc.Controllers
 {
@@ -110,7 +111,7 @@ namespace AssetManagerMvc.Controllers
         // GET: Telephones/Create
         public ActionResult Create()
         {
-            SetCreateAndEditViewbag();
+            SetCreateAndEditViewbag(new Telephone());
             return View();
         }
 
@@ -131,7 +132,7 @@ namespace AssetManagerMvc.Controllers
                 return RedirectToAction("Index");
             }
 
-            SetCreateAndEditViewbag(telephone.TelephoneType);
+            SetCreateAndEditViewbag(telephone);
             return View(telephone);
         }
 
@@ -147,7 +148,7 @@ namespace AssetManagerMvc.Controllers
             {
                 return HttpNotFound();
             }
-            SetCreateAndEditViewbag(telephone.TelephoneType);
+            SetCreateAndEditViewbag(telephone);
             return View(telephone);
         }
 
@@ -164,23 +165,17 @@ namespace AssetManagerMvc.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            SetCreateAndEditViewbag(telephone.TelephoneType);
+            SetCreateAndEditViewbag(telephone);
             return View(telephone);
         }
-        private void SetCreateAndEditViewbag(string telephoneType = null)
+        private void SetCreateAndEditViewbag(Telephone telephone)
         {
-            if (string.IsNullOrEmpty(telephoneType))
-            {
-                ViewBag.TelephoneType = new SelectList(db.Telephones, "TelephoneType", "TelephoneType")
-                .GroupBy(f => f.Text).Select(f => f.First()) // == Distinct              
-                .OrderBy(f => f.Text);
-            }
-            else
-            {
-                ViewBag.TelephoneType = new SelectList(db.Telephones, "TelephoneType", "TelephoneType", telephoneType)
-                .GroupBy(f => f.Text).Select(f => f.First()) // == Distinct              
-                .OrderBy(f => f.Text);
-            }
+            ViewBag.TelephoneType = GenericSelectList(db, typeof(Telephone), "TelephoneType", telephone.TelephoneType);
+            ViewBag.Supplier = AssetSelectList(db, "Supplier", telephone.Supplier);
+            ViewBag.Owner = AssetSelectList(db, "Owner", telephone.Owner);
+            ViewBag.Manufacturer = GenericSelectList(db, typeof(Telephone), "Manufacturer", telephone.Manufacturer);
+            ViewBag.ModelName = GenericSelectList(db, typeof(Telephone), "ModelName", telephone.ModelName);
+
         }
 
         // GET: Telephones/Delete/5

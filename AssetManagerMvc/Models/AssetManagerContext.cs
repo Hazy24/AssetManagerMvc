@@ -30,17 +30,5 @@ namespace AssetManagerMvc.Models
         public DbSet<Department> Departments { get; set; }
         public DbSet<Miscellaneous> Miscellaneous { get; set; }
         public DbSet<Network> Networks { get; set; }
-    }
-    //public class ObservableListSource<T> : ObservableCollection<T>, IListSource
-    //    where T : class
-    //{
-    //    private IBindingList _bindingList;
-
-    //    bool IListSource.ContainsListCollection { get { return false; } }
-
-    //    IList IListSource.GetList()
-    //    {
-    //        return _bindingList ?? (_bindingList = this.ToBindingList());
-    //    }
-    //}
+    }   
 }

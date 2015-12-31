@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AssetManagerMvc.Models;
+using static AssetManagerMvc.Models.CustomHelpers;
 
 namespace AssetManagerMvc.Controllers
 {
@@ -101,6 +102,7 @@ namespace AssetManagerMvc.Controllers
         // GET: Beamers/Create
         public ActionResult Create()
         {
+            SetCreateAndEditViewbag(new Beamer());
             return View();
         }
 
@@ -120,7 +122,7 @@ namespace AssetManagerMvc.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            SetCreateAndEditViewbag(beamer);
             return View(beamer);
         }
 
@@ -136,6 +138,7 @@ namespace AssetManagerMvc.Controllers
             {
                 return HttpNotFound();
             }
+            SetCreateAndEditViewbag(beamer);
             return View(beamer);
         }
 
@@ -152,9 +155,16 @@ namespace AssetManagerMvc.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            SetCreateAndEditViewbag(beamer);
             return View(beamer);
         }
-
+        private void SetCreateAndEditViewbag(Beamer beamer)
+        {
+            ViewBag.Supplier = AssetSelectList(db, "Supplier", beamer.Supplier);
+            ViewBag.Owner = AssetSelectList(db, "Owner", beamer.Owner);
+            ViewBag.Manufacturer = GenericSelectList(db, typeof(Beamer), "Manufacturer", beamer.Manufacturer);
+            ViewBag.ModelName = GenericSelectList(db, typeof(Beamer), "ModelName", beamer.ModelName);
+        }
         // GET: Beamers/Delete/5
         public ActionResult Delete(int? id)
         {

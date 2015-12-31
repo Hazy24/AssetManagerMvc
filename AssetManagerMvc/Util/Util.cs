@@ -278,5 +278,29 @@ namespace AssetManagerMvc.Models
             
             local.Close();
         }
+
+        /// <summary>
+        /// returns a distinct and ordered SelectList
+        /// </summary>
+        
+        public static IOrderedEnumerable<SelectListItem> DOSelectList(IEnumerable<object> items, string dataValueField,
+    string dataTextField, object selectedValue = null)
+        {
+            IOrderedEnumerable<SelectListItem> selectList;
+
+            if (selectedValue == null)
+            {
+                selectList = new SelectList(items, dataValueField, dataTextField)
+                .GroupBy(f => f.Text).Select(f => f.First()) // == Distinct              
+                .OrderBy(f => f.Text);
+            }
+            else
+            {
+                selectList = new SelectList(items, dataValueField, dataTextField, selectedValue)
+                .GroupBy(f => f.Text).Select(f => f.First()) // == Distinct              
+                .OrderBy(f => f.Text);
+            }            
+            return selectList;
+        }
     }
 }

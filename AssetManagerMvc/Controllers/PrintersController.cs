@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AssetManagerMvc.Models;
+using static AssetManagerMvc.Models.CustomHelpers;
 
 namespace AssetManagerMvc.Controllers
 {
@@ -116,6 +117,7 @@ namespace AssetManagerMvc.Controllers
         // GET: Printers/Create
         public ActionResult Create()
         {
+            SetCreateAndEditViewbag(new Printer());
             return View();
         }
 
@@ -135,7 +137,7 @@ namespace AssetManagerMvc.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            SetCreateAndEditViewbag(printer);
             return View(printer);
         }
 
@@ -151,6 +153,7 @@ namespace AssetManagerMvc.Controllers
             {
                 return HttpNotFound();
             }
+            SetCreateAndEditViewbag(printer);
             return View(printer);
         }
 
@@ -167,9 +170,17 @@ namespace AssetManagerMvc.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            SetCreateAndEditViewbag(printer);
             return View(printer);
         }
 
+        private void SetCreateAndEditViewbag(Printer printer)
+        {            
+            ViewBag.Supplier = AssetSelectList(db, "Supplier", printer.Supplier);
+            ViewBag.Owner = AssetSelectList(db, "Owner", printer.Owner);
+            ViewBag.Manufacturer = GenericSelectList(db, typeof(Printer), "Manufacturer", printer.Manufacturer);
+            ViewBag.ModelName = GenericSelectList(db, typeof(Printer), "ModelName", printer.ModelName);
+        }
         // GET: Printers/Delete/5
         public ActionResult Delete(int? id)
         {

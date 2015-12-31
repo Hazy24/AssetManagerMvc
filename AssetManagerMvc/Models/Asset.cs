@@ -8,16 +8,16 @@ using System.Web;
 namespace AssetManagerMvc.Models
 {
     public class Asset
-    {
+    {       
         public int AssetId { get; set; }
 
         [Required]
         [Display(Name = "Serial Number")]
-        public string SerialNumber { get; set; }
+        public string SerialNumber { get; set; } = string.Empty;
 
         [Required]
         [Display(Name = "Model Name")]
-        public string ModelName { get; set; }
+        public string ModelName { get; set; } = string.Empty;
 
         [Display(Name = "Purchase Date")]
         [DataType(DataType.Date)]
@@ -28,14 +28,14 @@ namespace AssetManagerMvc.Models
         public decimal? PurchasePrice { get; set; }
 
         [DataType(DataType.MultilineText)]
-        public string Remark { get; set; }
+        public string Remark { get; set; } = string.Empty;
 
-        public string Owner { get; set; }
-        public string Supplier { get; set; }
-        public string Manufacturer { get; set; }
+        public string Owner { get; set; } = string.Empty;
+        public string Supplier { get; set; } = string.Empty;
+        public string Manufacturer { get; set; } = string.Empty;
 
         [Display(Name = "Ip Address")]
-        public string IpAddress { get; set; }
+        public string IpAddress { get; set; } = string.Empty;
 
         [NotMapped]
         public string CompoundId
