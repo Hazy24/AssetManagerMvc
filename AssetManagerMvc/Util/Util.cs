@@ -99,6 +99,19 @@ namespace AssetManagerMvc.Models
 
             return telephones;
         }
+        public static IQueryable<Network> TextSearch(this IQueryable<Network> networks, string searchString)
+        {
+            IQueryable<Network> assetSearch = (networks as IQueryable<Asset>)
+                .TextSearch(searchString)
+                .Cast<Network>();
+
+            networks = assetSearch.Concat(networks.Where
+                (p => p.IpAddress.Contains(searchString)
+                ))
+                .Distinct();
+
+            return networks;
+        }
         public static IQueryable<UsePeriod> TextSearch(this IQueryable<UsePeriod> useperiods, string searchString)
         {
             useperiods = useperiods.Where

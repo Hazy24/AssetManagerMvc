@@ -7,11 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AssetManagerMvc.Models;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
-using System.IO;
 using System.Linq.Expressions;
-using System.Web.Mvc.Html;
 using static AssetManagerMvc.Models.CustomHelpers;
 
 namespace AssetManagerMvc.Controllers

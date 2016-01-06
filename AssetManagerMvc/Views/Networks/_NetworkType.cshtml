@@ -1,0 +1,11 @@
+﻿
+@model AssetManagerMvc.Models.Network
+
+<div class="form-group">
+    @Html.LabelFor(model => model.NetworkType, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10" style="float: left;">
+        @Html.DropDownList("NetworkType", null, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.NetworkType, "", new { @class = "text-danger" })
+        <a id="typeLink" href="javascript:" onclick="changeToText('NetworkType', 'typeLink'); return false;">New network type?</a>
+    </div>
+</div>
