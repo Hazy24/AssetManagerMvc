@@ -35,7 +35,10 @@
                         @Html.DisplayFor(modelItem => item.Function)
                     </td>
                     <td>                       
-                        @Html.ActionLink("Details", "Details", "Useperiods", new { id = item.UsePeriodId }, null)                        
+                        @Html.ActionLink("Details", "Details", "Useperiods", new { id = item.UsePeriodId }, null) |
+                        @Html.ActionLink("New", "Create", new { oldUsePeriodId = item.UsePeriodId, category = ViewContext.RouteData.Values["controller"]
+                   },
+               new { title = "Sets the end date of this UsePeriod to today, and links you to the UsePeriods/Create page with this asset already selected." })
                     </td>
                 </tr>
             }

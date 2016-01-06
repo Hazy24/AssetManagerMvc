@@ -103,7 +103,7 @@ namespace AssetManagerMvc.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Computer computer = db.Computers.Find(id);
+            Computer computer = db.Computers.Find(id);            
             if (computer == null)
             {
                 return HttpNotFound();
