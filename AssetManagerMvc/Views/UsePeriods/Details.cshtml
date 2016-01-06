@@ -15,9 +15,12 @@
             @Html.DisplayNameFor(model => model.Asset.CompoundId)
         </dt>
 
-        <dd>            
+        <dd>
+            @{var controllerName = Model.Asset.GetType().BaseType.Name;
+                controllerName = controllerName.EndsWith("s") ? controllerName : controllerName + "s";                
+            }
             @Html.ActionLink(Model.Asset.CompoundId, "Details",
-                                    Model.Asset.GetType().BaseType.Name + "s", new { id = Model.AssetId }, null)
+            controllerName, new { id = Model.AssetId }, null)
         </dd>
 
 

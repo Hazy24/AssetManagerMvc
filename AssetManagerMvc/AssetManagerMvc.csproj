@@ -185,6 +185,7 @@
     <Compile Include="Controllers\DepartmentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MiscellaneousController.cs" />
     <Compile Include="Controllers\MonitorsController.cs" />
     <Compile Include="Controllers\NetworksController.cs" />
     <Compile Include="Controllers\PatchPointsController.cs" />
@@ -436,6 +437,12 @@
     <Content Include="Views\Networks\Edit.cshtml" />
     <Content Include="Views\Networks\Index.cshtml" />
     <Content Include="Views\Networks\_NetworkType.cshtml" />
+    <Content Include="Views\Miscellaneous\Create.cshtml" />
+    <Content Include="Views\Miscellaneous\Delete.cshtml" />
+    <Content Include="Views\Miscellaneous\Details.cshtml" />
+    <Content Include="Views\Miscellaneous\Edit.cshtml" />
+    <Content Include="Views\Miscellaneous\Index.cshtml" />
+    <Content Include="Views\Miscellaneous\_MiscellaneousType.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,10 @@
+﻿@model AssetManagerMvc.Models.Miscellaneous
+
+<div class="form-group">
+    @Html.LabelFor(model => model.MiscellaneousType, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10" style="float: left;">
+        @Html.DropDownList("MiscellaneousType", null, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.MiscellaneousType, "", new { @class = "text-danger" })
+        <a id="typeLink" href="javascript:" onclick="changeToText('MiscellaneousType', 'typeLink'); return false;">New miscellaneous type?</a>
+    </div>
+</div>

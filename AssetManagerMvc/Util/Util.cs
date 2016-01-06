@@ -22,6 +22,8 @@ namespace AssetManagerMvc.Models
               || a.ModelName.Contains(searchString)
               || a.Owner.Contains(searchString)
               || a.SerialNumber.Contains(searchString)
+              || a.Remark.Contains(searchString)
+              || a.IpAddress.Contains(searchString)
               || a.Supplier.Contains(searchString));
 
             return assets;
@@ -52,8 +54,7 @@ namespace AssetManagerMvc.Models
                 .Cast<Printer>();
 
             printers = assetSearch.Concat(printers.Where
-                (p => p.DrumModel.Contains(searchString)
-                || p.IpAddress.Contains(searchString)
+                (p => p.DrumModel.Contains(searchString)               
                 || p.PrinterName.Contains(searchString)
                 || p.TonerModel.Contains(searchString)))
                 .Distinct();
@@ -101,16 +102,15 @@ namespace AssetManagerMvc.Models
         }
         public static IQueryable<Network> TextSearch(this IQueryable<Network> networks, string searchString)
         {
-            IQueryable<Network> assetSearch = (networks as IQueryable<Asset>)
+            return (networks as IQueryable<Asset>)
                 .TextSearch(searchString)
-                .Cast<Network>();
-
-            networks = assetSearch.Concat(networks.Where
-                (p => p.IpAddress.Contains(searchString)
-                ))
-                .Distinct();
-
-            return networks;
+                .Cast<Network>();           
+        }
+        public static IQueryable<Miscellaneous> TextSearch(this IQueryable<Miscellaneous> misc, string searchString)
+        {
+            return (misc as IQueryable<Asset>)
+                .TextSearch(searchString)
+                .Cast<Miscellaneous>();
         }
         public static IQueryable<UsePeriod> TextSearch(this IQueryable<UsePeriod> useperiods, string searchString)
         {
