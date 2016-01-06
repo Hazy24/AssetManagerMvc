@@ -10,6 +10,8 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 
 namespace AssetManagerMvc.Models
 {
@@ -314,6 +316,78 @@ namespace AssetManagerMvc.Models
                 .OrderBy(f => f.Text);
             }            
             return selectList;
+        }
+
+        public static void RemoveSynonyms(AssetManagerContext db)
+        {
+            try
+            {
+                foreach (Asset a in db.Assets)
+                {
+                    CheckRequiredProps(a);
+                }
+
+                var assetsWithCvbaOwner = db.Assets
+                       .Where(a => a.Owner == "cvba")
+                       ;
+
+                foreach (Asset a in assetsWithCvbaOwner)
+                {
+                    CheckRequiredProps(a);
+                    a.Owner = "cv";
+                }
+
+                var assetsWithAltanHP = db.Assets
+                    .Where(a => a.Supplier == "Altan/HP")
+                    ;
+                foreach (Asset a in assetsWithAltanHP)
+                {
+                    a.Supplier = "Altan";
+                }
+
+                var computersWin7 = db.Computers
+                    .Where(c => c.OperatingSystem == "win 7 pro"
+                    || c.OperatingSystem == "windows 7");
+
+                foreach (Computer c in computersWin7)
+                {
+                    c.OperatingSystem = "Win 7";
+                }
+
+                var computersMSE = db.Computers
+                   .Where(c => c.AntiVirus == "MS sec"
+                   || c.AntiVirus == "mse");
+
+                foreach (Computer c in computersMSE)
+                {
+                    c.AntiVirus = "MSE";
+                }
+
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
+        }
+        private static void CheckRequiredProps(Asset a)
+        {
+            if (string.IsNullOrEmpty(a.SerialNumber)) a.SerialNumber = "?";
+            if (a is Computer)
+            {
+                Computer c = (Computer)a;
+                if (string.IsNullOrEmpty(c.ComputerType)) c.ComputerType = "?";
+            }
         }
     }
 }

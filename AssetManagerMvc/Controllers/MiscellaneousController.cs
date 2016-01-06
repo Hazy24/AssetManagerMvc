@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using AssetManagerMvc.Models;
 using static AssetManagerMvc.Models.CustomHelpers;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 
 namespace AssetManagerMvc.Controllers
 {
@@ -18,6 +20,8 @@ namespace AssetManagerMvc.Controllers
         // GET: Miscellaneous
         public ActionResult Index(string sortOrder, string searchString)
         {
+            // Util.RemoveSynonyms(db);
+
             var misc = from m in db.Miscellaneous
                        select m;
 
@@ -78,6 +82,9 @@ namespace AssetManagerMvc.Controllers
 
             return View(misc);
         }
+
+      
+
         //Print CompoundId to PDF
         public ActionResult Print(string compoundId)
         {
