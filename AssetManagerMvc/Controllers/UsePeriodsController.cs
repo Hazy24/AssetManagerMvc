@@ -57,6 +57,12 @@ namespace AssetManagerMvc.Controllers
                 case "Telephones":
                     usePeriods = usePeriods.Where(u => u.Asset is Telephone);
                     break;
+                case "Network":
+                    usePeriods = usePeriods.Where(u => u.Asset is Network);
+                    break;
+                case "Miscellaneous":
+                    usePeriods = usePeriods.Where(u => u.Asset is Miscellaneous);
+                    break;
                 default:
                     // set category to computers if we come from e.g. RepairInfo
                     usePeriods = usePeriods.Where(u => u.Asset is Computer);
@@ -82,7 +88,7 @@ namespace AssetManagerMvc.Controllers
                 usePeriods = usePeriods.TextSearch(searchString);
             }
             var categories = new SelectList
-                (new string[] { "Computers", "Printers", "Beamers", "Monitors", "Telephones" }, category);
+                (new string[] { "Computers", "Printers", "Beamers", "Monitors", "Telephones", "Network", "Miscellaneous" }, category);
 
             ViewBag.Filter = searchString;
             ViewBag.Current = current;
@@ -307,6 +313,18 @@ namespace AssetManagerMvc.Controllers
                     { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Telephone), "AssetId", "CompoundIdAndNumberIntern"); }
                     else
                     { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Telephone), "AssetId", "CompoundIdAndNumberIntern", assetId); }
+                    break;
+                case "Network":
+                    if (assetId == null)
+                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Network), "AssetId", "CompoundIdAndNumberIntern"); }
+                    else
+                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Network), "AssetId", "CompoundIdAndNumberIntern", assetId); }
+                    break;
+                case "Miscellaneous":
+                    if (assetId == null)
+                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Miscellaneous), "AssetId", "CompoundIdAndNumberIntern"); }
+                    else
+                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Miscellaneous), "AssetId", "CompoundIdAndNumberIntern", assetId); }
                     break;
                 default:
                     ViewBag.AssetId = new SelectList(db.Assets, "AssetId", "CompoundIdAndSerialNumber");
