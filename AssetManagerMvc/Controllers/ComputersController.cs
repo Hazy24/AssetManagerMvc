@@ -156,7 +156,7 @@ namespace AssetManagerMvc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AssetId,SerialNumber,ModelName,PurchaseDate,PurchasePrice,Owner,Supplier,Manufacturer,ComputerName,ComputerType,OfficeVersion,OperatingSystem,Browser,AntiVirus,IsTeamViewerInstalled")] Computer computer)
+        public ActionResult Edit([Bind(Include = "AssetId,SerialNumber,ModelName,PurchaseDate,PurchasePrice,Owner,Supplier,Manufacturer,ComputerName,ComputerType,OfficeVersion,OperatingSystem,Browser,AntiVirus,IsTeamViewerInstalled,Remark")] Computer computer)
         {
             if (ModelState.IsValid)
             {
