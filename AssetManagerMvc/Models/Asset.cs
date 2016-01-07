@@ -61,6 +61,7 @@ namespace AssetManagerMvc.Models
             }
         }
         public virtual ICollection<UsePeriod> UsePeriods { get; set; }
+        public virtual ICollection<LogItem> LogItems { get; set; }
     }
     public class AssetSelectListItem
     {

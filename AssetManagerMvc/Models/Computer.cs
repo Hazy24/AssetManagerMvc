@@ -21,6 +21,13 @@ namespace AssetManagerMvc.Models
         public string AntiVirus { get; set; } = string.Empty;
         [Display(Name = "TeamViewer")]
         public bool IsTeamViewerInstalled { get; set; } = false;
-       
+
+        [Display(Name = "Image Version")]
+        public string ImageVersion { get; set; } = string.Empty;
+
+        [Display(Name = "Quality Check")]
+        // Server.MapPath("~/Docs/Computerfiche.docx");       
+        public string QualityCheck { get; set; } = string.Empty;
+
     }
 }

@@ -119,7 +119,7 @@ namespace AssetManagerMvc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AssetId,SerialNumber,ModelName,PurchaseDate,PurchasePrice,Owner,Supplier,Manufacturer,ComputerName,ComputerType,OfficeVersion,OperatingSystem,Browser,AntiVirus,IsTeamViewerInstalled,Remark")] Computer computer)
+        public ActionResult Create([Bind(Include = "AssetId,SerialNumber,ModelName,PurchaseDate,PurchasePrice,Owner,Supplier,Manufacturer,ComputerName,ComputerType,OfficeVersion,OperatingSystem,Remark,ImageVersion,QualityCheck")] Computer computer)
         {
             if (ModelState.IsValid)
             {
@@ -156,7 +156,7 @@ namespace AssetManagerMvc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AssetId,SerialNumber,ModelName,PurchaseDate,PurchasePrice,Owner,Supplier,Manufacturer,ComputerName,ComputerType,OfficeVersion,OperatingSystem,Browser,AntiVirus,IsTeamViewerInstalled,Remark")] Computer computer)
+        public ActionResult Edit([Bind(Include = "AssetId,SerialNumber,ModelName,PurchaseDate,PurchasePrice,Owner,Supplier,Manufacturer,ComputerName,ComputerType,OfficeVersion,OperatingSystem,Remark,ImageVersion,QualityCheck")] Computer computer)
         {
             if (ModelState.IsValid)
             {
@@ -169,9 +169,7 @@ namespace AssetManagerMvc.Controllers
         }
 
         private void SetCreateAndEditViewbag(Computer computer)
-        {
-            ViewBag.AntiVirus = GenericSelectList(db, typeof(Computer), "AntiVirus", computer.AntiVirus);
-            ViewBag.Browser = GenericSelectList(db, typeof(Computer), "Browser", computer.Browser);
+        {           
             ViewBag.ComputerType = GenericSelectList(db, typeof(Computer), "ComputerType", computer.ComputerType);
             ViewBag.OfficeVersion = GenericSelectList(db, typeof(Computer), "OfficeVersion", computer.OfficeVersion);
             ViewBag.OperatingSystem = GenericSelectList(db, typeof(Computer), "OperatingSystem", computer.OperatingSystem);
@@ -179,6 +177,8 @@ namespace AssetManagerMvc.Controllers
             ViewBag.Owner = AssetSelectList(db, "Owner", computer.Owner);
             ViewBag.Manufacturer = GenericSelectList(db, typeof(Computer), "Manufacturer", computer.Manufacturer);
             ViewBag.ModelName = GenericSelectList(db, typeof(Computer), "ModelName", computer.ModelName);
+            ViewBag.ImageVersion = GenericSelectList(db, typeof(Computer), "ImageVersion", computer.ImageVersion);
+            ViewBag.QualityCheck = GenericSelectList(db, typeof(Computer), "QualityCheck", computer.QualityCheck);
         }
         // GET: Computers/Delete/5
         public ActionResult Delete(int? id)

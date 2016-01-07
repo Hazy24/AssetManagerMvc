@@ -278,12 +278,21 @@
     <Compile Include="Migrations\201512281350515_add-misc-and-network.Designer.cs">
       <DependentUpon>201512281350515_add-misc-and-network.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601071324562_imageversion-qualitycheck.cs" />
+    <Compile Include="Migrations\201601071324562_imageversion-qualitycheck.Designer.cs">
+      <DependentUpon>201601071324562_imageversion-qualitycheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601071453195_logitems.cs" />
+    <Compile Include="Migrations\201601071453195_logitems.Designer.cs">
+      <DependentUpon>201601071453195_logitems.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Asset.cs" />
     <Compile Include="Models\AssetManagerContext.cs" />
     <Compile Include="Models\Beamer.cs" />
     <Compile Include="Models\Computer.cs" />
+    <Compile Include="Models\LogItem.cs" />
     <Compile Include="Util\CustomHelpers.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\DropDownListText.cs" />
@@ -443,6 +452,8 @@
     <Content Include="Views\Miscellaneous\Edit.cshtml" />
     <Content Include="Views\Miscellaneous\Index.cshtml" />
     <Content Include="Views\Miscellaneous\_MiscellaneousType.cshtml" />
+    <Content Include="Views\Computers\_ImageVersion.cshtml" />
+    <Content Include="Views\Computers\_QualityCheck.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -515,6 +526,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512281350515_add-misc-and-network.resx">
       <DependentUpon>201512281350515_add-misc-and-network.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601071324562_imageversion-qualitycheck.resx">
+      <DependentUpon>201601071324562_imageversion-qualitycheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601071453195_logitems.resx">
+      <DependentUpon>201601071453195_logitems.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

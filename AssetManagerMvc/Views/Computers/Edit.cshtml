@@ -63,19 +63,9 @@
 
         @Html.Partial("_OperatingSystem")
 
-        @Html.Partial("_Browser")
+        @Html.Partial("_ImageVersion")
 
-        @Html.Partial("_AntiVirus")
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsTeamViewerInstalled, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.IsTeamViewerInstalled)
-                    @Html.ValidationMessageFor(model => model.IsTeamViewerInstalled, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
+        @Html.Partial("_QualityCheck")
 
         <div class="form-group">
             @Html.LabelFor(model => model.Remark, htmlAttributes: new { @class = "control-label col-md-2" })

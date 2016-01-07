@@ -30,5 +30,6 @@ namespace AssetManagerMvc.Models
         public DbSet<Department> Departments { get; set; }
         public DbSet<Miscellaneous> Miscellaneous { get; set; }
         public DbSet<Network> Networks { get; set; }
+        public DbSet<LogItem> LogItems { get; set; }
     }   
 }

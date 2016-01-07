@@ -8,10 +8,10 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Computer</h4>
         <hr />
@@ -53,29 +53,19 @@
             </div>
         </div>
 
-        @Html.Partial("_Owner")        
+        @Html.Partial("_Owner")
 
-        @Html.Partial("_Supplier")       
+        @Html.Partial("_Supplier")
 
-        @Html.Partial("_ComputerType")       
-       
+        @Html.Partial("_ComputerType")
+
         @Html.Partial("_OfficeVersion")
 
-        @Html.Partial("_OperatingSystem")    
+        @Html.Partial("_OperatingSystem")
 
-        @Html.Partial("_Browser")      
+        @Html.Partial("_ImageVersion")
 
-        @Html.Partial("_AntiVirus")       
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsTeamViewerInstalled, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.IsTeamViewerInstalled)
-                    @Html.ValidationMessageFor(model => model.IsTeamViewerInstalled, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
+        @Html.Partial("_QualityCheck")
 
         <div class="form-group">
             @Html.LabelFor(model => model.Remark, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -83,7 +73,7 @@
                 @Html.EditorFor(model => model.Remark, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "text-danger" })
             </div>
-        </div> 
+        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
