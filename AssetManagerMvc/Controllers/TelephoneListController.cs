@@ -59,7 +59,8 @@ namespace AssetManagerMvc.Controllers
                .Where(u => u.EndDate == null || u.EndDate >= DateTime.Now)
                .Where(u => u.UserAccount != null)
                .Where(u => u.UserAccount.Department.LdapName != "log")
-               .Where(u => u.Status.UsePeriodStatusId == 1) 
+               .Where(u => u.Status.UsePeriodStatusId == 1)
+               .Where(u => !((u.Asset as Telephone).NumberIntern.StartsWith("5")))
                .OrderBy( u => u.UserAccount.Name)
                .Select(u => new TelephoneListItem
                {
@@ -73,7 +74,7 @@ namespace AssetManagerMvc.Controllers
         }
         private IQueryable<TelephoneListItem> ExternLog()
         {
-            IQueryable<TelephoneListItem> query = db.UsePeriods
+            IQueryable<TelephoneListItem> query1 = db.UsePeriods
                .Include(u => u.Asset)
                .Include(u => u.Status)
                .Include(u => u.UserAccount)               
@@ -82,8 +83,7 @@ namespace AssetManagerMvc.Controllers
                .Where(u => u.EndDate == null || u.EndDate >= DateTime.Now)
                .Where(u => u.UserAccount != null)
                .Where(u => u.UserAccount.Department.LdapName == "log")
-               .Where(u => u.Status.UsePeriodStatusId == 1) // afgeleverd en in werking  
-               .OrderBy(u => u.UserAccount.Name)
+               .Where(u => u.Status.UsePeriodStatusId == 1) // afgeleverd en in werking                 
                .Select(u => new TelephoneListItem
                {
                    Department = u.UserAccount.Department.Name,
@@ -92,6 +92,28 @@ namespace AssetManagerMvc.Controllers
                    NumberIntern = (u.Asset as Telephone).NumberIntern
                })
                ;
+            IQueryable<TelephoneListItem> query2 = db.UsePeriods
+               .Include(u => u.Asset)
+               .Include(u => u.Status)
+               .Include(u => u.UserAccount)
+               .Where(u => u.Asset is Telephone)
+               .Where(u => (u.Asset as Telephone).TelephoneType != "GSM")
+               .Where(u => u.EndDate == null || u.EndDate >= DateTime.Now)
+               .Where(u => u.UserAccount != null)
+               .Where(u => (u.Asset as Telephone).NumberIntern.StartsWith("5"))
+               .Where(u => u.Status.UsePeriodStatusId == 1) // afgeleverd en in werking                 
+               .Select(u => new TelephoneListItem
+               {
+                   Department = u.UserAccount.Department.Name,
+                   Name = u.UserAccount.Name,
+                   Number = (u.Asset as Telephone).Number,
+                   NumberIntern = (u.Asset as Telephone).NumberIntern
+               })
+               ;
+
+            var query = query1.Concat(query2)
+                .Distinct()
+                .OrderBy(t => t.Name);
             return query;
         }
         private IQueryable<TelephoneListItem> GSM()
@@ -126,7 +148,8 @@ namespace AssetManagerMvc.Controllers
                .Where(u => u.EndDate == null || u.EndDate >= DateTime.Now)
                .Where(u => u.UserAccount == null)
                .Where(u => u.Status.UsePeriodStatusId == 1) // afgeleverd en in werking  
-               .Where(u => !string.IsNullOrEmpty((u.Asset as Telephone).NumberIntern))         
+               .Where(u => !string.IsNullOrEmpty((u.Asset as Telephone).NumberIntern))
+               .Where(u => u.Function != "Zonder eigenaar")      
                .OrderBy(u => u.Function)
                .Select(u => new TelephoneListItem
                {                   
