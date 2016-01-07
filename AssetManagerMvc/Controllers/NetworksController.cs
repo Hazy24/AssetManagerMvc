@@ -11,6 +11,7 @@ using static AssetManagerMvc.Models.CustomHelpers;
 
 namespace AssetManagerMvc.Controllers
 {
+    [Authorize(Users = @"OWWOFT\sven, OWWOFT\miquel, OWWOFT\maurice, OWWOFT\kristof, OWWOFT\werner")]
     public class NetworksController : Controller
     {
         private AssetManagerContext db = new AssetManagerContext();

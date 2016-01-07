@@ -13,6 +13,7 @@ using System.Diagnostics;
 
 namespace AssetManagerMvc.Controllers
 {
+    [Authorize(Users = @"OWWOFT\sven, OWWOFT\miquel, OWWOFT\maurice, OWWOFT\kristof, OWWOFT\werner")]
     public class MiscellaneousController : Controller
     {
         private AssetManagerContext db = new AssetManagerContext();
