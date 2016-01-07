@@ -34,7 +34,8 @@ namespace AssetManagerMvc.Models
         public string Supplier { get; set; } = string.Empty;
         public string Manufacturer { get; set; } = string.Empty;
 
-        [Display(Name = "Ip Address")]
+        [Display(Name = "Ip Address")]        
+        [DisplayFormat(DataFormatString = "<a href=\"http://{0}\">{0}</a>", HtmlEncode = false)]
         public string IpAddress { get; set; } = string.Empty;
 
         [NotMapped]

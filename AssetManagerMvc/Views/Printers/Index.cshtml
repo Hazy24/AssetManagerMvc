@@ -70,7 +70,7 @@
         @Html.DisplayFor(modelItem => item.Location)
     </td>
     <td>        
-        <a href="http://@Html.DisplayFor(modelItem => item.IpAddress)">@Html.DisplayFor(modelItem => item.IpAddress)</a>
+        @Html.DisplayFor(modelItem => item.IpAddress)
     </td>
     <td>
         @Html.ActionLink("Edit", "Edit", new { id = item.AssetId }) |
