@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using AssetManagerMvc.Models;
 using System.Text.RegularExpressions;
+using static AssetManagerMvc.Models.CustomHelpers;
 
 namespace AssetManagerMvc.Controllers
 {
@@ -281,7 +282,7 @@ namespace AssetManagerMvc.Controllers
         private void SetCreateAndEditViewbag(string category = null, int? assetId = null, int? usePeriodStatusId = null,
             int? userAccountId = null, string function = null)
         {
-
+            // ViewBag.AssetId = GenericSelectList(db, Type.GetType(category))
             switch (category)
             {
                 case "Computers":

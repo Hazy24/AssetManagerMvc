@@ -20,8 +20,6 @@ namespace AssetManagerMvc.Controllers
         // GET: Miscellaneous
         public ActionResult Index(string sortOrder, string searchString)
         {
-            // Util.RemoveSynonyms(db);
-
             var misc = from m in db.Miscellaneous
                        select m;
 
