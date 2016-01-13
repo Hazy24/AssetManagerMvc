@@ -184,6 +184,7 @@
     <Compile Include="Controllers\ComputersController.cs" />
     <Compile Include="Controllers\DepartmentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LogItemsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MiscellaneousController.cs" />
     <Compile Include="Controllers\MonitorsController.cs" />
@@ -454,6 +455,12 @@
     <Content Include="Views\Miscellaneous\_MiscellaneousType.cshtml" />
     <Content Include="Views\Computers\_ImageVersion.cshtml" />
     <Content Include="Views\Computers\_QualityCheck.cshtml" />
+    <Content Include="Views\LogItems\Create.cshtml" />
+    <Content Include="Views\LogItems\Delete.cshtml" />
+    <Content Include="Views\LogItems\Details.cshtml" />
+    <Content Include="Views\LogItems\Edit.cshtml" />
+    <Content Include="Views\LogItems\Index.cshtml" />
+    <Content Include="Views\Shared\_LogItemsOverview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

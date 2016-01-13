@@ -1,0 +1,45 @@
+﻿@model AssetManagerMvc.Models.Asset
+@using AssetManagerMvc.Models
+
+<dt>
+    @Html.DisplayNameFor(model => model.LogItems)
+</dt>
+<dd>
+    <p>
+        @Html.ActionLink("Create New", "Create", "LogItems", new { assetId = Model.AssetId }, null)
+    </p>
+    @if (Model.LogItems.Count > 0)
+            {
+        <table class="table alternating">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.LogItems.First().DateCreated)</th>
+                <th style="min-width: 500px;">@Html.DisplayNameFor(model => model.LogItems.First().Text)</th>
+                <th></th>
+            </tr>
+            @{var logItems = Model.LogItems.ToList();}
+            @{logItems.Sort((x,y) => y.DateCreated.CompareTo(x.DateCreated));}
+            @foreach (var item in logItems)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateCreated)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Text)
+                    </td>
+
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "LogItems", new { id = item.LogItemId }, null)
+                        |
+                        @Html.ActionLink("Details", "Details", "LogItems", new { id = item.LogItemId }, null)
+                        |
+                        @Html.ActionLink("Delete", "Delete", "LogItems", new { id = item.LogItemId }, null)
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+</dd>
+
+
+

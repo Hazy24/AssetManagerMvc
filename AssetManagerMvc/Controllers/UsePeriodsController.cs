@@ -29,15 +29,7 @@ namespace AssetManagerMvc.Controllers
             // set category to computers if we come from a computer page etc.
             if ((string.IsNullOrEmpty(category)) && (Request.UrlReferrer != null))
             {
-                // "/AssetManager/" is in the path when running on server
-                Match match = Regex.Match(Request.UrlReferrer.AbsolutePath, @"/AssetManager/([A-Za-z]+)");
-                if (match.Success && match.Groups.Count > 1) { category = match.Groups[1].Value; }
-                else
-                {
-                    // only"/" is in the path when running locally
-                    match = Regex.Match(Request.UrlReferrer.AbsolutePath, @"/([A-Za-z]+)");
-                    if (match.Success && match.Groups.Count > 1) { category = match.Groups[1].Value; }
-                }
+                category = GetReferringControllerName(Request.UrlReferrer);             
             }
 
             // filters

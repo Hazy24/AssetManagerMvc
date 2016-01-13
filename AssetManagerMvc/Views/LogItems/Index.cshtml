@@ -1,0 +1,45 @@
+﻿@model IEnumerable<AssetManagerMvc.Models.LogItem>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Asset.SerialNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Text)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Asset.SerialNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Text)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateCreated)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.LogItemId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.LogItemId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.LogItemId })
+        </td>
+    </tr>
+}
+
+</table>
