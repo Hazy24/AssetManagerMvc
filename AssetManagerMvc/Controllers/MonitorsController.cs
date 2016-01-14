@@ -113,11 +113,13 @@ namespace AssetManagerMvc.Controllers
         public ActionResult Create([Bind(Include = "AssetId,SerialNumber,ModelName,PurchaseDate,PurchasePrice,Owner,Supplier,Manufacturer,Size,MaxResolution,Remark")] Monitor monitor)
         {
             if (ModelState.IsValid)
-            {
+            {                
                 db.Assets.Add(monitor);
                 UsePeriod up = new UsePeriod(monitor, db.UsePeriodStatuses
                     .Where(x => x.Description == "nieuw toestel").First().UsePeriodStatusId);
                 db.UsePeriods.Add(up);
+                db.SaveChanges();
+                monitor.CompoundId = "M" + monitor.AssetId;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

@@ -287,6 +287,10 @@
     <Compile Include="Migrations\201601071453195_logitems.Designer.cs">
       <DependentUpon>201601071453195_logitems.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601141148521_compoundId.cs" />
+    <Compile Include="Migrations\201601141148521_compoundId.Designer.cs">
+      <DependentUpon>201601141148521_compoundId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Asset.cs" />
@@ -539,6 +543,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601071453195_logitems.resx">
       <DependentUpon>201601071453195_logitems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601141148521_compoundId.resx">
+      <DependentUpon>201601141148521_compoundId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

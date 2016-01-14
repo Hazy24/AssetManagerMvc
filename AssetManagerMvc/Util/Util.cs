@@ -20,6 +20,7 @@ namespace AssetManagerMvc.Models
         public static IQueryable<Asset> TextSearch(this IQueryable<Asset> assets, string searchString)
         {
             assets = assets.Where(a => a.AssetId.ToString().Contains(searchString)
+              || a.CompoundId.Contains(searchString)
               || a.Manufacturer.Contains(searchString)
               || a.ModelName.Contains(searchString)
               || a.Owner.Contains(searchString)
@@ -28,7 +29,7 @@ namespace AssetManagerMvc.Models
               || a.IpAddress.Contains(searchString)
               || a.Supplier.Contains(searchString)
               || a.LogItems.Any(l => l.Text.Contains(searchString))
-              );         
+              );
 
 
             return assets;
@@ -59,7 +60,7 @@ namespace AssetManagerMvc.Models
                 .Cast<Printer>();
 
             printers = assetSearch.Concat(printers.Where
-                (p => p.DrumModel.Contains(searchString)               
+                (p => p.DrumModel.Contains(searchString)
                 || p.PrinterName.Contains(searchString)
                 || p.TonerModel.Contains(searchString)))
                 .Distinct();
@@ -109,7 +110,7 @@ namespace AssetManagerMvc.Models
         {
             return (networks as IQueryable<Asset>)
                 .TextSearch(searchString)
-                .Cast<Network>();           
+                .Cast<Network>();
         }
         public static IQueryable<Miscellaneous> TextSearch(this IQueryable<Miscellaneous> misc, string searchString)
         {
@@ -162,9 +163,9 @@ namespace AssetManagerMvc.Models
             else
             {
                 patchpoints = patchpoints.Where
-                    (pp => pp.Function.Contains(searchString)                   
+                    (pp => pp.Function.Contains(searchString)
                     || pp.Remark.Contains(searchString)
-                    || pp.RoomName.Contains(searchString)                    
+                    || pp.RoomName.Contains(searchString)
                     || pp.Tile.Contains(searchString)
                     );
             }
@@ -201,7 +202,7 @@ namespace AssetManagerMvc.Models
             stream.Flush();
             stream.Position = 0;
             return stream;
-        }  
+        }
 
         public static List<AssetSelectListItem> CompoundIdAndUserAccountNameOrFunction(AssetManagerContext db)
         {
@@ -227,7 +228,7 @@ namespace AssetManagerMvc.Models
             return list;
         }
 
-        public static void CopyTable(string sourceConnectionString, 
+        public static void CopyTable(string sourceConnectionString,
             string destinationConnectionString, string tableName)
         {
             // Create source connection
@@ -265,21 +266,22 @@ namespace AssetManagerMvc.Models
         public static void CopyDataFromServerDbToLocalDb()
         {
             if (!ConfigurationManager.ConnectionStrings["AssetManagerContextLocal"]
-                .ConnectionString.Contains("Data Source=(LocalDb)")) { return; }
+                .ConnectionString.Contains("Data Source=(LocalDb)"))
+            { return; }
             ClearAllTablesLocalDb();
             CopyTable("AssetManagerContextServer", "AssetManagerContextLocal", "UseperiodStatus");
             CopyTable("AssetManagerContextServer", "AssetManagerContextLocal", "Assets");
             CopyTable("AssetManagerContextServer", "AssetManagerContextLocal", "UserAccounts");
             CopyTable("AssetManagerContextServer", "AssetManagerContextLocal", "Departments");
             CopyTable("AssetManagerContextServer", "AssetManagerContextLocal", "PatchPoints");
-            CopyTable("AssetManagerContextServer", "AssetManagerContextLocal", "UsePeriods");       
-            
+            CopyTable("AssetManagerContextServer", "AssetManagerContextLocal", "UsePeriods");
+
         }
         private static void ClearAllTablesLocalDb()
         {
             SqlConnection local = new SqlConnection(ConfigurationManager
                 .ConnectionStrings["AssetManagerContextLocal"].ConnectionString);
-            
+
             local.Open();
             SqlCommand cmd = new SqlCommand("DELETE FROM UsePeriods", local);
             cmd.ExecuteNonQuery();
@@ -293,14 +295,14 @@ namespace AssetManagerMvc.Models
             cmd.ExecuteNonQuery();
             cmd = new SqlCommand("DELETE FROM PatchPoints", local);
             cmd.ExecuteNonQuery();
-            
+
             local.Close();
         }
 
         /// <summary>
         /// returns a distinct and ordered SelectList
         /// </summary>
-        
+
         public static IOrderedEnumerable<SelectListItem> DOSelectList(IEnumerable<object> items, string dataValueField,
     string dataTextField, object selectedValue = null)
         {
@@ -317,7 +319,7 @@ namespace AssetManagerMvc.Models
                 selectList = new SelectList(items, dataValueField, dataTextField, selectedValue)
                 .GroupBy(f => f.Text).Select(f => f.First()) // == Distinct              
                 .OrderBy(f => f.Text);
-            }            
+            }
             return selectList;
         }
 
@@ -391,6 +393,38 @@ namespace AssetManagerMvc.Models
                 Computer c = (Computer)a;
                 if (string.IsNullOrEmpty(c.ComputerType)) c.ComputerType = "?";
             }
+        }
+        public static void InsertCompounIdsInDb(AssetManagerContext db)
+        {
+            foreach (var c in db.Computers)
+            {
+                c.CompoundId = "C" + c.AssetId;
+            }
+            foreach (var p in db.Printers)
+            {
+                p.CompoundId = "P" + p.AssetId;
+            }
+            foreach (var b in db.Beamers)
+            {
+                b.CompoundId = "B" + b.AssetId;
+            }
+            foreach (var m in db.Monitors)
+            {
+                m.CompoundId = "M" + m.AssetId;
+            }
+            foreach (var t in db.Telephones)
+            {
+                t.CompoundId = "T" + t.AssetId;
+            }
+            foreach (var n in db.Networks)
+            {
+                n.CompoundId = "N" + n.AssetId;
+            }
+            foreach (var a in db.Miscellaneous)
+            {
+                a.CompoundId = "A" + a.AssetId;
+            }
+            db.SaveChanges();
         }
     }
 }

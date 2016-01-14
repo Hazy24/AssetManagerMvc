@@ -119,11 +119,13 @@ namespace AssetManagerMvc.Controllers
         public ActionResult Create([Bind(Include = "AssetId,SerialNumber,ModelName,PurchaseDate,PurchasePrice,Remark,Owner,Supplier,Manufacturer,MiscellaneousType")] Miscellaneous miscellaneous)
         {
             if (ModelState.IsValid)
-            {
+            {                
                 db.Assets.Add(miscellaneous);
                 UsePeriod up = new UsePeriod(miscellaneous, db.UsePeriodStatuses
                   .Where(x => x.Description == "nieuw toestel").First().UsePeriodStatusId);
                 db.UsePeriods.Add(up);
+                db.SaveChanges();
+                miscellaneous.CompoundId = "A" + miscellaneous.AssetId;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

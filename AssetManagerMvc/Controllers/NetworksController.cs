@@ -119,11 +119,13 @@ namespace AssetManagerMvc.Controllers
         public ActionResult Create([Bind(Include = "AssetId,SerialNumber,ModelName,PurchaseDate,PurchasePrice,Remark,Owner,Supplier,Manufacturer,IpAddress,NetworkType")] Network network)
         {
             if (ModelState.IsValid)
-            {
+            {                
                 db.Networks.Add(network);
                 UsePeriod up = new UsePeriod(network, db.UsePeriodStatuses
                    .Where(x => x.Description == "nieuw toestel").First().UsePeriodStatusId);
                 db.UsePeriods.Add(up);
+                db.SaveChanges();
+                network.CompoundId = "N" + network.AssetId;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

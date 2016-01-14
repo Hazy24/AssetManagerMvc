@@ -114,11 +114,13 @@ namespace AssetManagerMvc.Controllers
         public ActionResult Create([Bind(Include = "AssetId,SerialNumber,ModelName,PurchaseDate,PurchasePrice,Owner,Supplier,Manufacturer,BeamerName,Remark")] Beamer beamer)
         {
             if (ModelState.IsValid)
-            {
+            {               
                 db.Assets.Add(beamer);
                 UsePeriod up = new UsePeriod(beamer, db.UsePeriodStatuses
                     .Where(x => x.Description == "nieuw toestel").First().UsePeriodStatusId);
                 db.UsePeriods.Add(up);
+                db.SaveChanges();
+                beamer.CompoundId = "B" + beamer.AssetId;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

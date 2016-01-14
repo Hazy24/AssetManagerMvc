@@ -123,15 +123,16 @@ namespace AssetManagerMvc.Controllers
         public ActionResult Create([Bind(Include = "AssetId,SerialNumber,ModelName,PurchaseDate,PurchasePrice,Owner,Supplier,Manufacturer,TelephoneType,Number,NumberIntern,Port,Remark")] Telephone telephone)
         {
             if (ModelState.IsValid)
-            {
+            {                
                 db.Assets.Add(telephone);
                 UsePeriod up = new UsePeriod(telephone, db.UsePeriodStatuses
                    .Where(x => x.Description == "nieuw toestel").First().UsePeriodStatusId);
                 db.UsePeriods.Add(up);
                 db.SaveChanges();
+                telephone.CompoundId = "T" + telephone.AssetId;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             SetCreateAndEditViewbag(telephone);
             return View(telephone);
         }

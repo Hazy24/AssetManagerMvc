@@ -129,11 +129,13 @@ namespace AssetManagerMvc.Controllers
         public ActionResult Create([Bind(Include = "AssetId,SerialNumber,ModelName,PurchaseDate,PurchasePrice,Owner,Supplier,Manufacturer,PrinterName,TonerModel,DrumModel,IpAddress,Location,Remark")] Printer printer)
         {
             if (ModelState.IsValid)
-            {
+            {                
                 db.Assets.Add(printer);
                 UsePeriod up = new UsePeriod(printer, db.UsePeriodStatuses
                    .Where(x => x.Description == "nieuw toestel").First().UsePeriodStatusId);
                 db.UsePeriods.Add(up);
+                db.SaveChanges();
+                printer.CompoundId = "P" + printer.AssetId;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

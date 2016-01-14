@@ -20,6 +20,8 @@ namespace AssetManagerMvc.Controllers
         // GET: Computers
         public ActionResult Index(string sortOrder, string searchString)
         {
+            // Util.InsertCompounIdsInDb(db);
+
             var computers = from c in db.Computers
                             select c;
 
@@ -123,10 +125,13 @@ namespace AssetManagerMvc.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 db.Computers.Add(computer);
                 UsePeriod up = new UsePeriod(computer, db.UsePeriodStatuses
                     .Where(x => x.Description == "nieuw toestel").First().UsePeriodStatusId);
                 db.UsePeriods.Add(up);
+                db.SaveChanges();
+                computer.CompoundId = "C" + computer.AssetId;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
