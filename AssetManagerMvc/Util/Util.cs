@@ -26,7 +26,10 @@ namespace AssetManagerMvc.Models
               || a.SerialNumber.Contains(searchString)
               || a.Remark.Contains(searchString)
               || a.IpAddress.Contains(searchString)
-              || a.Supplier.Contains(searchString));
+              || a.Supplier.Contains(searchString)
+              || a.LogItems.Any(l => l.Text.Contains(searchString))
+              );         
+
 
             return assets;
         }
