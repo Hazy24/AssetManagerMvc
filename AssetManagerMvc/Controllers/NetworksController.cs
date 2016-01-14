@@ -18,7 +18,7 @@ namespace AssetManagerMvc.Controllers
 
         // GET: Networks
         public ActionResult Index(string sortOrder, string searchString)
-        {
+        {            
             var networks = from n in db.Networks
                            select n;
 
@@ -28,7 +28,8 @@ namespace AssetManagerMvc.Controllers
             }
             ViewBag.CurrentFilter = searchString;
 
-            ViewBag.CompoundIdSortParm = String.IsNullOrEmpty(sortOrder) ? "compoundId_desc" : "";            
+            ViewBag.CompoundIdSortParm = String.IsNullOrEmpty(sortOrder) ? "compoundId_desc" : "";
+            ViewBag.NetworkNameSortParm = sortOrder == "networkname" ? "networkname_desc" : "networkname";
             ViewBag.SerialNumberSortParm = sortOrder == "serialnumber" ? "serialnumber_desc" : "serialnumber";
             ViewBag.ManufacturerSortParm = sortOrder == "manufacturer" ? "manufacturer_desc" : "manufacturer";
             ViewBag.ModelNameSortParm = sortOrder == "modelname" ? "modelname_desc" : "modelname";
@@ -40,7 +41,13 @@ namespace AssetManagerMvc.Controllers
             {
                 case "compoundId_desc":
                     networks = networks.OrderByDescending(n => n.AssetId);
-                    break;               
+                    break;
+                case "networkname":
+                    networks = networks.OrderBy(n => n.NetworkName);
+                    break;
+                case "networkname_desc":
+                    networks = networks.OrderByDescending(n => n.NetworkName);
+                    break;
                 case "serialnumber":
                     networks = networks.OrderBy(n => n.SerialNumber);
                     break;
@@ -78,7 +85,7 @@ namespace AssetManagerMvc.Controllers
                     networks = networks.OrderByDescending(n => n.IpAddress);
                     break;
 
-                default:  // compoundId ascending 
+                default:  // AssetId ascending 
                     networks = networks.OrderBy(n => n.AssetId);
                     break;
             }
@@ -116,7 +123,7 @@ namespace AssetManagerMvc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AssetId,SerialNumber,ModelName,PurchaseDate,PurchasePrice,Remark,Owner,Supplier,Manufacturer,IpAddress,NetworkType")] Network network)
+        public ActionResult Create([Bind(Include = "AssetId,SerialNumber,ModelName,PurchaseDate,PurchasePrice,Remark,Owner,Supplier,Manufacturer,IpAddress,NetworkType,NetworkName")] Network network)
         {
             if (ModelState.IsValid)
             {                
@@ -154,7 +161,7 @@ namespace AssetManagerMvc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AssetId,SerialNumber,ModelName,PurchaseDate,PurchasePrice,Remark,Owner,Supplier,Manufacturer,IpAddress,NetworkType")] Network network)
+        public ActionResult Edit([Bind(Include = "AssetId,CompoundId,SerialNumber,ModelName,PurchaseDate,PurchasePrice,Remark,Owner,Supplier,Manufacturer,IpAddress,NetworkType,NetworkName")] Network network)
         {
             if (ModelState.IsValid)
             {

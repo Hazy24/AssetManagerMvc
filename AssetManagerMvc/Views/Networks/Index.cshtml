@@ -20,7 +20,10 @@
     <tr>
         <th>
             @Html.ActionLink("CompoundId", "Index", new { sortOrder = ViewBag.CompoundIdSortParm, searchString = ViewBag.CurrentFilter })
-        </th>        
+        </th> 
+        <th>
+            @Html.ActionLink("Network Name", "Index", new { sortOrder = ViewBag.NetworkNameSortParm, searchString = ViewBag.CurrentFilter })
+        </th>       
         <th>
             @Html.ActionLink("Serial Number", "Index", new { sortOrder = ViewBag.SerialNumberSortParm, searchString = ViewBag.CurrentFilter })
         </th>
@@ -46,6 +49,9 @@
     <tr>
         <td>
             @Html.ActionLink(item.CompoundId, "Index", "UsePeriods", new { assetId = item.AssetId, current = false, hideUitGebruik = false }, null)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NetworkName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.SerialNumber)

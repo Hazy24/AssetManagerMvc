@@ -108,9 +108,14 @@ namespace AssetManagerMvc.Models
         }
         public static IQueryable<Network> TextSearch(this IQueryable<Network> networks, string searchString)
         {
-            return (networks as IQueryable<Asset>)
+            IQueryable<Network> assetSearch = (networks as IQueryable<Asset>)
                 .TextSearch(searchString)
                 .Cast<Network>();
+
+            networks = assetSearch.Concat(networks.Where
+                (n => n.NetworkName.Contains(searchString)))
+                .Distinct();
+            return networks;
         }
         public static IQueryable<Miscellaneous> TextSearch(this IQueryable<Miscellaneous> misc, string searchString)
         {
@@ -394,7 +399,7 @@ namespace AssetManagerMvc.Models
                 if (string.IsNullOrEmpty(c.ComputerType)) c.ComputerType = "?";
             }
         }
-        public static void InsertCompounIdsInDb(AssetManagerContext db)
+        public static void InsertCompoundIdsInDb(AssetManagerContext db)
         {
             foreach (var c in db.Computers)
             {

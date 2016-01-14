@@ -19,6 +19,14 @@
             @Html.ActionLink("Print", "Print", new { compoundId = Model.CompoundId })
         </dd>
         <dt>
+            @Html.DisplayNameFor(model => model.NetworkName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NetworkName)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.SerialNumber)
         </dt>
 

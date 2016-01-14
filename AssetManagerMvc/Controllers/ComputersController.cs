@@ -20,8 +20,6 @@ namespace AssetManagerMvc.Controllers
         // GET: Computers
         public ActionResult Index(string sortOrder, string searchString)
         {
-            // Util.InsertCompounIdsInDb(db);
-
             var computers = from c in db.Computers
                             select c;
 
@@ -161,7 +159,7 @@ namespace AssetManagerMvc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AssetId,SerialNumber,ModelName,PurchaseDate,PurchasePrice,Owner,Supplier,Manufacturer,ComputerName,ComputerType,OfficeVersion,OperatingSystem,Remark,ImageVersion,QualityCheck")] Computer computer)
+        public ActionResult Edit([Bind(Include = "AssetId,CompoundId,SerialNumber,ModelName,PurchaseDate,PurchasePrice,Owner,Supplier,Manufacturer,ComputerName,ComputerType,OfficeVersion,OperatingSystem,Remark,ImageVersion,QualityCheck")] Computer computer)
         {
             if (ModelState.IsValid)
             {

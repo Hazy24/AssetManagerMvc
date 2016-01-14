@@ -8,7 +8,9 @@ namespace AssetManagerMvc.Models
 {
     public class Network : Asset
     {
+        [Display(Name = "Network Name")]
+        public string NetworkName { get; set; } = string.Empty;
         [Display(Name = "Type")]
-        public string NetworkType { get; set; }        
+        public string NetworkType { get; set; }         
     }
 }

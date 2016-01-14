@@ -5,6 +5,6 @@
     <div class="col-md-10" style="float: left;">
         @Html.DropDownList("OperatingSystem", null, htmlAttributes: new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.OperatingSystem, "", new { @class = "text-danger" })
-        <a id="typeLink" href="javascript:" onclick="changeToText('OperatingSystem', 'typeLink'); return false;">New operating system?</a>
+        <a id="OSLink" href="javascript:" onclick="changeToText('OperatingSystem', 'OSLink'); return false;">New operating system?</a>
     </div>
 </div>

@@ -38,24 +38,8 @@ namespace AssetManagerMvc.Models
         [DisplayFormat(DataFormatString = "<a href=\"http://{0}\">{0}</a>", HtmlEncode = false)]
         public string IpAddress { get; set; } = string.Empty;
 
-
         public string CompoundId { get; set; }
-        //[NotMapped]
-        //public string CompoundId
-        //{
-        //    get
-        //    {
-        //        string compoundid = AssetId.ToString();
-        //        if (this is Computer) compoundid = "C" + compoundid;
-        //        else if (this is Printer) compoundid = "P" + compoundid;
-        //        else if (this is Beamer) compoundid = "B" + compoundid;
-        //        else if (this is Monitor) compoundid = "M" + compoundid;
-        //        else if (this is Telephone) compoundid = "T" + compoundid;
-        //        else if (this is Network) compoundid = "N" + compoundid;
-        //        else if (this is Miscellaneous) compoundid = "A" + compoundid;
-        //        return compoundid;
-        //    }
-        //}
+     
         [NotMapped]
         public string CompoundIdAndSerialNumber
         {
