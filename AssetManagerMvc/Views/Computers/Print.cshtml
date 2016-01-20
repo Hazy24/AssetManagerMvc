@@ -10,13 +10,13 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Print</title>
-    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/print")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
+<body style="padding-top: 20px;">
     <div class="container body-content">
         <h2>Computer Fiche</h2>
-
+        <div style="float: right;">@DateTime.Now.ToShortDateString()</div>
         <div>
             <h4>@Html.DisplayFor(model => model.CompoundId)</h4>
             <hr />

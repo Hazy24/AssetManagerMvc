@@ -1,0 +1,30 @@
+﻿@model AssetManagerMvc.Models.Computer
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Print2</title>
+    @Styles.Render("~/Content/css")
+    <style>
+     
+    </style>
+</head>
+<body>
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.ComputerName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ComputerName)
+            </dd>
+        </dl>
+    </div>
+</body>
+</html>
