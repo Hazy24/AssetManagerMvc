@@ -48,6 +48,8 @@ namespace AssetManagerMvc.Models
               || c.ComputerName.Contains(searchString)
               || c.ComputerType.Contains(searchString)
               || c.OfficeVersion.Contains(searchString)
+              || c.ImageVersion.Contains(searchString)
+              || c.QualityCheck.Contains(searchString)
               || c.OperatingSystem.Contains(searchString)))
               .Distinct();
 
