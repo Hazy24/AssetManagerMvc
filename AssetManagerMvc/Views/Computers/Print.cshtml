@@ -1,0 +1,144 @@
+﻿@model AssetManagerMvc.Models.Computer
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Print</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="container body-content">
+        <h2>Computer Fiche</h2>
+
+        <div>
+            <h4>@Html.DisplayFor(model => model.CompoundId)</h4>
+            <hr />
+            <dl class="dl-horizontal">
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ComputerName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ComputerName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.SerialNumber)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.SerialNumber)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ModelName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ModelName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Manufacturer)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Manufacturer)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.PurchaseDate)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PurchaseDate)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.PurchasePrice)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PurchasePrice)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Owner)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Owner)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Supplier)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Supplier)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ComputerType)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ComputerType)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.OfficeVersion)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.OfficeVersion)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.OperatingSystem)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.OperatingSystem)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ImageVersion)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ImageVersion)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.QualityCheck)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.QualityCheck)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Remark)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Remark)
+                </dd>
+
+                @Html.Partial("_LogItemsOverviewPrint")
+                @Html.Partial("_UsePeriodsOverviewPrint")
+            </dl>
+        </div>
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Oxfam Fairtrade</p>
+        </footer>
+    </div>
+</body>
+</html>

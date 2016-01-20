@@ -1,0 +1,31 @@
+﻿@model AssetManagerMvc.Models.Asset
+@using AssetManagerMvc.Models
+
+<dt>
+    @Html.DisplayNameFor(model => model.LogItems)
+</dt>
+<dd>
+    @if (Model.LogItems.Count > 0)
+            {
+        <table class="table alternating">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.LogItems.First().DateCreated)</th>
+                <th style="min-width: 500px;">@Html.DisplayNameFor(model => model.LogItems.First().Text)</th>
+            </tr>
+            @{var logItems = Model.LogItems.ToList();}
+            @{logItems.Sort((x, y) => y.DateCreated.CompareTo(x.DateCreated));}
+            @foreach (var item in logItems)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateCreated)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Text)
+                    </td>
+                </tr>
+            }
+        </table>
+                }
+</dd>
+
