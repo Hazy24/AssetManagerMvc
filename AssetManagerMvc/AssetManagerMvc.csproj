@@ -336,6 +336,8 @@
     <Content Include="Docs\deliverInfo.docx" />
     <Content Include="fonts\OxfamGlobalHeadline.ttf" />
     <Content Include="Docs\Computerfiche.docx" />
+    <Content Include="Docs\images.xlsx" />
+    <Content Include="Docs\qualityV1.docx" />
     <None Include="Properties\PublishProfiles\AssetManagerVmsql.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

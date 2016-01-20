@@ -23,10 +23,11 @@ namespace AssetManagerMvc.Models
         public bool IsTeamViewerInstalled { get; set; } = false;
 
         [Display(Name = "Image Version")]
+        [DisplayFormat(DataFormatString = "<a href=\"/docs/images.xlsx\">{0}</a>", HtmlEncode = false)]
         public string ImageVersion { get; set; } = string.Empty;
 
         [Display(Name = "Quality Check")]
-        // Server.MapPath("~/Docs/Computerfiche.docx");       
+        [DisplayFormat(DataFormatString = "<a href=\"/docs/quality{0}.docx\">{0}</a>", HtmlEncode = false)]
         public string QualityCheck { get; set; } = string.Empty;
 
     }
