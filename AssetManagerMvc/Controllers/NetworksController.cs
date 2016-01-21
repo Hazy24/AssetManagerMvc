@@ -92,9 +92,24 @@ namespace AssetManagerMvc.Controllers
             return View(networks);
         }
         //Print CompoundId to PDF
-        public ActionResult Print(string compoundId)
+        public ActionResult PrintCompoundId(string compoundId)
         {
             return File(Util.CompoundIdtoPDFStream(compoundId), "application/pdf", compoundId + ".pdf");
+        }
+
+        // GET: Networks/Print/5
+        public ActionResult Print(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Network network = db.Networks.Find(id);
+            if (network == null)
+            {
+                return HttpNotFound();
+            }
+            return View(network);
         }
         // GET: Networks/Details/5
         public ActionResult Details(int? id)

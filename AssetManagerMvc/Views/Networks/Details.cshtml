@@ -16,7 +16,7 @@
 
         <dd>
             @Html.DisplayFor(model => model.CompoundId)
-            @Html.ActionLink("Print", "Print", new { compoundId = Model.CompoundId })
+            @Html.ActionLink("Print", "PrintCompoundId", new { compoundId = Model.CompoundId })
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.NetworkName)
@@ -111,5 +111,6 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.AssetId }) |
+    @Html.ActionLink("Print", "Print", new { id = Model.AssetId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
