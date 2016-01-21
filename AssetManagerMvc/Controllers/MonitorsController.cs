@@ -21,7 +21,7 @@ namespace AssetManagerMvc.Controllers
         {
             var monitors = from m in db.Monitors
                            select m;
-            if (!String.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(searchString))
             {
                 monitors = monitors.TextSearch(searchString);
             }
@@ -78,9 +78,24 @@ namespace AssetManagerMvc.Controllers
         }
 
         //Print CompoundId to PDF
-        public ActionResult Print(string compoundId)
+        public ActionResult PrintCompoundId(string compoundId)
         {
             return File(Util.CompoundIdtoPDFStream(compoundId), "application/pdf", compoundId + ".pdf");
+        }
+
+        // GET: Monitors/Print/5
+        public ActionResult Print(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Monitor monitor = db.Monitors.Find(id);
+            if (monitor == null)
+            {
+                return HttpNotFound();
+            }
+            return View(monitor);
         }
 
         // GET: Monitors/Details/5

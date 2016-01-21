@@ -24,7 +24,7 @@ namespace AssetManagerMvc.Controllers
             var misc = from m in db.Miscellaneous
                        select m;
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(searchString))
             {
                 misc = misc.TextSearch(searchString);
             }
