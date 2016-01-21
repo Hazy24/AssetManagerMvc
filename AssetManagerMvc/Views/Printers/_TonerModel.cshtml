@@ -5,7 +5,7 @@
     <div class="col-md-10" style="float: left;">
         @Html.DropDownList("TonerModel", null, htmlAttributes: new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.TonerModel, "", new { @class = "text-danger" })
-        <a id="typeLink" href="javascript:" onclick="changeToText('TonerModel', 'typeLink'); return false;">New toner model?</a>
+        <a id="tonerModelLink" href="javascript:" onclick="changeToText('TonerModel', 'tonerModelLink'); return false;">New toner model?</a>
     </div>
 </div>
 

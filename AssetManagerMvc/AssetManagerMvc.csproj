@@ -345,6 +345,7 @@
     <Content Include="Docs\qualityV1.docx" />
     <None Include="Properties\PublishProfiles\AssetManagerVmsql.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\checkselects.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -407,7 +408,6 @@
     <Content Include="Views\UserAccounts\Details.cshtml" />
     <Content Include="Views\UserAccounts\Edit.cshtml" />
     <Content Include="Views\UserAccounts\Index.cshtml" />
-    <Content Include="Views\UsePeriods\TestView.cshtml" />
     <Content Include="Views\UsePeriods\_Function.cshtml" />
     <Content Include="Views\Shared\Displaytemplates\UsePeriodStatusTableCell.cshtml" />
     <Content Include="Views\Printers\Create.cshtml" />

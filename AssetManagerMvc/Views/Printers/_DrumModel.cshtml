@@ -5,6 +5,6 @@
     <div class="col-md-10" style="float: left;">
         @Html.DropDownList("DrumModel", null, htmlAttributes: new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.DrumModel, "", new { @class = "text-danger" })
-        <a id="typeLink" href="javascript:" onclick="changeToText('DrumModel', 'typeLink'); return false;">New drum model?</a>
+        <a id="drumModelLink" href="javascript:" onclick="changeToText('DrumModel', 'drumModelLink'); return false;">New drum model?</a>
     </div>
 </div>

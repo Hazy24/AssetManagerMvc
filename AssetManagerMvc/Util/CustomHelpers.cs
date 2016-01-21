@@ -23,10 +23,10 @@ namespace AssetManagerMvc.Models
                 ;
 
             SelectList selectlist = new SelectList(query, property, property, selectedvalue);
-            
-            if (selectedvalue!= null && !string.IsNullOrWhiteSpace(selectedvalue.ToString()) && !selectlist.Contains(selectedvalue))
-            {
-                string selected = selectedvalue.ToString();
+            string selected = selectedvalue.ToStringOrEmpty();
+
+            if (!string.IsNullOrWhiteSpace(selected) && !selectlist.Contains(selectedvalue))
+            {                
                 List<SelectListItem> list = selectlist.ToList();
                 list.Add(new SelectListItem { Text = selected, Value = selected });
                 list.Sort((x, y) => x.Text.CompareTo(y.Text));

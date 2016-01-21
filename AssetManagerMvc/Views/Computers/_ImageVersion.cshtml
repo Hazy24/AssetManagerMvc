@@ -5,7 +5,7 @@
     <div class="col-md-10" style="float: left;">
         @Html.DropDownList("ImageVersion", null, htmlAttributes: new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.ImageVersion, "", new { @class = "text-danger" })
-        <a id="IVLink" href="javascript:" onclick="changeToText('ImageVersion', 'IVLink'); return false;">New image version?</a>
+        <a id="imageVersionLink" href="javascript:" onclick="changeToText('ImageVersion', 'imageVersionLink'); return false;">New image version?</a>
     </div>
 </div>
 

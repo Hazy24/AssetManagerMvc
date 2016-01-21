@@ -18,10 +18,10 @@ namespace AssetManagerMvc.Controllers
 
         // GET: Beamers
         public ActionResult Index(string sortOrder, string searchString)
-        {
+        {            
             var beamers = from b in db.Beamers
                            select b;
-            if (!String.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(searchString))
             {
                 beamers = beamers.TextSearch(searchString);
             }

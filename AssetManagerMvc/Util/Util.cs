@@ -245,7 +245,7 @@ namespace AssetManagerMvc.Models
             return list;
         }
 
-        public static void CopyTable(string sourceConnectionString,
+        private static void CopyTable(string sourceConnectionString,
             string destinationConnectionString, string tableName)
         {
             // Create source connection
