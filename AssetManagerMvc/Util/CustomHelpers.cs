@@ -15,16 +15,27 @@ namespace AssetManagerMvc.Models
     {
         public static SelectList GenericSelectList(AssetManagerContext db, Type entityType
             , string property, object selectedvalue)
-        {
+        {             
             var set = db.Set(entityType);
             var query = set.OrderBy(property)
-                .Select("new(" + property + ")")
+                .Select("new(" + property + ")")                
                 .Distinct()
                 ;
-            return new SelectList(query, property, property, selectedvalue);
+
+            SelectList selectlist = new SelectList(query, property, property, selectedvalue);
+            
+            if (selectedvalue!= null && !string.IsNullOrWhiteSpace(selectedvalue.ToString()) && !selectlist.Contains(selectedvalue))
+            {
+                string selected = selectedvalue.ToString();
+                List<SelectListItem> list = selectlist.ToList();
+                list.Add(new SelectListItem { Text = selected, Value = selected });
+                list.Sort((x, y) => x.Text.CompareTo(y.Text));
+                selectlist = new SelectList(list, "Value", "Text", selectedvalue);
+            }
+            return selectlist;
         }
         public static SelectList AssetSelectList(AssetManagerContext db, string property, object selectedvalue)
-        {            
+        {
             var query = db.Assets.OrderBy(property)
                 .Select("new(" + property + ")")
                 .Distinct()

@@ -179,7 +179,7 @@ namespace AssetManagerMvc.Controllers
         {
             ViewBag.Supplier = AssetSelectList(db, "Supplier", beamer.Supplier);
             ViewBag.Owner = AssetSelectList(db, "Owner", beamer.Owner);
-            ViewBag.Manufacturer = GenericSelectList(db, typeof(Beamer), "Manufacturer", beamer.Manufacturer);
+            ViewBag.Manufacturer = GenericSelectList(db, typeof(Beamer), "Manufacturer", beamer.Manufacturer);            
             ViewBag.ModelName = GenericSelectList(db, typeof(Beamer), "ModelName", beamer.ModelName);
         }
         // GET: Beamers/Delete/5
