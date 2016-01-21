@@ -106,19 +106,7 @@ namespace AssetManagerMvc.Controllers
             }
             return View(computer);
         }
-        public ActionResult Print2(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Computer computer = db.Computers.Find(id);
-            if (computer == null)
-            {
-                return HttpNotFound();
-            }
-            return View(computer);
-        }
+      
         // GET: Computers/Details/5
         public ActionResult Details(int? id)
         {

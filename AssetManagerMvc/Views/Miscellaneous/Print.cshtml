@@ -1,4 +1,4 @@
-﻿@model AssetManagerMvc.Models.Beamer
+﻿@model AssetManagerMvc.Models.Miscellaneous
 
 @{
     Layout = null;
@@ -18,20 +18,12 @@
 </head>
 <body style="padding-top: 0px;">
     <div class="container body-content">
-        <h2>Beamer Fiche</h2>
+        <h2>Miscellaneous Fiche</h2>
         <div style="float: right;">@DateTime.Now.ToShortDateString()</div>
         <div>
             <h4>@Html.DisplayFor(model => model.CompoundId)</h4>
             <hr />
             <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.BeamerName)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.BeamerName)
-                </dd>
-
                 <dt>
                     @Html.DisplayNameFor(model => model.SerialNumber)
                 </dt>
@@ -89,6 +81,14 @@
                 </dd>
 
                 <dt>
+                    @Html.DisplayNameFor(model => model.MiscellaneousType)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.MiscellaneousType)
+                </dd>
+
+                <dt>
                     @Html.DisplayNameFor(model => model.Remark)
                 </dt>
 
@@ -99,6 +99,7 @@
                 @Html.Partial("_UsePeriodsOverviewPrint")
             </dl>
         </div>
+
     </div>
 </body>
 </html>
