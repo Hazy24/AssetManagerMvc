@@ -480,6 +480,7 @@
     <Content Include="Views\Monitors\Print.cshtml" />
     <Content Include="Views\Networks\Print.cshtml" />
     <Content Include="Views\Printers\Print.cshtml" />
+    <Content Include="Views\Telephones\Print.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -88,9 +88,24 @@ namespace AssetManagerMvc.Controllers
         }
 
         //Print CompoundId to PDF
-        public ActionResult Print(string compoundId)
+        public ActionResult PrintCompoundId(string compoundId)
         {
             return File(Util.CompoundIdtoPDFStream(compoundId), "application/pdf", compoundId + ".pdf");
+        }
+
+        // GET: Telephones/Print/5
+        public ActionResult Print(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Telephone telephone = db.Telephones.Find(id);
+            if (telephone == null)
+            {
+                return HttpNotFound();
+            }
+            return View(telephone);
         }
 
         // GET: Telephones/Details/5
