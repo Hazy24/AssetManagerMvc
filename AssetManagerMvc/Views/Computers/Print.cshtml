@@ -12,6 +12,9 @@
     <title>Print</title>
     @Styles.Render("~/Content/print")
     @Scripts.Render("~/bundles/modernizr")
+    <script type="text/javascript">
+        window.onload = function () { window.print(); }
+    </script>
 </head>
 <body style="padding-top: 20px;">
     <div class="container body-content">
