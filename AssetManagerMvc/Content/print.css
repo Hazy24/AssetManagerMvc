@@ -20,3 +20,9 @@
 .dl-horizontal dd:after {
     clear: both;
 }
+a[href]:after {
+    content:"";
+  }
+  abbr[title]:after {
+    content:"";
+  }
