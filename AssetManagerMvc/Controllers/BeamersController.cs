@@ -79,9 +79,24 @@ namespace AssetManagerMvc.Controllers
         }
 
         //Print CompoundId to PDF
-        public ActionResult Print(string compoundId)
+        public ActionResult PrintCompoundId(string compoundId)
         {
             return File(Util.CompoundIdtoPDFStream(compoundId), "application/pdf", compoundId + ".pdf");
+        }
+
+        // GET: Beamers/Print/5
+        public ActionResult Print(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Beamer beamer = db.Beamers.Find(id);
+            if (beamer == null)
+            {
+                return HttpNotFound();
+            }
+            return View(beamer);
         }
 
         // GET: Beamers/Details/5

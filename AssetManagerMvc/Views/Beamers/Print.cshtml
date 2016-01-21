@@ -1,4 +1,4 @@
-﻿@model AssetManagerMvc.Models.Computer
+﻿@model AssetManagerMvc.Models.Beamer
 
 @{
     Layout = null;
@@ -18,19 +18,18 @@
 </head>
 <body style="padding-top: 0px;">
     <div class="container body-content">
-        <h2>Computer Fiche</h2>
+        <h2>Beamer Fiche</h2>
         <div style="float: right;">@DateTime.Now.ToShortDateString()</div>
         <div>
-            <h4>@Html.DisplayFor(model => model.CompoundId)</h4>
+            <h4>Beamer</h4>
             <hr />
             <dl class="dl-horizontal">
-
                 <dt>
-                    @Html.DisplayNameFor(model => model.ComputerName)
+                    @Html.DisplayNameFor(model => model.BeamerName)
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.ComputerName)
+                    @Html.DisplayFor(model => model.BeamerName)
                 </dd>
 
                 <dt>
@@ -90,58 +89,16 @@
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.ComputerType)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.ComputerType)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.OfficeVersion)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.OfficeVersion)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.OperatingSystem)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.OperatingSystem)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.ImageVersion)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.ImageVersion)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.QualityCheck)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.QualityCheck)
-                </dd>
-                <dt>
                     @Html.DisplayNameFor(model => model.Remark)
                 </dt>
 
                 <dd>
                     @Html.DisplayFor(model => model.Remark)
                 </dd>
-
                 @Html.Partial("_LogItemsOverviewPrint")
                 @Html.Partial("_UsePeriodsOverviewPrint")
             </dl>
         </div>
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Oxfam Fairtrade</p>
-        </footer>
     </div>
 </body>
 </html>

@@ -475,6 +475,7 @@
     <Content Include="Views\Computers\Print.cshtml" />
     <Content Include="Views\Shared\_LogItemsOverviewPrint.cshtml" />
     <Content Include="Views\Shared\_UsePeriodsOverviewPrint.cshtml" />
+    <Content Include="Views\Beamers\Print.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
