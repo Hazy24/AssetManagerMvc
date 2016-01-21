@@ -115,15 +115,25 @@ namespace AssetManagerMvc.Models
                 .Cast<Network>();
 
             networks = assetSearch.Concat(networks.Where
-                (n => n.NetworkName.Contains(searchString)))
+                (n => n.NetworkName.Contains(searchString)
+                || n.NetworkType.Contains(searchString)
+                ))
                 .Distinct();
             return networks;
         }
         public static IQueryable<Miscellaneous> TextSearch(this IQueryable<Miscellaneous> misc, string searchString)
         {
-            return (misc as IQueryable<Asset>)
-                .TextSearch(searchString)
-                .Cast<Miscellaneous>();
+            IQueryable<Miscellaneous> assetSearch = (misc as IQueryable<Asset>)
+               .TextSearch(searchString)
+               .Cast<Miscellaneous>();
+
+            misc = assetSearch.Concat(misc.Where
+                (m => m.MiscellaneousName.Contains(searchString)
+                || m.MiscellaneousType.Contains(searchString)
+                ))
+                .Distinct();
+
+            return misc;
         }
         public static IQueryable<UsePeriod> TextSearch(this IQueryable<UsePeriod> useperiods, string searchString)
         {

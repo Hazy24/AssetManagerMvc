@@ -8,6 +8,8 @@ namespace AssetManagerMvc.Models
 {
     public class Miscellaneous : Asset
     {
+        [Display(Name = "Miscellaneous Name")]
+        public string MiscellaneousName { get; set; } = string.Empty;
         [Display(Name = "Type")]
         public string MiscellaneousType { get; set; }        
     }

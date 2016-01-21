@@ -31,6 +31,7 @@ namespace AssetManagerMvc.Controllers
             ViewBag.CurrentFilter = searchString;
 
             ViewBag.CompoundIdSortParm = String.IsNullOrEmpty(sortOrder) ? "compoundId_desc" : "";
+            ViewBag.MiscNameSortParm = sortOrder == "miscname" ? "miscname_desc" : "miscname";
             ViewBag.SerialNumberSortParm = sortOrder == "serialnumber" ? "serialnumber_desc" : "serialnumber";
             ViewBag.ManufacturerSortParm = sortOrder == "manufacturer" ? "manufacturer_desc" : "manufacturer";
             ViewBag.ModelNameSortParm = sortOrder == "modelname" ? "modelname_desc" : "modelname";
@@ -41,6 +42,12 @@ namespace AssetManagerMvc.Controllers
             {
                 case "compoundId_desc":
                     misc = misc.OrderByDescending(m => m.AssetId);
+                    break;
+                case "miscname":
+                    misc = misc.OrderBy(m => m.MiscellaneousName);
+                    break;
+                case "miscname_desc":
+                    misc = misc.OrderByDescending(m => m.MiscellaneousName);
                     break;
                 case "serialnumber":
                     misc = misc.OrderBy(m => m.SerialNumber);
@@ -132,7 +139,7 @@ namespace AssetManagerMvc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AssetId,SerialNumber,ModelName,PurchaseDate,PurchasePrice,Remark,Owner,Supplier,Manufacturer,MiscellaneousType")] Miscellaneous miscellaneous)
+        public ActionResult Create([Bind(Include = "AssetId,SerialNumber,ModelName,PurchaseDate,PurchasePrice,Remark,Owner,Supplier,Manufacturer,MiscellaneousType,MiscellaneousName")] Miscellaneous miscellaneous)
         {
             if (ModelState.IsValid)
             {                
@@ -170,7 +177,7 @@ namespace AssetManagerMvc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AssetId,CompoundId,SerialNumber,ModelName,PurchaseDate,PurchasePrice,Remark,Owner,Supplier,Manufacturer,MiscellaneousType")] Miscellaneous miscellaneous)
+        public ActionResult Edit([Bind(Include = "AssetId,CompoundId,SerialNumber,ModelName,PurchaseDate,PurchasePrice,Remark,Owner,Supplier,Manufacturer,MiscellaneousType,MiscellaneousName")] Miscellaneous miscellaneous)
         {
             if (ModelState.IsValid)
             {

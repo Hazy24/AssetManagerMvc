@@ -295,6 +295,10 @@
     <Compile Include="Migrations\201601141441514_networkname.Designer.cs">
       <DependentUpon>201601141441514_networkname.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601211201365_MiscellaneousName.cs" />
+    <Compile Include="Migrations\201601211201365_MiscellaneousName.Designer.cs">
+      <DependentUpon>201601211201365_MiscellaneousName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Asset.cs" />
@@ -565,6 +569,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601141441514_networkname.resx">
       <DependentUpon>201601141441514_networkname.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601211201365_MiscellaneousName.resx">
+      <DependentUpon>201601211201365_MiscellaneousName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
