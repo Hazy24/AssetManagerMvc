@@ -10,7 +10,7 @@ using AssetManagerMvc.Models;
 
 namespace AssetManagerMvc.Controllers
 {
-    [Authorize(Users = @"OWWOFT\sven, OWWOFT\miquel, OWWOFT\maurice, OWWOFT\kristof, OWWOFT\werner")]
+    [Authorize(Users = @"OWWOFT\sven, OWWOFT\miquel, OWWOFT\maurice, OWWOFT\kristof, OWWOFT\werner, Hazy-G2358\Hazy")]
     public class PatchPointsController : Controller
     {
         private AssetManagerContext db = new AssetManagerContext();
