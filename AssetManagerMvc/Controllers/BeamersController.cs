@@ -177,8 +177,8 @@ namespace AssetManagerMvc.Controllers
         }
         private void SetCreateAndEditViewbag(Beamer beamer)
         {
-            ViewBag.Supplier = AssetSelectList(db, "Supplier", beamer.Supplier);
-            ViewBag.Owner = AssetSelectList(db, "Owner", beamer.Owner);
+            ViewBag.Supplier = GenericSelectList(db, typeof(Asset), "Supplier", beamer.Supplier);
+            ViewBag.Owner = GenericSelectList(db, typeof(Asset), "Owner", beamer.Owner);
             ViewBag.Manufacturer = GenericSelectList(db, typeof(Beamer), "Manufacturer", beamer.Manufacturer);            
             ViewBag.ModelName = GenericSelectList(db, typeof(Beamer), "ModelName", beamer.ModelName);
         }

@@ -191,8 +191,8 @@ namespace AssetManagerMvc.Controllers
         private void SetCreateAndEditViewbag(Miscellaneous misc)
         {
             ViewBag.MiscellaneousType = GenericSelectList(db, typeof(Miscellaneous), "MiscellaneousType", misc.MiscellaneousType);
-            ViewBag.Supplier = AssetSelectList(db, "Supplier", misc.Supplier);
-            ViewBag.Owner = AssetSelectList(db, "Owner", misc.Owner);
+            ViewBag.Supplier = GenericSelectList(db, typeof(Asset), "Supplier", misc.Supplier);
+            ViewBag.Owner = GenericSelectList(db, typeof(Asset), "Owner", misc.Owner);
             ViewBag.Manufacturer = GenericSelectList(db, typeof(Miscellaneous), "Manufacturer", misc.Manufacturer);
             ViewBag.ModelName = GenericSelectList(db, typeof(Miscellaneous), "ModelName", misc.ModelName);
         }

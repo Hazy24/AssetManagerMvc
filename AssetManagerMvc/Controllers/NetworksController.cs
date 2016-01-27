@@ -190,8 +190,8 @@ namespace AssetManagerMvc.Controllers
         private void SetCreateAndEditViewbag(Network network)
         {          
             ViewBag.NetworkType = GenericSelectList(db, typeof(Network), "NetworkType", network.NetworkType);
-            ViewBag.Supplier = AssetSelectList(db, "Supplier", network.Supplier);
-            ViewBag.Owner = AssetSelectList(db, "Owner", network.Owner);
+            ViewBag.Supplier = GenericSelectList(db, typeof(Asset), "Supplier", network.Supplier);
+            ViewBag.Owner = GenericSelectList(db, typeof(Asset), "Owner", network.Owner);
             ViewBag.Manufacturer = GenericSelectList(db, typeof(Network), "Manufacturer", network.Manufacturer);
             ViewBag.ModelName = GenericSelectList(db, typeof(Network), "ModelName", network.ModelName);
         }

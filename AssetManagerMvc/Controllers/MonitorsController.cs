@@ -194,8 +194,8 @@ namespace AssetManagerMvc.Controllers
         private void SetCreateAndEditViewbag(Monitor monitor)
         {
             ViewBag.MaxResolution = GenericSelectList(db, typeof(Monitor), "MaxResolution", monitor.MaxResolution);
-            ViewBag.Supplier = AssetSelectList(db, "Supplier", monitor.Supplier);
-            ViewBag.Owner = AssetSelectList(db, "Owner", monitor.Owner);
+            ViewBag.Supplier = GenericSelectList(db, typeof(Asset), "Supplier", monitor.Supplier);
+            ViewBag.Owner = GenericSelectList(db, typeof(Asset), "Owner", monitor.Owner);
             ViewBag.Manufacturer = GenericSelectList(db, typeof(Monitor), "Manufacturer", monitor.Manufacturer);
             ViewBag.ModelName = GenericSelectList(db, typeof(Monitor), "ModelName", monitor.ModelName);           
         }

@@ -193,8 +193,8 @@ namespace AssetManagerMvc.Controllers
 
         private void SetCreateAndEditViewbag(Printer printer)
         {            
-            ViewBag.Supplier = AssetSelectList(db, "Supplier", printer.Supplier);
-            ViewBag.Owner = AssetSelectList(db, "Owner", printer.Owner);
+            ViewBag.Supplier = GenericSelectList(db, typeof(Asset), "Supplier", printer.Supplier);
+            ViewBag.Owner = GenericSelectList(db, typeof(Asset), "Owner", printer.Owner);
             ViewBag.Manufacturer = GenericSelectList(db, typeof(Printer), "Manufacturer", printer.Manufacturer);
             ViewBag.ModelName = GenericSelectList(db, typeof(Printer), "ModelName", printer.ModelName);
             ViewBag.TonerModel = GenericSelectList(db, typeof(Printer), "TonerModel", printer.TonerModel);

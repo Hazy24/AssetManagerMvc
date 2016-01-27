@@ -187,8 +187,8 @@ namespace AssetManagerMvc.Controllers
         private void SetCreateAndEditViewbag(Telephone telephone)
         {
             ViewBag.TelephoneType = GenericSelectList(db, typeof(Telephone), "TelephoneType", telephone.TelephoneType);
-            ViewBag.Supplier = AssetSelectList(db, "Supplier", telephone.Supplier);
-            ViewBag.Owner = AssetSelectList(db, "Owner", telephone.Owner);
+            ViewBag.Supplier = GenericSelectList(db, typeof(Asset), "Supplier", telephone.Supplier);
+            ViewBag.Owner = GenericSelectList(db, typeof(Asset), "Owner", telephone.Owner);
             ViewBag.Manufacturer = GenericSelectList(db, typeof(Telephone), "Manufacturer", telephone.Manufacturer);
             ViewBag.ModelName = GenericSelectList(db, typeof(Telephone), "ModelName", telephone.ModelName);
 

@@ -191,8 +191,8 @@ namespace AssetManagerMvc.Controllers
             ViewBag.ComputerType = GenericSelectList(db, typeof(Computer), "ComputerType", computer.ComputerType);
             ViewBag.OfficeVersion = GenericSelectList(db, typeof(Computer), "OfficeVersion", computer.OfficeVersion);
             ViewBag.OperatingSystem = GenericSelectList(db, typeof(Computer), "OperatingSystem", computer.OperatingSystem);
-            ViewBag.Supplier = AssetSelectList(db, "Supplier", computer.Supplier);
-            ViewBag.Owner = AssetSelectList(db, "Owner", computer.Owner);
+            ViewBag.Supplier = GenericSelectList(db, typeof(Asset), "Supplier", computer.Supplier);
+            ViewBag.Owner = GenericSelectList(db, typeof(Asset), "Owner", computer.Owner);
             ViewBag.Manufacturer = GenericSelectList(db, typeof(Computer), "Manufacturer", computer.Manufacturer);
             ViewBag.ModelName = GenericSelectList(db, typeof(Computer), "ModelName", computer.ModelName);
             ViewBag.ImageVersion = GenericSelectList(db, typeof(Computer), "ImageVersion", computer.ImageVersion);
