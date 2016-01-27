@@ -295,6 +295,10 @@
     <Compile Include="Migrations\201601211201365_MiscellaneousName.Designer.cs">
       <DependentUpon>201601211201365_MiscellaneousName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601271018305_remove-incident.cs" />
+    <Compile Include="Migrations\201601271018305_remove-incident.Designer.cs">
+      <DependentUpon>201601271018305_remove-incident.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Asset.cs" />
     <Compile Include="Models\AssetManagerContext.cs" />
@@ -546,6 +550,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601211201365_MiscellaneousName.resx">
       <DependentUpon>201601211201365_MiscellaneousName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601271018305_remove-incident.resx">
+      <DependentUpon>201601271018305_remove-incident.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
