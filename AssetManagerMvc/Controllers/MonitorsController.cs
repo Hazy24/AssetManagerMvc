@@ -11,7 +11,7 @@ using static AssetManagerMvc.Models.CustomHelpers;
 
 namespace AssetManagerMvc.Controllers
 {
-    [Authorize(Users = @"OWWOFT\sven, OWWOFT\miquel, OWWOFT\maurice, OWWOFT\kristof, OWWOFT\werner, Hazy-G2358\Hazy")]
+    [Authorize(Users = @"OWWOFT\sven, OWWOFT\miquel, OWWOFT\maurice, OWWOFT\kristof, OWWOFT\werner, Hazy-G2358\Hazy, OFT-IT-ENVY\Miquel")]
     public class MonitorsController : Controller
     {
         private AssetManagerContext db = new AssetManagerContext();
