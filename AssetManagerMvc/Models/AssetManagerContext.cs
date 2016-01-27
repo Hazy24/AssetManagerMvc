@@ -19,8 +19,7 @@ namespace AssetManagerMvc.Models
         public DbSet<UserAccount> UserAccounts { get; set; }
         public DbSet<UsePeriod> UsePeriods { get; set; }
         public DbSet<Computer> Computers { get; set; }
-        public DbSet<Asset> Assets { get; set; }
-        // public DbSet<Incident> Incidents { get; set; }
+        public DbSet<Asset> Assets { get; set; }        
         public DbSet<UsePeriodStatus> UsePeriodStatuses { get; set; }
         public DbSet<Printer> Printers { get; set; }
         public DbSet<Beamer> Beamers { get; set; }

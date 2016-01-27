@@ -312,7 +312,6 @@
     <Compile Include="Models\Network.cs" />
     <Compile Include="Models\PatchPointsCreator.cs" />
     <Compile Include="Models\RepairInfo.cs" />
-    <Compile Include="Models\Incident.cs" />
     <Compile Include="Models\Monitor.cs" />
     <Compile Include="Models\PatchPoint.cs" />
     <Compile Include="Models\Printer.cs" />
