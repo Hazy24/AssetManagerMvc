@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using AssetManagerMvc.Models;
 using static AssetManagerMvc.Models.CustomHelpers;
+using System.Text.RegularExpressions;
 
 namespace AssetManagerMvc.Controllers
 {
@@ -34,7 +35,7 @@ namespace AssetManagerMvc.Controllers
             ViewBag.ManufacturerSortParm = sortOrder == "manufacturer" ? "manufacturer_desc" : "manufacturer";
             ViewBag.ModelNameSortParm = sortOrder == "modelname" ? "modelname_desc" : "modelname";
             ViewBag.PurchaseDateSortParm = sortOrder == "purchasedate" ? "purchasedate_desc" : "purchasedate";
-            
+
 
             switch (sortOrder)
             {
@@ -77,7 +78,7 @@ namespace AssetManagerMvc.Controllers
                 case "purchasedate_desc":
                     telephones = telephones.OrderByDescending(m => m.PurchaseDate);
                     break;
-              
+
 
                 default:  // compoundId ascending 
                     telephones = telephones.OrderBy(m => m.AssetId);
@@ -138,13 +139,14 @@ namespace AssetManagerMvc.Controllers
         public ActionResult Create([Bind(Include = "AssetId,SerialNumber,ModelName,PurchaseDate,PurchasePrice,Owner,Supplier,Manufacturer,TelephoneType,Number,NumberIntern,Port,Remark")] Telephone telephone)
         {
             if (ModelState.IsValid)
-            {                
+            {
                 db.Assets.Add(telephone);
                 UsePeriod up = new UsePeriod(telephone, db.UsePeriodStatuses
                    .Where(x => x.Description == "nieuw toestel").First().UsePeriodStatusId);
                 db.UsePeriods.Add(up);
                 db.SaveChanges();
                 telephone.CompoundId = "T" + telephone.AssetId;
+                CheckNumberFormat(telephone);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -178,6 +180,7 @@ namespace AssetManagerMvc.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(telephone).State = EntityState.Modified;
+                CheckNumberFormat(telephone);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -192,6 +195,28 @@ namespace AssetManagerMvc.Controllers
             ViewBag.Manufacturer = GenericSelectList(db, typeof(Telephone), "Manufacturer", telephone.Manufacturer);
             ViewBag.ModelName = GenericSelectList(db, typeof(Telephone), "ModelName", telephone.ModelName);
 
+        }
+        private void CheckNumberFormat(Telephone telephone)
+        {
+            Match longGSM = Regex.Match(telephone.Number, @"[0-9]{10,10}");
+            if (longGSM.Success)
+            {
+                telephone.Number = telephone.Number.Substring(0, 4)
+                    + " " + telephone.Number.Substring(4, 2)
+                    + " " + telephone.Number.Substring(6, 2)
+                    + " " + telephone.Number.Substring(8, 2);
+            }
+            else
+            {
+                Match longLandline = Regex.Match(telephone.Number, @"[0-9]{9,9}");
+                if (longLandline.Success)
+                {
+                    telephone.Number = telephone.Number.Substring(0, 2)
+                        + " " + telephone.Number.Substring(2, 3)
+                        + " " + telephone.Number.Substring(5, 2)
+                        + " " + telephone.Number.Substring(7, 2);
+                }
+            }
         }
 
         // GET: Telephones/Delete/5

@@ -14,8 +14,8 @@ namespace AssetManagerMvc.Controllers
     [Authorize(Users = @"OWWOFT\sven, OWWOFT\miquel, OWWOFT\maurice, OWWOFT\kristof, OWWOFT\werner, Hazy-G2358\Hazy, OFT-IT-ENVY\Miquel")]
     public class BeamersController : Controller
     {
-        private AssetManagerContext db = new AssetManagerContext();
-
+        private AssetManagerContext db = new AssetManagerContext();   
+        
         // GET: Beamers
         public ActionResult Index(string sortOrder, string searchString)
         {          
