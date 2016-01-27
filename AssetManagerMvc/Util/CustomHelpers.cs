@@ -33,7 +33,7 @@ namespace AssetManagerMvc.Models
                 selectlist = new SelectList(list, "Value", "Text", selectedvalue);
             }
             return selectlist;
-        }         
+        }      
         public static string ToStringOrEmpty(this object value)
         {
             return ((object)value ?? String.Empty).ToString();

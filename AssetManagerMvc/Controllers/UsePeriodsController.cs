@@ -29,7 +29,7 @@ namespace AssetManagerMvc.Controllers
             // set category to computers if we come from a computer page etc.
             if ((string.IsNullOrEmpty(category)) && (Request.UrlReferrer != null))
             {
-                category = GetReferringControllerName(Request.UrlReferrer);             
+                category = GetReferringControllerName(Request.UrlReferrer);
             }
 
             // filters
@@ -71,6 +71,7 @@ namespace AssetManagerMvc.Controllers
                 usePeriods = usePeriods.Where(up => up.EndDate == null ||
                 up.EndDate >= DateTime.Now);
             }
+            // repairInfo geeft assetId mee
             if (assetId.HasValue)
             {
                 usePeriods = usePeriods.Where(u => u.AssetId == assetId.Value);
@@ -173,7 +174,7 @@ namespace AssetManagerMvc.Controllers
                 TempData.Keep("repairDoc");
             }
             List<UsePeriod> usePeriodsList = usePeriods.ToList();
-            if (assetId.HasValue && String.IsNullOrEmpty(sortOrder)) { usePeriodsList.Sort(); }            
+            if (assetId.HasValue && string.IsNullOrEmpty(sortOrder)) { usePeriodsList.Sort(); }
             return View(usePeriodsList);
         }
 
@@ -274,85 +275,40 @@ namespace AssetManagerMvc.Controllers
         private void SetCreateAndEditViewbag(string category = null, int? assetId = null, int? usePeriodStatusId = null,
             int? userAccountId = null, string function = null)
         {
-            // ViewBag.AssetId = GenericSelectList(db, Type.GetType(category))
+            // can't use GenericSelectList because "CompoundIdAndSerialNumber" is not in db (it's a computed property)
             switch (category)
             {
                 case "Computers":
-                    if (assetId == null)
-                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Computer), "AssetId", "CompoundIdAndSerialNumber"); }
-                    else
-                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Computer), "AssetId", "CompoundIdAndSerialNumber", assetId); }
+                    ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Computer), "AssetId", "CompoundIdAndSerialNumber", assetId);
                     break;
                 case "Printers":
-                    if (assetId == null)
-                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Printer), "AssetId", "CompoundIdAndSerialNumber"); }
-                    else
-                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Printer), "AssetId", "CompoundIdAndSerialNumber", assetId); }
+                    ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Printer), "AssetId", "CompoundIdAndSerialNumber", assetId);
                     break;
                 case "Beamers":
-                    if (assetId == null)
-                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Beamer), "AssetId", "CompoundIdAndSerialNumber"); }
-                    else
-                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Beamer), "AssetId", "CompoundIdAndSerialNumber", assetId); }
+                    ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Beamer), "AssetId", "CompoundIdAndSerialNumber", assetId);
                     break;
                 case "Monitors":
-                    if (assetId == null)
-                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Monitor), "AssetId", "CompoundIdAndSerialNumber"); }
-                    else
-                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Monitor), "AssetId", "CompoundIdAndSerialNumber", assetId); }
+                    ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Monitor), "AssetId", "CompoundIdAndSerialNumber", assetId);
                     break;
                 case "Telephones":
-                    if (assetId == null)
-                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Telephone), "AssetId", "CompoundIdAndNumberIntern"); }
-                    else
-                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Telephone), "AssetId", "CompoundIdAndNumberIntern", assetId); }
+                    ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Telephone), "AssetId", "CompoundIdAndNumberIntern", assetId);
                     break;
                 case "Network":
-                    if (assetId == null)
-                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Network), "AssetId", "CompoundIdAndNumberIntern"); }
-                    else
-                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Network), "AssetId", "CompoundIdAndNumberIntern", assetId); }
+                    ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Network), "AssetId", "CompoundIdAndNumberIntern", assetId);
                     break;
                 case "Miscellaneous":
-                    if (assetId == null)
-                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Miscellaneous), "AssetId", "CompoundIdAndNumberIntern"); }
-                    else
-                    { ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Miscellaneous), "AssetId", "CompoundIdAndNumberIntern", assetId); }
+                    ViewBag.AssetId = new SelectList(db.Assets.Where(x => x is Miscellaneous), "AssetId", "CompoundIdAndNumberIntern", assetId);
                     break;
                 default:
                     ViewBag.AssetId = new SelectList(db.Assets, "AssetId", "CompoundIdAndSerialNumber");
                     break;
             }
-            if (usePeriodStatusId == null)
-            {
-                ViewBag.UsePeriodStatusId = new SelectList(db.UsePeriodStatuses, "UsePeriodStatusId", "Description");
-            }
-            else
-            {
-                ViewBag.UsePeriodStatusId = new SelectList(db.UsePeriodStatuses, "UsePeriodStatusId", "Description", usePeriodStatusId);
-            }
-            if (userAccountId == null)
-            {
-                ViewBag.UserAccountId = new SelectList(db.UserAccounts.OrderBy(x => x.Name), "UserAccountId", "Name").ToList();
-            }
-            else
-            {
-                ViewBag.UserAccountId = new SelectList(db.UserAccounts.OrderBy(x => x.Name), "UserAccountId", "Name", userAccountId).ToList();
-            }
+            ViewBag.UsePeriodStatusId = new SelectList(db.UsePeriodStatuses, "UsePeriodStatusId", "Description", usePeriodStatusId);
+
+            ViewBag.UserAccountId = new SelectList(db.UserAccounts.OrderBy(x => x.Name), "UserAccountId", "Name", userAccountId).ToList();
             ViewBag.UserAccountId.Insert(0, new SelectListItem { Text = "", Value = "" });
 
-            if (string.IsNullOrEmpty(function))
-            {
-                ViewBag.Function = new SelectList(db.UsePeriods, "Function", "Function")
-                .GroupBy(f => f.Text).Select(f => f.First()) // == Distinct              
-                .OrderBy(f => f.Text);
-            }
-            else
-            {
-                ViewBag.Function = new SelectList(db.UsePeriods, "Function", "Function", function)
-                .GroupBy(f => f.Text).Select(f => f.First()) // == Distinct              
-                .OrderBy(f => f.Text);
-            }
+            ViewBag.Function = GenericSelectList(db, typeof(UsePeriod), "Function", function);           
         }
         // GET: UsePeriods/Delete/5
         public ActionResult Delete(int? id)
