@@ -33,15 +33,7 @@ namespace AssetManagerMvc.Models
                 selectlist = new SelectList(list, "Value", "Text", selectedvalue);
             }
             return selectlist;
-        }
-        public static SelectList AssetSelectList(AssetManagerContext db, string property, object selectedvalue)
-        {
-            var query = db.Assets.OrderBy(property)
-                .Select("new(" + property + ")")
-                .Distinct()
-                ;
-            return new SelectList(query, property, property, selectedvalue);
-        }
+        }         
         public static string ToStringOrEmpty(this object value)
         {
             return ((object)value ?? String.Empty).ToString();

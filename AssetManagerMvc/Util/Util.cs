@@ -221,29 +221,7 @@ namespace AssetManagerMvc.Models
             return stream;
         }
 
-        public static List<AssetSelectListItem> CompoundIdAndUserAccountNameOrFunction(AssetManagerContext db)
-        {
-
-            var usePeriods = db.UsePeriods
-              .Include(u => u.Asset)
-              .Include(u => u.Status)
-              .Include(u => u.UserAccount)
-              .Where(u => u.EndDate == null || u.EndDate >= DateTime.Now) // current
-              .Select(u => new { CompoundId = u.Asset.CompoundId, Name = u.UserAccount.Name, Function = u.Function })
-              ;
-
-            List<AssetSelectListItem> list = new List<AssetSelectListItem>();
-            foreach (var item in usePeriods)
-            {
-                AssetSelectListItem asli = new AssetSelectListItem();
-                asli.CompoundId = item.CompoundId;
-                if (string.IsNullOrEmpty(item.Name)) { asli.Identifier = item.Function; }
-                else { asli.Identifier = item.Name; }
-            }
-
-
-            return list;
-        }
+       
 
         private static void CopyTable(string sourceConnectionString,
             string destinationConnectionString, string tableName)
