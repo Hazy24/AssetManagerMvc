@@ -1,10 +1,10 @@
 ﻿.dl-horizontal dd {
-    margin-left: 180px;
+    margin-left: 160px;
 }
 
 .dl-horizontal dt {
     float: left;
-    width: 160px;
+    width: 140px;
     overflow: hidden;
     clear: left;
     text-align: right;

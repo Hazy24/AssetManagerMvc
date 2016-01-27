@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Print</title>
+    @Styles.Render("~/Content/print")
+    @Scripts.Render("~/bundles/modernizr")
+    <script type="text/javascript">
+        window.onload = function () { window.print(); }
+    </script>
+</head> 
+<body style="padding-top: 0px;">
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Oxfam Fairtrade</p>
+        </footer>
+    </div>
+</body>
+</html>

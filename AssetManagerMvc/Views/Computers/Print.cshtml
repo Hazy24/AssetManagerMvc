@@ -1,147 +1,126 @@
 ﻿@model AssetManagerMvc.Models.Computer
-
 @{
-    Layout = null;
+    ViewBag.Title = "Print";
+    Layout = "~/Views/Shared/_Print.cshtml";
 }
 
-<!DOCTYPE html>
+<h2>Computer Fiche</h2>
+<div style="float: right;">@DateTime.Now.ToShortDateString()</div>
+<div>
+    <h4>@Html.DisplayFor(model => model.CompoundId)</h4>
+    <hr />
+    <dl class="dl-horizontal">
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Print</title>
-    @Styles.Render("~/Content/print")
-    @Scripts.Render("~/bundles/modernizr")
-    <script type="text/javascript">
-        window.onload = function () { window.print(); }
-    </script>
-</head>
-<body style="padding-top: 0px;">
-    <div class="container body-content">
-        <h2>Computer Fiche</h2>
-        <div style="float: right;">@DateTime.Now.ToShortDateString()</div>
-        <div>
-            <h4>@Html.DisplayFor(model => model.CompoundId)</h4>
-            <hr />
-            <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ComputerName)
+        </dt>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.ComputerName)
-                </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ComputerName)
+        </dd>
 
-                <dd>
-                    @Html.DisplayFor(model => model.ComputerName)
-                </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SerialNumber)
+        </dt>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.SerialNumber)
-                </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SerialNumber)
+        </dd>
 
-                <dd>
-                    @Html.DisplayFor(model => model.SerialNumber)
-                </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ModelName)
+        </dt>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.ModelName)
-                </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ModelName)
+        </dd>
 
-                <dd>
-                    @Html.DisplayFor(model => model.ModelName)
-                </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Manufacturer)
+        </dt>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Manufacturer)
-                </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Manufacturer)
+        </dd>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Manufacturer)
-                </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PurchaseDate)
+        </dt>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.PurchaseDate)
-                </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PurchaseDate)
+        </dd>
 
-                <dd>
-                    @Html.DisplayFor(model => model.PurchaseDate)
-                </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PurchasePrice)
+        </dt>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.PurchasePrice)
-                </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PurchasePrice)
+        </dd>
 
-                <dd>
-                    @Html.DisplayFor(model => model.PurchasePrice)
-                </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Owner)
+        </dt>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Owner)
-                </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Owner)
+        </dd>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Owner)
-                </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Supplier)
+        </dt>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Supplier)
-                </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Supplier)
+        </dd>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Supplier)
-                </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ComputerType)
+        </dt>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.ComputerType)
-                </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ComputerType)
+        </dd>
 
-                <dd>
-                    @Html.DisplayFor(model => model.ComputerType)
-                </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OfficeVersion)
+        </dt>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.OfficeVersion)
-                </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OfficeVersion)
+        </dd>
 
-                <dd>
-                    @Html.DisplayFor(model => model.OfficeVersion)
-                </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OperatingSystem)
+        </dt>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.OperatingSystem)
-                </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OperatingSystem)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageVersion)
+        </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.OperatingSystem)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.ImageVersion)
-                </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ImageVersion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.QualityCheck)
+        </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.ImageVersion)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.QualityCheck)
-                </dt>
+        <dd>
+            @Html.DisplayFor(model => model.QualityCheck)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Remark)
+        </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.QualityCheck)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.Remark)
-                </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Remark)
+        </dd>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Remark)
-                </dd>
-
-                @Html.Partial("_LogItemsOverviewPrint")
-                @Html.Partial("_UsePeriodsOverviewPrint")
-            </dl>
-        </div>
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Oxfam Fairtrade</p>
-        </footer>
-    </div>
-</body>
-</html>
+        @Html.Partial("_LogItemsOverviewPrint")
+        @Html.Partial("_UsePeriodsOverviewPrint")
+    </dl>
+</div>

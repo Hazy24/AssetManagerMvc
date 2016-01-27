@@ -105,8 +105,8 @@ namespace AssetManagerMvc.Controllers
                 return HttpNotFound();
             }
             return View(computer);
-        }
-      
+        }       
+
         // GET: Computers/Details/5
         public ActionResult Details(int? id)
         {

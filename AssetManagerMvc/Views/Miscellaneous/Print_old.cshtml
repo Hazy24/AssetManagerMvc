@@ -1,0 +1,112 @@
+﻿@model AssetManagerMvc.Models.Miscellaneous
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Print</title>
+    @Styles.Render("~/Content/print")
+    @Scripts.Render("~/bundles/modernizr")
+    <script type="text/javascript">
+        window.onload = function () { window.print(); }
+    </script>
+</head>
+<body style="padding-top: 0px;">
+    <div class="container body-content">
+        <h2>Miscellaneous Fiche</h2>
+        <div style="float: right;">@DateTime.Now.ToShortDateString()</div>
+        <div>
+            <h4>@Html.DisplayFor(model => model.CompoundId)</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.MiscellaneousName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.MiscellaneousName)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.SerialNumber)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.SerialNumber)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ModelName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ModelName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Manufacturer)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Manufacturer)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.PurchaseDate)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PurchaseDate)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.PurchasePrice)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PurchasePrice)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Owner)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Owner)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Supplier)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Supplier)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.MiscellaneousType)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.MiscellaneousType)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Remark)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Remark)
+                </dd>
+                @Html.Partial("_LogItemsOverviewPrint")
+                @Html.Partial("_UsePeriodsOverviewPrint")
+            </dl>
+        </div>
+
+    </div>
+</body>
+</html>

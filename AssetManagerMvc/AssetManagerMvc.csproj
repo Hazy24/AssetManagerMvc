@@ -453,9 +453,16 @@
     <Content Include="Views\LogItems\Edit.cshtml" />
     <Content Include="Views\LogItems\Index.cshtml" />
     <Content Include="Views\Shared\_LogItemsOverview.cshtml" />
-    <Content Include="Views\Computers\Print.cshtml" />
     <Content Include="Views\Shared\_LogItemsOverviewPrint.cshtml" />
     <Content Include="Views\Shared\_UsePeriodsOverviewPrint.cshtml" />
+    <Content Include="Views\Beamers\Print_old.cshtml" />
+    <Content Include="Views\Miscellaneous\Print_old.cshtml" />
+    <Content Include="Views\Monitors\Print_old.cshtml" />
+    <Content Include="Views\Networks\Print_old.cshtml" />
+    <Content Include="Views\Printers\Print_old.cshtml" />
+    <Content Include="Views\Telephones\Print_old.cshtml" />
+    <Content Include="Views\Shared\_Print.cshtml" />
+    <Content Include="Views\Computers\Print.cshtml" />
     <Content Include="Views\Beamers\Print.cshtml" />
     <Content Include="Views\Miscellaneous\Print.cshtml" />
     <Content Include="Views\Monitors\Print.cshtml" />
