@@ -45,4 +45,10 @@ td.ppWand {
 td.ppPrinter {
     background-color: #FF33CC
 }
+@media (min-width: 1230px) {
+    .container {
+        max-width: 1200px;
+    }
+}
+
     
